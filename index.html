@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正安二中信息技术学业水平测试大闯关</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .question-count-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .question-count-selector button {
+            margin: 0 10px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .question-count-selector button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        .question-count-selector button:active {
+            transform: translateY(0);
+        }
+        .progress {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .question-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .question-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .options {
+            margin-bottom: 20px;
+        }
+        .option {
+            margin-bottom: 10px;
+        }
+        .option input {
+            margin-right: 10px;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .navigation button {
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .navigation #prev-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .navigation #next-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .navigation #submit-btn {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+        .navigation button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .navigation button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        .navigation button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .time-info {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .quick-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 8px;
+        }
+        .quick-nav button {
+            width: 40px;
+            height: 40px;
+            margin: 0;
+            border: 2px solid #e0e0e0;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .quick-nav button:hover:not(.answered):not(:disabled) {
+            border-color: #2196F3;
+            transform: scale(1.1);
+        }
+        .quick-nav button.answered {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: white;
+            border-color: transparent;
+        }
+        .quick-nav button.current {
+            border: 3px solid #2196F3;
+            background-color: #e3f2fd;
+            color: #1976d2;
+            font-weight: bold;
+        }
+        .result-container {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .statistics {
+            margin-bottom: 20px;
+        }
+        .wrong-questions {
+            margin-bottom: 20px;
+        }
+        .wrong-question {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .explanation {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .correct {
+            color: #4CAF50;
+        }
+        .incorrect {
+            color: #F44336;
+        }
+        .return-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .return-home button {
+            padding: 15px 40px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+        .return-home button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        .return-home button:active {
+            transform: translateY(-1px);
+        }
+        
+        /* 添加动画效果 */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+        
+        .question-count-selector button:active,
+        .navigation button:active:not(:disabled),
+        .quick-nav button:active:not(:disabled),
+        .return-home button:active {
+            animation: pulse 0.3s;
+        }
+        
+        /* 响应式设计 - 多平台适配 */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 95%;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    .container {
+        padding: 20px;
+        border-radius: 12px;
+    }
+    
+    .header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+    
+    .question-count-selector {
+        margin-bottom: 15px;
+    }
+    
+    .question-count-selector button {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 14px;
+        width: 80px;
+    }
+    
+    .question-container {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .question-title {
+        font-size: 16px;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+    
+    .option {
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+    
+    .navigation {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .navigation button {
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .time-info {
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .quick-nav {
+        gap: 6px;
+        margin-bottom: 15px;
+    }
+    
+    .quick-nav button {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+    
+    .result-container {
+        padding: 15px;
+    }
+    
+    .return-home button {
+        padding: 12px 30px;
+        font-size: 16px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+        border-radius: 10px;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .question-count-selector button {
+        width: 70px;
+        padding: 8px 15px;
+        font-size: 13px;
+        margin: 3px;
+    }
+    
+    .question-container {
+        padding: 12px;
+    }
+    
+    .question-title {
+        font-size: 15px;
+    }
+    
+    .option {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    
+    .option input {
+        margin-right: 6px;
+        transform: scale(0.9);
+    }
+    
+    .navigation button {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+    
+    .quick-nav button {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
+    }
+    
+    .time-info {
+        font-size: 11px;
+    }
+    
+    .result-container h2 {
+        font-size: 1.3rem;
+    }
+    
+    .statistics h3,
+    .wrong-questions h3 {
+        font-size: 1.1rem;
+    }
+    
+    .wrong-question {
+        font-size: 13px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .explanation {
+        font-size: 12px;
+    }
+}
+
+/* 平板设备优化 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        max-width: 90%;
+    }
+    
+    .question-count-selector button {
+        padding: 11px 22px;
+        font-size: 15px;
+    }
+    
+    .question-title {
+        font-size: 17px;
+    }
+    
+    .navigation button {
+        padding: 11px 22px;
+        font-size: 15px;
+    }
+}
+
+/* 横屏手机优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        padding: 8px;
+    }
+    
+    .container {
+        padding: 12px;
+    }
+    
+    .header {
+        margin-bottom: 10px;
+    }
+    
+    .header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .question-count-selector {
+        margin-bottom: 10px;
+    }
+    
+    .question-container {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .options {
+        margin-bottom: 10px;
+    }
+    
+    .option {
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+    
+    .navigation {
+        margin-bottom: 10px;
+    }
+    
+    .quick-nav {
+        margin-bottom: 10px;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1000px;
+    }
+    
+    .question-title {
+        font-size: 19px;
+    }
+    
+    .option {
+        font-size: 16px;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .question-count-selector button:hover,
+    .navigation button:hover:not(:disabled),
+    .quick-nav button:hover:not(:disabled),
+    .return-home button:hover {
+        transform: none;
+    }
+    
+    .question-count-selector button:active,
+    .navigation button:active:not(:disabled),
+    .quick-nav button:active:not(:disabled),
+    .return-home button:active {
+        transform: scale(0.98);
+    }
+    
+    /* 增加触摸目标大小 */
+    .option input {
+        transform: scale(1.2);
+        margin-right: 12px;
+    }
+    
+    .quick-nav button {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+    }
+    
+    .container {
+        background-color: #2d2d2d;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .question-container,
+    .result-container {
+        background-color: #3d3d3d;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .quick-nav button {
+        background-color: #3d3d3d;
+        border-color: #555;
+        color: #e0e0e0;
+    }
+    
+    .quick-nav button.answered {
+        background: linear-gradient(135deg, #2e7d32 0%, #1565c0 100%);
+    }
+    
+    .quick-nav button.current {
+        background-color: #1e3a5f;
+        color: #90caf9;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .question-count-selector,
+    .navigation,
+    .quick-nav,
+    .return-home {
+        display: none !important;
+    }
+    
+    .result-container {
+        display: block !important;
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>正安二中信息技术学业水平测试大闯关</h1>
+    </div>
+    
+    <div class="question-count-selector">
+        <button id="btn-10">10题</button>
+        <button id="btn-20">20题</button>
+        <button id="btn-30">30题</button>
+    </div>
+    
+    <div class="progress" id="progress">进度: 0/0</div>
+    
+    <div class="question-container" id="question-container">
+        <div class="question-title" id="question-title">请选择题目数量开始测试</div>
+        <div class="options" id="options"></div>
+    </div>
+    
+    <div class="navigation">
+        <button id="prev-btn">上一题</button>
+        <button id="submit-btn">马上交卷</button>
+        <button id="next-btn">下一题</button>
+    </div>
+    
+    <div class="time-info" id="time-info">
+        <div>开始时间: <span id="start-time">--:--:--</span></div>
+        <div>已使用时间: <span id="elapsed-time">00:00:00</span></div>
+    </div>
+    
+    <div class="quick-nav" id="quick-nav"></div>
+    
+    <div class="result-container" id="result-container">
+        <h2>测试结果</h2>
+        <div class="statistics" id="statistics"></div>
+        <div class="wrong-questions" id="wrong-questions"></div>
+        <div class="return-home">
+            <button id="return-home-btn">结束本次考试返回首页</button>
+        </div>
+    </div>
+
+    <script>
+        // 题目数据 - 扩展题目库，确保有足够题目
+        const questions = [
+ {
+    id: 1,
+    question: "下列关于数据、信息与知识的说法正确的是()",
+    options: [
+        "A.数据可以是数字也可以是文本，但不能是图像",
+        "B.信息是数据中所包含的意义，是对数据进行加工的结果",
+        "C.信息和知识可以独立存在，不需要载体",
+        "D.数据是通过信息加工而来的"
+    ],
+    answer: "B",
+    explanation: "信息是数据中所包含的意义，是对数据进行加工的结果。数据可以是多种形式，包括图像；信息和知识都需要载体；数据是信息的来源。"
+},
+{
+    id: 2,
+    question: "下列关于数据、信息和知识说法正确的是()",
+    options: [
+        "A.数据是对事物的客观描述，因此所有数据都是有价值的",
+        "B.通过对信息提炼归纳可能得到知识，因此所有信息都是有价值的",
+        "C.信息可以用来消除某种认知上的不确定性",
+        "D.任何信息都可以转化为知识"
+    ],
+    answer: "C",
+    explanation: "信息可以用来消除某种认知上的不确定性。不是所有数据都有价值；不是所有信息都有价值；不是任何信息都可以转化为知识。"
+},
+{
+    id: 3,
+    question: "十进制数9转换为二进制数是()",
+    options: [
+        "A.1001",
+        "B.1000",
+        "C.1011",
+        "D.1100"
+    ],
+    answer: "A",
+    explanation: "十进制数9转换为二进制是1001。"
+},
+{
+    id: 4,
+    question: "一首时长为20s的双声道音乐，采样频率为44.1KHz,量化位数为6,已知：音频所占的存储容量=采样频率×量化位数×声道数×时间÷8,该音乐所占的存储容量为多少MB()",
+    options: [
+        "A.44.1×6×2×20÷8÷1024÷1024",
+        "B.44100×6×2×20÷8÷1024÷1024",
+        "C.44100×6×2×20÷8÷1024",
+        "D.44.1×6×2×20÷8÷1024"
+    ],
+    answer: "B",
+    explanation: "采样频率44.1KHz需要转换为44100Hz，存储容量计算后需要除以1024两次转换为MB。"
+},
+{
+    id: 5,
+    question: "为了解员工对公司的认可度和满意度，下列哪种方法不恰当()",
+    options: [
+        "A.问卷调查",
+        "B.用同类公司的数据作参考",
+        "C.面对面询问",
+        "D.员工匿名邮件反馈"
+    ],
+    answer: "B",
+    explanation: "用同类公司的数据作参考不能直接了解本公司员工的认可度和满意度。"
+},
+{
+    id: 6,
+    question: "下列不属于用excel进行数据可视化表达常见图表的是()",
+    options: [
+        "A.条形图",
+        "B.折线图",
+        "C.饼图",
+        "D.词云图"
+    ],
+    answer: "D",
+    explanation: "词云图通常不是Excel内置的图表类型。"
+},
+{
+    id: 7,
+    question: "大数据的特征不包括()",
+    options: [
+        "A.巨量性",
+        "B.多样性",
+        "C.迅变性",
+        "D.无效性"
+    ],
+    answer: "D",
+    explanation: "大数据的特征包括巨量性、多样性、迅变性和价值性，不包括无效性。"
+},
+{
+    id: 8,
+    question: "关于数据安全，下列说法错误的是()",
+    options: [
+        "A.数据的安全威胁有计算机病毒、黑客攻击和数据存储介质损坏等",
+        "B.数据安全有两方面的含义，即数据防护的安全和数据本身的安全",
+        "C.个人失误也会给数据安全带来威胁",
+        "D.数据加密是确保安全的唯一手段，无需其它防护措施"
+    ],
+    answer: "D",
+    explanation: "数据加密是确保安全的重要手段，但不是唯一手段。"
+},
+{
+    id: 9,
+    question: "智能家居是计算机解决问题的重要体现，计算机解决问题的一般过程是()",
+    options: [
+        "A.分析问题、设计算法、编写程序、调试运行",
+        "B.分析问题、编写程序、设计算法、调试运行",
+        "C.设计算法、分析问题、编写程序、调试运行",
+        "D.设计算法、编写程序、分析问题、调试运行"
+    ],
+    answer: "A",
+    explanation: "计算机解决问题的一般过程是：分析问题、设计算法、编写程序、调试运行。"
+},
+{
+    id: 10,
+    question: "下列关于算法的描述，正确的是()",
+    options: [
+        "A.算法只能用流程图进行描述",
+        "B.一个算法可以没有输出",
+        "C.算法的执行步骤可以是无限的",
+        "D.设计算法是编程解决问题过程中不可或缺的一个步骤"
+    ],
+    answer: "D",
+    explanation: "设计算法是编程解决问题过程中不可或缺的一个步骤。"
+},
+{
+    id: 11,
+    question: "在Python语言中，c=float('80'),变量c的值为()",
+    options: [
+        "A.80",
+        "B.80.0",
+        "C.'80.0'",
+        "D.'80'"
+    ],
+    answer: "B",
+    explanation: "float()函数将字符串转换为浮点数。"
+},
+{
+    id: 12,
+    question: "下列程序代码，运行结果为()\ncolors=[\"red\",\"yellow\",\"blue\"]\nprint(colors[0])",
+    options: [
+        "A.red",
+        "B.yellow",
+        "C.blue",
+        "D.colors[0]"
+    ],
+    answer: "A",
+    explanation: "列表索引从0开始，colors[0]表示列表的第一个元素。"
+},
+{
+    id: 13,
+    question: "近年来人工智能发展迅速，下列关于人工智能描述正确的是()",
+    options: [
+        "A.人工智能是利用计算机或者计算机控制的机器，模拟、延伸和扩展人的智能",
+        "B.人工智能可以实现机器完全替代人的工作",
+        "C.人工智能可以实现机器完全替代人的感知",
+        "D.人工智能可以实现机器完全替代人的思考"
+    ],
+    answer: "A",
+    explanation: "人工智能是利用计算机或者计算机控制的机器，模拟、延伸和扩展人的智能。"
+},
+{
+    id: 14,
+    question: "下列关于信息技术说法错误的是()",
+    options: [
+        "A.信息技术的广泛应用，极大地促进了传统产业的转型升级，进一步提高了劳动生产率",
+        "B.信息技术的发展使社会就业结构向智能化趋势发展，这使得就业人群更要\"活到老，学到老\"",
+        "C.信息技术的发展对地区经济发展没有任何影响",
+        "D.通过某款App可以在线预约挂号，这体现了信息技术对改善民生服务所发挥的作用"
+    ],
+    answer: "C",
+    explanation: "信息技术的发展对地区经济发展有重要影响。"
+},
+{
+    id: 15,
+    question: "下列关于信息系统的说法错误的是()",
+    options: [
+        "A.信息系统中的数字、符号、图片、声音、视频等都是数据，通过计算机处理可以变成有用信息",
+        "B.信息系统要在硬件、软件、数据、网络和人员的协同下才能正常运行",
+        "C.信息系统的人员只包括信息系统的构建者、管理者",
+        "D.信息系统的软件指计算机完成特定任务的程序"
+    ],
+    answer: "C",
+    explanation: "信息系统的人员不仅包括构建者、管理者，还包括使用者等。"
+},
+{
+    id: 16,
+    question: "张老师要远程参加线上展示PPT的会议，下列信息系统中的软件最适合的是()",
+    options: [
+        "A.学籍管理系统软件",
+        "B.图书借阅系统软件",
+        "C.停车收费系统软件",
+        "D.视频会议软件"
+    ],
+    answer: "D",
+    explanation: "视频会议软件最适合远程参加线上展示PPT的会议。"
+},
+{
+    id: 17,
+    question: "随着互联网的发展和移动智能终端的普及，通过手机进行网络直播的人越来越多，下列选项中，不能实现移动终端上网的技术是()",
+    options: [
+        "A.5G",
+        "B.WiFi",
+        "C.4G",
+        "D.RFID"
+    ],
+    answer: "D",
+    explanation: "RFID是射频识别技术，不能直接用于移动终端上网。"
+},
+{
+    id: 18,
+    question: "乘坐公交时可以利用公交卡完成支付，这主要用到了物联网通信技术中的()",
+    options: [
+        "A.NFC技术",
+        "B.蓝牙技术",
+        "C.红外技术",
+        "D.WiFi技术"
+    ],
+    answer: "A",
+    explanation: "公交卡支付主要使用NFC（近场通信）技术。"
+},
+{
+    id: 19,
+    question: "某学校计算机教室网络网关为172.168.0.1,则下列哪个IP地址可能是该网络中的设备的IP地址()",
+    options: [
+        "A.256.168.0.0",
+        "B.172.168.0.12",
+        "C.168.256.0.1",
+        "D.172.168.0.256"
+    ],
+    answer: "B",
+    explanation: "IP地址的每个部分范围是0-255，且与网关在同一网段。"
+},
+{
+    id: 20,
+    question: "下列行为违反信息技术道德规范的是()",
+    options: [
+        "A.遵守网络文明公约",
+        "B.擅自破解他人计算机密码",
+        "C.健康合理上网",
+        "D.利用微信群发布班级通知"
+    ],
+    answer: "B",
+    explanation: "擅自破解他人计算机密码违反信息技术道德规范和法律。"
+},
+{
+    id: 21,
+    question: "历史上，好多珍贵文献由于各种原因没有流传下来。如今，传统的数据存储系统已不能满足数据指数型暴增所带来的海量存储的需求。数据存储正朝着横向和纵向无限扩容的方向前进，使得存储系统能够满足大数据不断增长的需求。下列关于数据、信息的说法，正确的是()",
+    options: [
+        "A.在古代，文字是数据的唯一表现方式",
+        "B.信息在传递过程中会发生损耗",
+        "C.如果存储信息的载体遭到破坏，那么其承载的信息就会消失",
+        "D.信息往往反映的是事物某一特定时间内的状态，所以古文对于当今社会的价值不高"
+    ],
+    answer: "C",
+    explanation: "如果存储信息的载体遭到破坏，那么其承载的信息就会消失。"
+},
+{
+    id: 22,
+    question: "关于数据、信息与知识关系的描述，下列选项中错误的是()",
+    options: [
+        "A.数据经过加工处理可得到信息，信息经过提炼归纳可得到知识",
+        "B.无论是信息还是知识，都是以数据为载体而存在",
+        "C.信息和数据都有传递性和共享性",
+        "D.数据、信息与知识之间没有任何联系"
+    ],
+    answer: "D",
+    explanation: "数据、信息与知识之间有密切联系。"
+},
+{
+    id: 23,
+    question: "3位二进制数1□1,中间位被遮挡，则其对应的十进制数可能是()",
+    options: [
+        "A.3或5",
+        "B.5或6",
+        "C.6或7",
+        "D.5或7"
+    ],
+    answer: "D",
+    explanation: "二进制数101=5，111=7。"
+},
+{
+    id: 24,
+    question: "ASCII码表中字母部分编码值是连续的，已知字符\"Z\"的ASCII码为01011010,字符\"X\"的ASCII码是()",
+    options: [
+        "A.01011000",
+        "B.01011001",
+        "C.10110000",
+        "D.01010001"
+    ],
+    answer: "A",
+    explanation: "X在Z前面两个位置，ASCII码值减2。"
+},
+{
+    id: 25,
+    question: "数据采集的方式有多种，下列适合利用传感器采集数据的是()",
+    options: [
+        "A.烟雾报警系统",
+        "B.通过网络搜索\"人工智能\"相关信息",
+        "C.查询高校历年的分数线情况",
+        "D.通过\"家庭用水情况问卷\"调查了解家庭用水和节水情况"
+    ],
+    answer: "A",
+    explanation: "烟雾报警系统使用传感器采集数据。"
+},
+{
+    id: 26,
+    question: "在Excel中用图表表示各项开销占总开销比重的关系，最适合的是()",
+    options: [
+        "A.饼图",
+        "B.柱形图",
+        "C.折线图",
+        "D.雷达图"
+    ],
+    answer: "A",
+    explanation: "饼图最适合表示各部分占总体的比例关系。"
+},
+{
+    id: 27,
+    question: "下列不属于大数据4V特征的是()",
+    options: [
+        "A.数据量大",
+        "B.数据种类多",
+        "C.数据产生和处理速度快",
+        "D.数据价值密度高"
+    ],
+    answer: "D",
+    explanation: "大数据的4V特征：Volume（大量）、Variety（多样）、Velocity（高速）、Value（价值），价值密度低是特点。"
+},
+{
+    id: 28,
+    question: "为确保信息系统的正常运行，可以从哪些方面进行安全防范()①身份认证②设置防火墙③数据备份④数据加密⑤数据共享",
+    options: [
+        "A.①②③⑤",
+        "B.①②③④",
+        "C.①③④⑤",
+        "D.②③④⑤"
+    ],
+    answer: "B",
+    explanation: "数据共享不是安全防范措施。"
+},
+{
+    id: 29,
+    question: "用计算机解决问题时，核心是解决\"怎么做\"。该步骤是指()",
+    options: [
+        "A.分析问题",
+        "B.设计算法",
+        "C.编写程序",
+        "D.调试运行"
+    ],
+    answer: "B",
+    explanation: "设计算法是解决\"怎么做\"的核心步骤。"
+},
+{
+    id: 30,
+    question: "下列对算法的输出理解正确的是()",
+    options: [
+        "A.算法的输出必须和输入等量",
+        "B.算法只能有一个输出",
+        "C.算法可以有多个不同类型的输出",
+        "D.没有限制但通常不超过5个"
+    ],
+    answer: "C",
+    explanation: "算法可以有多个不同类型的输出。"
+},
+{
+    id: 31,
+    question: "在Python语言中，表达式234//10%10的结果为()",
+    options: [
+        "A.0",
+        "B.3",
+        "C.2",
+        "D.4"
+    ],
+    answer: "B",
+    explanation: "234//10=23，23%10=3。"
+},
+{
+    id: 32,
+    question: "在Python中，下列程序段执行后，输出变量s的值是()\na=4\nb=5\ns=0\nif a>8:\n　s=a*3\nelse:\n　s=a+3\nprint(s)",
+    options: [
+        "A.6",
+        "B.12",
+        "C.8",
+        "D.7"
+    ],
+    answer: "D",
+    explanation: "a=4不大于8，执行else分支，s=a+3=7。"
+},
+{
+    id: 33,
+    question: "人工智能技术已经普及到人们生活的方方面面，下列选项应用了智能语音技术的是()",
+    options: [
+        "A.通过语音与智能电视对话了解气温情况",
+        "B.天黑了家里的窗帘自动关闭",
+        "C.智慧家庭应用中，下雨天窗户自动关闭",
+        "D.人脸识别开锁"
+    ],
+    answer: "A",
+    explanation: "通过语音对话使用了智能语音技术。"
+},
+{
+    id: 34,
+    question: "信息技术是社会发展、创新变革过程中不可缺少的推动力，下列不属于信息技术发展趋势的是()",
+    options: [
+        "A.更智能的信息交互方式",
+        "B.更多样的信息采集与处理终端",
+        "C.更巨大的终端设备",
+        "D.更泛在的信息通信网络"
+    ],
+    answer: "C",
+    explanation: "终端设备趋向小型化、便携化。"
+},
+{
+    id: 35,
+    question: "在智慧校园系统中，刷脸系统让学生不再为丢失饭卡、走读卡等事情担忧了。这里的学生属于构成信息系统关键要素的哪一个()",
+    options: [
+        "A.人",
+        "B.信息技术",
+        "C.数据(大数据)",
+        "D.过程"
+    ],
+    answer: "A",
+    explanation: "学生是信息系统的使用者，属于\"人\"要素。"
+},
+{
+    id: 36,
+    question: "下列列举的应用中，哪项不直接涉及信息系统的功能，即信息的输入、输出、存储、处理和控制()",
+    options: [
+        "A.银行管理系统",
+        "B.血液系统",
+        "C.课程选修系统",
+        "D.网购交易系统"
+    ],
+    answer: "B",
+    explanation: "血液系统是生物系统，不是信息系统。"
+},
+{
+    id: 37,
+    question: "下列关于计算机与移动终端的说法错误的是()",
+    options: [
+        "A.智能手机、平板计算机等移动终端可以被看作特殊用途的计算机",
+        "B.计算机的操作系统可以和移动终端的操作系统通用，没有区别",
+        "C.大部分移动终端与计算机有类似的体系结构，如输入设备、输出设备、存储器、运算器和控制器",
+        "D.移动终端使得信息系统处理信息不受时空限制，增加了信息系统应用的灵活性和便捷性"
+    ],
+    answer: "B",
+    explanation: "计算机和移动终端的操作系统有区别，不能完全通用。"
+},
+{
+    id: 38,
+    question: "物联网指的是物和物相连的互联网络，下列选项中不属于物联网应用范畴的是()",
+    options: [
+        "A.智能医疗",
+        "B.电子表格",
+        "C.智能电网",
+        "D.智能交通"
+    ],
+    answer: "B",
+    explanation: "电子表格是办公软件，不属于物联网应用。"
+},
+{
+    id: 39,
+    question: "下列属于A类IP地址的是()",
+    options: [
+        "A.10.168.3.10",
+        "B.192.168.3.10",
+        "C.129.168.3.0",
+        "D.195.168.3.0"
+    ],
+    answer: "A",
+    explanation: "A类IP地址范围：1.0.0.0-126.255.255.255。"
+},
+{
+    id: 40,
+    question: "在信息飞速发展的时代，人们的信息社会责任愈发重要。下列没有遵守信息社会责任的是()",
+    options: [
+        "A.对未经证实的信息或言论，应保持谨慎的态度，养成良好的习惯，不可盲目转发",
+        "B.对个人隐私要注意保护，不可随意在网络平台上公开自己的真实姓名、身份证号等敏感信息",
+        "C.在实际生活中，我们应当严格遵守法律法规，在虚拟的网络世界里，我们的违法行为不会被发现",
+        "D.对他人隐私，要尊重要保密，坚决不能在网络上擅自泄露他人的私密信息"
+    ],
+    answer: "C",
+    explanation: "网络世界中的违法行为同样会被发现和追究。"
+},
+{
+    id: 41,
+    question: "学校微信公众号中运动会开幕式的文章被教师和学生们先后转发到微信朋友圈，被数以万计的人浏览，这主要说明信息具有()",
+    options: [
+        "A.共享性",
+        "B.时效性",
+        "C.依附性",
+        "D.真伪性"
+    ],
+    answer: "A",
+    explanation: "信息被多人共享体现了信息的共享性。"
+},
+{
+    id: 42,
+    question: "小明的妈妈通过耳温枪测出小明的体温为39度，根据人的正常体温，可以知道小明发烧了，人的正常体温属于()",
+    options: [
+        "A.数据",
+        "B.信息",
+        "C.知识",
+        "D.消息"
+    ],
+    answer: "C",
+    explanation: "人的正常体温是经过验证的经验和常识，属于知识。"
+},
+{
+    id: 43,
+    question: "要用计算机存储和处理数值数据，首先要将其转化为二进制数，十进制数20转化为二进制数是()",
+    options: [
+        "A.10011",
+        "B.10100",
+        "C.10101",
+        "D.10010"
+    ],
+    answer: "B",
+    explanation: "十进制数20转换为二进制是10100。"
+},
+{
+    id: 44,
+    question: "在ASCII编码中，一个英文字符通常用多少个字节来表示()",
+    options: [
+        "A.1个",
+        "B.2个",
+        "C.3个",
+        "D.4个"
+    ],
+    answer: "A",
+    explanation: "ASCII编码中一个英文字符用1个字节表示。"
+},
+{
+    id: 45,
+    question: "在数据处理中，对错误及重复信息的整理是不可或缺的关键步骤。这一环节属于数据处理的()",
+    options: [
+        "A.数据更新",
+        "B.数据整理",
+        "C.数据采集",
+        "D.数据呈现"
+    ],
+    answer: "B",
+    explanation: "对错误及重复信息的整理属于数据整理环节。"
+},
+{
+    id: 46,
+    question: "下列关于大数据的说法错误的是()",
+    options: [
+        "A.广义上讲大数据是指利用传统数据处理软件所无法处理的大量复杂的数据集",
+        "B.大数据的价值密度高",
+        "C.大数据具有巨量性、多样性、迅变性、价值性等特征",
+        "D.可以利用网络爬虫工具采集大数据"
+    ],
+    answer: "B",
+    explanation: "大数据的价值密度相对较低。"
+},
+{
+    id: 47,
+    question: "大数据时代，数据安全问题引起人们的关注，下列关于保障数据安全做法错误的是()",
+    options: [
+        "A.在设置密码时，应包含大小写字母等不易被猜测的字符",
+        "B.尽量不使用开放的WiFi登录社交网络平台，避免账号信息被盗",
+        "C.谨慎分享，不分享私密信息",
+        "D.为了方便记住密码，将自己的生日后六位数字设置为支付密码"
+    ],
+    answer: "D",
+    explanation: "使用生日作为密码安全性低。"
+},
+{
+    id: 48,
+    question: "在用计算机程序解决问题的过程中，为了确保程序按预期运行并排除错误。此步骤属于()",
+    options: [
+        "A.提出问题",
+        "B.分析问题",
+        "C.设计方案",
+        "D.编程调试"
+    ],
+    answer: "D",
+    explanation: "确保程序按预期运行并排除错误属于编程调试阶段。"
+},
+{
+    id: 49,
+    question: "下列流程图符号的正确名称是()",
+    options: [
+        "A.输入/输出框",
+        "B.处理框",
+        "C.判断框",
+        "D.开始/结束框"
+    ],
+    answer: "A",
+    explanation: "平行四边形表示输入/输出框。"
+},
+{
+    id: 50,
+    question: "下列Python语句中，可以生成2,4,6,8,10这一序列的是()",
+    options: [
+        "A.range(2,10,2)",
+        "B.range(0,10,2)",
+        "C.range(1,11,2)",
+        "D.range(2,11,2)"
+    ],
+    answer: "D",
+    explanation: "range(2,11,2)生成从2开始到10（不包括11），步长为2的序列。"
+},
+{
+    id: 51,
+    question: "Python语言实现求100(含100)以内所有偶数和的代码如下，【1】应填的代码是()\nsum=0\n　for i in range(2,101,2):\n　　sum=【1】\n　print(sum)",
+    options: [
+        "A.sum",
+        "B.sum+1",
+        "C.sum+i",
+        "D.i+i"
+    ],
+    answer: "C",
+    explanation: "需要将每个偶数i累加到sum中。"
+},
+{
+    id: 52,
+    question: "ChatGPT通过对大量语言数据的学习和训练，生成了高质量的自然语言文本回答各种问题，这主要应用了()",
+    options: [
+        "A.深度学习",
+        "B.机器翻译",
+        "C.生物特征识别",
+        "D.模式识别"
+    ],
+    answer: "A",
+    explanation: "ChatGPT主要基于深度学习技术。"
+},
+{
+    id: 53,
+    question: "在信息技术发展趋势中，下列哪项描述不符合信息技术的发展要求()",
+    options: [
+        "A.信息需求多元化推动产品服务扩展",
+        "B.技术迭代预示高速高效能发展",
+        "C.计算机硬件设计趋向于增大体积",
+        "D.信息量增长要求提升处理速度和容量"
+    ],
+    answer: "C",
+    explanation: "计算机硬件设计趋向小型化、便携化。"
+},
+{
+    id: 54,
+    question: "老师把同学们的图书借阅信息保存在图书借阅管理系统中，这主要体现了信息系统的什么功能()",
+    options: [
+        "A.输入功能",
+        "B.存储功能",
+        "C.处理功能",
+        "D.控制功能"
+    ],
+    answer: "B",
+    explanation: "保存信息体现了信息系统的存储功能。"
+},
+{
+    id: 55,
+    question: "信息系统在智能交通管理中起着重要作用，电子警察系统通过抓拍的方式来约束车辆的行为，其抓拍过程属于()",
+    options: [
+        "A.信息采集",
+        "B.信息存储",
+        "C.信息备份",
+        "D.信息传输"
+    ],
+    answer: "A",
+    explanation: "抓拍过程属于信息采集。"
+},
+{
+    id: 56,
+    question: "下列哪一个设备不属于计算机的输入设备()",
+    options: [
+        "A.键盘",
+        "B.鼠标",
+        "C.摄像头",
+        "D.显示器"
+    ],
+    answer: "D",
+    explanation: "显示器是输出设备。"
+},
+{
+    id: 57,
+    question: "小王想要回到家后就可以有热水洗澡，他通过手机上的某App在回家前半小时打开了家里的热水器，这里使用的技术是()",
+    options: [
+        "A.云计算",
+        "B.人工智能",
+        "C.物联网",
+        "D.虚拟现实"
+    ],
+    answer: "C",
+    explanation: "通过手机远程控制家电属于物联网技术。"
+},
+{
+    id: 58,
+    question: "在域名中我们能获得很多的信息，例如地域、机构性质等，下列能从域名中直接获得地域信息的是()",
+    options: [
+        "A.www.tsinghua.edu.cn",
+        "B.www.baidu.com",
+        "C.mail.qq.com",
+        "D.www.163.net"
+    ],
+    answer: "A",
+    explanation: ".cn表示中国，能获得地域信息。"
+},
+{
+    id: 59,
+    question: "微信工作群已成为工作中必不可少的沟通工具，在微信群中，下列哪项行为符合信息社会责任的要求()",
+    options: [
+        "A.当发现群内有人发布违法信息时，及时向群管理员报告并协助处理",
+        "B.为了吸引注意，故意编造并发布虚假的中奖信息",
+        "C.在未经他人同意的情况下，分享他人的个人生活照片",
+        "D.将微信群友的私人对话截图并公开分享到其他社交平台"
+    ],
+    answer: "A",
+    explanation: "报告违法信息是履行信息社会责任的表现。"
+},
+{
+    id: 60,
+    question: "\"村BA\"火出圈后，有一组数字值得一提：2022年台江县地区生产总值完成44.98亿元，同比增长9%,增速贵州省第一。上述新闻中独立的\"44.98\"是()",
+    options: [
+        "A.信息",
+        "B.数据",
+        "C.知识",
+        "D.智慧"
+    ],
+    answer: "B",
+    explanation: "独立的数字\"44.98\"是数据。"
+},
+{
+    id: 61,
+    question: "下列关于数据和信息关系的描述中，错误的是()",
+    options: [
+        "A.数据可以处理，信息不能处理",
+        "B.数据是信息的载体",
+        "C.信息是数据所包含的意义",
+        "D.数据和信息都具有普遍性"
+    ],
+    answer: "A",
+    explanation: "信息也可以被处理。"
+},
+{
+    id: 62,
+    question: "一个4位二进制数1■10,其中一位看不清了，则可能与这个二进制数相等的十进制是()",
+    options: [
+        "A.9或13",
+        "B.10或14",
+        "C.10或13",
+        "D.11或14"
+    ],
+    answer: "B",
+    explanation: "二进制数1010=10，1110=14。"
+},
+{
+    id: 63,
+    question: "在GB2312编码中，计算机中存储一个汉字需要几个字节()",
+    options: [
+        "A.8",
+        "B.2",
+        "C.4",
+        "D.16"
+    ],
+    answer: "B",
+    explanation: "GB2312编码中一个汉字用2个字节存储。"
+},
+{
+    id: 64,
+    question: "需要对一个动画片进行配音，使用麦克风采集的是什么数据()",
+    options: [
+        "A.声音",
+        "B.图片",
+        "C.视频",
+        "D.文字"
+    ],
+    answer: "A",
+    explanation: "麦克风采集声音数据。"
+},
+{
+    id: 65,
+    question: "某班主任对班级的所有同学考试进行多次对照分析后，找到每位同学的薄弱学科和优势学科，这样的分析方法属于()",
+    options: [
+        "A.对比分析法",
+        "B.总体分析法",
+        "C.平均分析法",
+        "D.结构分析法"
+    ],
+    answer: "A",
+    explanation: "多次对照分析属于对比分析法。"
+},
+{
+    id: 66,
+    question: "大数据已经渗透到很多行业，例如网络购物、餐饮外卖、生鲜配送等\"线上经济\"正在逐渐改变人们的生活习惯和消费模式。这主要体现了大数据哪一方面的应用()",
+    options: [
+        "A.智慧校园",
+        "B.医疗健康",
+        "C.社区管理",
+        "D.生活服务"
+    ],
+    answer: "D",
+    explanation: "网络购物、外卖等属于生活服务领域。"
+},
+{
+    id: 67,
+    question: "下列会威胁数据安全的是()",
+    options: [
+        "A.备份数据",
+        "B.使用复杂密码",
+        "C.计算机病毒",
+        "D.查看数据"
+    ],
+    answer: "C",
+    explanation: "计算机病毒会威胁数据安全。"
+},
+{
+    id: 68,
+    question: "关于算法描述，除自然语言和伪代码外，常用的算法描述方法还有()",
+    options: [
+        "A.流程图",
+        "B.思维导图",
+        "C.柱状图",
+        "D.饼图"
+    ],
+    answer: "A",
+    explanation: "流程图是常用的算法描述方法。"
+},
+{
+    id: 69,
+    question: "枚举算法是依据问题的已知条件，确定答案的大致范围，在此范围内列举出它所有可能情况的方法。以下哪一个适合用枚举算法来解决()",
+    options: [
+        "A.求银行贷款后每月要还的贷款金额",
+        "B.求三个电阻串联后的电阻值",
+        "C.在100硬币中找出一枚假币",
+        "D.已知A,B两个数的值，求这两个数的和"
+    ],
+    answer: "C",
+    explanation: "在100硬币中找假币适合用枚举算法。"
+},
+{
+    id: 70,
+    question: "下列选项中，可以作为Python程序变量名的是()",
+    options: [
+        "A.1ab",
+        "B.ab2",
+        "C.a-b",
+        "D.if"
+    ],
+    answer: "B",
+    explanation: "变量名不能以数字开头，不能包含特殊字符，不能是关键字。"
+},
+{
+    id: 71,
+    question: "运行如下程序时，输入23,输出值为()\nx=int(input())\nwhile x!=0:\n　　　　　X=x//10\nprint(x)",
+    options: [
+        "A.2",
+        "B.0",
+        "C.23",
+        "D.1"
+    ],
+    answer: "B",
+    explanation: "23//10=2，2//10=0，循环结束输出0。"
+},
+{
+    id: 72,
+    question: "下列描述属于人工智能应用范畴的是()",
+    options: [
+        "A.使用手持金属探测仪进行安检扫描",
+        "B.地图软件在有wifi连接的地方自动升级数据",
+        "C.高速公路ETC通道自动识别车牌号码进行收费",
+        "D.医生使用听诊器给病人检查身体"
+    ],
+    answer: "C",
+    explanation: "自动识别车牌属于人工智能应用。"
+},
+{
+    id: 73,
+    question: "下列关于信息技术说法错误的是()",
+    options: [
+        "A.信息技术是指获取、表示、传输、存储和加工信息的各种技术总和",
+        "B.现代信息技术是以微电子学为基础",
+        "C.现代通信技术主要包括卫星通信、光纤通信、移动通信等技术",
+        "D.信息技术是计算机出现后才产生的"
+    ],
+    answer: "D",
+    explanation: "信息技术在计算机出现前就已存在。"
+},
+{
+    id: 74,
+    question: "关于现代信息技术未来发展方向的说法不正确的是()",
+    options: [
+        "A.\"互联网+\"促进了信息化和工业化深度融合",
+        "B.物联网成为数据采集的重要来源",
+        "C.大数据成为重要的战略资源",
+        "D.跨领域应用与学科交叉越来越少"
+    ],
+    answer: "D",
+    explanation: "跨领域应用与学科交叉越来越多。"
+},
+{
+    id: 75,
+    question: "从信息化管理角度出发，学校食堂消费管理信息系统实现的主要目标是()",
+    options: [
+        "A.增加学校资产",
+        "B.保证钱财安全",
+        "C.保证卫生安全",
+        "D.智能化处理数据"
+    ],
+    answer: "D",
+    explanation: "食堂消费系统主要目标是智能化处理数据。"
+},
+{
+    id: 76,
+    question: "某同学在线上实名预约了科技馆的参观券，进入科技馆参观时，只要在检票口刷一下身份证。刷身份证的过程运用了物联网技术中的()",
+    options: [
+        "A.二维码识别",
+        "B.条形码识别",
+        "C.射频识别与传感识别",
+        "D.红外线识别"
+    ],
+    answer: "C",
+    explanation: "刷身份证使用射频识别技术。"
+},
+{
+    id: 77,
+    question: "在计算机网络中，光纤通信的主要特点是()",
+    options: [
+        "A.容量小，不容易被电磁干扰",
+        "B.容量大，不容易被电磁干扰",
+        "C.容量大，容易被电磁干扰",
+        "D.容量小，容易被电磁干扰"
+    ],
+    answer: "B",
+    explanation: "光纤通信容量大，抗电磁干扰能力强。"
+},
+{
+    id: 78,
+    question: "下列关于系统软件和应用软件的说法，不正确的是()",
+    options: [
+        "A.应用软件可以满足用户的特定需求，拓宽计算机系统的应用领域",
+        "B.应用软件分为办公软件、工具软件、娱乐软件、管理软件等",
+        "C.系统软件为应用软件提供支持和服务",
+        "D.Excel是最重要的系统软件"
+    ],
+    answer: "D",
+    explanation: "Excel是应用软件，不是系统软件。"
+},
+{
+    id: 79,
+    question: "小李同学喜欢使用\"微信\"、\"微博\"等软件分享、交流信息。下列做法合适的是()",
+    options: [
+        "A.小吴因为对某个同学有偏见，就在朋友圈曝光该同学的隐私",
+        "B.为了吸引关注，编造同学打群架的消息",
+        "C.随意转发网上未经证实的信息",
+        "D.将自己的运动状态分享到朋友圈"
+    ],
+    answer: "D",
+    explanation: "分享自己的运动状态是合适的网络行为。"
+},
+{
+    id: 80,
+    question: "下列关于信息特征的描述，正确的是()",
+    options: [
+        "A.同一条信息可以依附于不同的载体",
+        "B.信息是伴随计算机的产生而产生的",
+        "C.信息被一个人接收后就消失了",
+        "D.信息对每个人的价值都是相同的"
+    ],
+    answer: "A",
+    explanation: "信息可以依附于不同载体。"
+},
+{
+    id: 81,
+    question: "物质、能量和信息是组成世界的三大基本要素，关于信息的描述，下列说法不正确的是()",
+    options: [
+        "A.信息可以通过电视、导航、地图等进行传播",
+        "B.信息具有传递性和共享性",
+        "C.信息对于接受群体来说其价值都是一样的",
+        "D.天气预报播放当天和未来几天的气象信息体现了信息的时效性"
+    ],
+    answer: "C",
+    explanation: "信息对不同人的价值可能不同。"
+},
+{
+    id: 82,
+    question: "\"一带一路\"是\"丝绸之路经济带\"和\"21世纪海上丝绸之路\"的简称，涵盖了我国共计18个省、自治区、直辖市。若要用二进制表示这18个省、自治区、直辖市，则至少需要二进制数的位数是()",
+    options: [
+        "A.3",
+        "B.4",
+        "C.5",
+        "D.6"
+    ],
+    answer: "C",
+    explanation: "2^4=16<18，2^5=32>18，需要5位二进制数。"
+},
+{
+    id: 83,
+    question: "以下关于编码的说法不正确的是()",
+    options: [
+        "A.身份证号、学籍号、车牌号等都是按照一定规则生成的编码",
+        "B.邮政编码对应的地区是唯一的",
+        "C.编码一般包含一定含义，如身份证号中包含出生日期",
+        "D.二维码不属于编码"
+    ],
+    answer: "D",
+    explanation: "二维码也是一种编码形式。"
+},
+{
+    id: 84,
+    question: "学校每次月考结束，教务处老师通过扫描设备将试卷扫描上传，方便老师们接下来的阅卷工作。这个过程属于数据处理中的()",
+    options: [
+        "A.数据分析",
+        "B.数据编码",
+        "C.数据采集",
+        "D.数据加密"
+    ],
+    answer: "C",
+    explanation: "扫描试卷属于数据采集。"
+},
+{
+    id: 85,
+    question: "下列不是数据分析类型的是()",
+    options: [
+        "A.有关趋势的分析",
+        "B.有关比例的分析",
+        "C.有关大小(多少)的分析",
+        "D.有关数据可视化的分析"
+    ],
+    answer: "D",
+    explanation: "数据可视化是数据分析结果的呈现方式，不是分析类型。"
+},
+{
+    id: 86,
+    question: "某5A级景区的管理部门对该景点近三年重要节假日游客数进行数据对比，并参考全国范围内其他景点运营数据进一步优化该景点的服务方案。这主要体现了什么技术的应用()",
+    options: [
+        "A.车联网技术",
+        "B.数据备份技术",
+        "C.智能驾驶技术",
+        "D.大数据技术"
+    ],
+    answer: "D",
+    explanation: "多维度数据分析体现了大数据技术的应用。"
+},
+{
+    id: 87,
+    question: "如果设置某网络平台账号的6位数密码，四组选项中密码安全性最高的是()",
+    options: [
+        "A.123456",
+        "B.abc123",
+        "C.fc8888",
+        "D.Asd#2Y"
+    ],
+    answer: "D",
+    explanation: "包含大小写字母、数字和特殊字符的密码安全性最高。"
+},
+{
+    id: 88,
+    question: "算法的基本结构不包括哪个()",
+    options: [
+        "A.顺序结构",
+        "B.分支结构",
+        "C.循环结构",
+        "D.树形结构"
+    ],
+    answer: "D",
+    explanation: "算法的基本结构包括顺序、分支和循环结构。"
+},
+{
+    id: 89,
+    question: "解析算法是指通过找出解决问题的前提条件与结果之间关系的表达式求解方法，下列适合用解析算法解决的问题是()",
+    options: [
+        "A.计算梯度电费",
+        "B.求符合要求的三位正整数的\"水仙花数\"",
+        "C.找出一箱苹果中坏的苹果",
+        "D.韩信点兵"
+    ],
+    answer: "A",
+    explanation: "计算梯度电费有明确的数学表达式，适合解析算法。"
+},
+{
+    id: 90,
+    question: "在Python解释器提示符\">>>\"下，能正确输出Hello World!的语句是()",
+    options: [
+        "A.Print('Hello World!')",
+        "B.print(Hello World!)",
+        "C.print(\"Hello World!\")",
+        "D.PRINT(\"Hello World!\")"
+    ],
+    answer: "C",
+    explanation: "Python中print函数需要小写，字符串需要引号。"
+},
+{
+    id: 91,
+    question: "有如下Python程序段：\nsum=1\nfor i in range(1,10,3):\nsum=sum*i\nprint(sum,i)",
+    options: [
+        "A.287",
+        "B.2807",
+        "C.2810",
+        "D.28010"
+    ],
+    answer: "A",
+    explanation: "循环过程：i=1,sum=1; i=4,sum=4; i=7,sum=28; i=10不满足条件，输出sum=28,i=7。"
+},
+{
+    id: 92,
+    question: "研究计算机怎样模拟或实现人类的学习行为，以获取新的知识或技能，重新组织已有的知识结构使之不断改善自身的性能的核心技术是()",
+    options: [
+        "A.人机交互",
+        "B.自然语言处理",
+        "C.机器学习",
+        "D.人机对弈"
+    ],
+    answer: "C",
+    explanation: "描述的是机器学习的定义。"
+},
+{
+    id: 93,
+    question: "下列选项中，属于现代信息技术应用的是()①智能家居②自动驾驶汽车③手抄报④指纹识别⑤纸质宣传单",
+    options: [
+        "A.①②③",
+        "B.②④⑤",
+        "C.①②④",
+        "D.②③④"
+    ],
+    answer: "C",
+    explanation: "智能家居、自动驾驶汽车、指纹识别属于现代信息技术应用。"
+},
+{
+    id: 94,
+    question: "从技术进步引发社会的变革进程上看，农业技术革命将人类带入农业社会，工业技术革命将人类带入工业社会，现代信息技术革命将人类带入()",
+    options: [
+        "A.原始社会",
+        "B.封建社会",
+        "C.信息社会",
+        "D.奴隶社会"
+    ],
+    answer: "C",
+    explanation: "现代信息技术革命将人类带入信息社会。"
+},
+{
+    id: 95,
+    question: "在QQ登录时，除了要输入QQ号码等用户账号外，还要求输入密码，这属于信息系统的什么环节的功能()",
+    options: [
+        "A.输出",
+        "B.准备",
+        "C.存储",
+        "D.输入"
+    ],
+    answer: "D",
+    explanation: "输入账号密码属于信息系统的输入功能。"
+},
+{
+    id: 96,
+    question: "智能家居产品最大的特点就是节能，就拿灯控来说，灯控会根据人体感应打开关闭，该系统中使用了()",
+    options: [
+        "A.湿度传感器",
+        "B.距离传感器",
+        "C.红外传感器",
+        "D.温度传感器"
+    ],
+    answer: "C",
+    explanation: "人体感应通常使用红外传感器。"
+},
+{
+    id: 97,
+    question: "在IPv4网络配置参数中，它的子网掩码由多少位二进制数构成()",
+    options: [
+        "A.4",
+        "B.8",
+        "C.16",
+        "D.32"
+    ],
+    answer: "D",
+    explanation: "IPv4子网掩码由32位二进制数构成。"
+},
+{
+    id: 98,
+    question: "构建一个电子点餐系统时，必须全面考虑软件与硬件的结合，下列关于点餐系统说法不正确的是()",
+    options: [
+        "A.点餐系统中的点菜软件属于应用软件",
+        "B.点餐系统属于信息系统",
+        "C.点餐系统不需要操作系统的支持也能运行",
+        "D.打印机在点餐信息系统中属于计算机硬件"
+    ],
+    answer: "C",
+    explanation: "点餐系统需要操作系统的支持。"
+},
+{
+    id: 99,
+    question: "下列行为不违反信息技术道德规范的是()",
+    options: [
+        "A.私自破解他人计算机密码",
+        "B.通过网络向他人计算机散布计算机病毒",
+        "C.利用互联网对他人进行诽谤、谩骂",
+        "D.利用电子邮件发布班级通知"
+    ],
+    answer: "D",
+    explanation: "利用电子邮件发布班级通知是正当用途。"
+},
+{
+    id: 100,
+    question: "\"发高烧时，擦拭酒精以加快体温散发起到降温作用\"是经过研究验证的有效方法和经验，这个医学常识我们称之为()",
+    options: [
+        "A.信息",
+        "B.知识",
+        "C.数据",
+        "D.智慧"
+    ],
+    answer: "B",
+    explanation: "经过验证的有效方法和经验属于知识。"
+},
+{
+    id: 101,
+    question: "将汉字\"口\"和\"品\"采用GB2312-1980编码规则进行存储，以下说法正确的是()",
+    options: [
+        "A.两个字笔画不同，\"品\"占用的存储空间更大",
+        "B.两个字采用的编码相同，占用的存储空间也相同",
+        "C.因这两个字的输入方式很多，所以占用的存储空间可能不同",
+        "D.两个字笔画不同，\"品\"占用的存储空间更小"
+    ],
+    answer: "B",
+    explanation: "GB2312编码中每个汉字都占用2个字节。"
+},
+{
+    id: 102,
+    question: "网络数据采集可通过以下哪项获取电商平台用户对商品的评价数据()",
+    options: [
+        "A.传感器",
+        "B.宣传单",
+        "C.线下调查",
+        "D.网络爬虫"
+    ],
+    answer: "D",
+    explanation: "网络爬虫可用于采集网络数据。"
+},
+{
+    id: 103,
+    question: "相关数据显示，2023年贵阳的中秋与国庆假期旅游订单量同比去年增长738%。主要用到的数据分析法是()",
+    options: [
+        "A.对比分析",
+        "B.平均分析",
+        "C.结构分析",
+        "D.关联分析"
+    ],
+    answer: "A",
+    explanation: "与去年同期比较属于对比分析。"
+},
+{
+    id: 104,
+    question: "医生在诊断疑难杂症时，确定合理的治疗方案通常是最艰难的，主要借助以下哪项技术获取疾病推荐的治疗方案()",
+    options: [
+        "A.无线传输",
+        "B.物联网",
+        "C.虚拟现实",
+        "D.大数据"
+    ],
+    answer: "D",
+    explanation: "医疗诊断推荐方案可借助大数据技术。"
+},
+{
+    id: 105,
+    question: "下列选项中，不属于数据安全保护措施的是()",
+    options: [
+        "A.数据分析",
+        "B.数据加密",
+        "C.数据备份",
+        "D.强化访问控制"
+    ],
+    answer: "A",
+    explanation: "数据分析不是安全保护措施。"
+},
+{
+    id: 106,
+    question: "关于算法的描述中，下列错误的是()",
+    options: [
+        "A.算法是在有限步骤内解决某一问题所使用的方法",
+        "B.流程图描述算法时用长方形表达判断框",
+        "C.自然语言通俗易懂，但在语义上容易产生二义性",
+        "D.算法是解决\"做什么\"和\"怎么做\"的具体步骤的描述"
+    ],
+    answer: "B",
+    explanation: "流程图中的判断框用菱形表示。"
+},
+{
+    id: 107,
+    question: "解析算法是指通过找出解决问题的前提条件与结果之间关系的表达式求解方法，下列问题中适合使用解析算法解决的是()",
+    options: [
+        "A.求体重指数BMI的值",
+        "B.求1—1000之间所有素数",
+        "C.找出\"三位数字密码锁\"密码",
+        "D.韩信点兵"
+    ],
+    answer: "A",
+    explanation: "BMI计算有明确的数学公式，适合解析算法。"
+},
+{
+    id: 108,
+    question: "在Python程序中，若a=5,b=2,那么a//b的值是()",
+    options: [
+        "A.2",
+        "B.5",
+        "C.6",
+        "D.10"
+    ],
+    answer: "A",
+    explanation: "//是整除运算符，5//2=2。"
+},
+{
+    id: 109,
+    question: "利用Python求50以内所有奇数和，代码如下：\nsum=0\nFor i in range(1,51,2):\n　　sum=_________\nprint(sum)\n横线处应填的代码()",
+    options: [
+        "A.i+i",
+        "B.sum+sum",
+        "C.sum+i",
+        "D.i"
+    ],
+    answer: "C",
+    explanation: "需要将每个奇数i累加到sum中。"
+},
+{
+    id: 110,
+    question: "下列关于人工智能说法错误的是()",
+    options: [
+        "A.人工智能机器可替代人类完成一些危险、繁重的工作",
+        "B.机器人不得伤害人类个体，或目睹人类个体将遭受危险而袖手旁观",
+        "C.人类不需要对人工智能进行控制，因为其不存在失控风险",
+        "D.人工智能的开发运用要遵守法律法规，防范人工智能失控的风险"
+    ],
+    answer: "C",
+    explanation: "人工智能存在失控风险，需要人类控制。"
+},
+{
+    id: 111,
+    question: "小飞同学使用百度在线翻译功能将一份英文版的物理杂志翻译成中文，这主要运用了人工智能技术中的()",
+    options: [
+        "A.语音识别",
+        "B.智能代理",
+        "C.智能机器人",
+        "D.机器翻译"
+    ],
+    answer: "D",
+    explanation: "在线翻译使用了机器翻译技术。"
+},
+{
+    id: 112,
+    question: "下列关于5G对社会发展、科技进步以及人们生活、工作与学习影响的描述，错误的是()",
+    options: [
+        "A.5G网络可以应用在物联网、智慧农场等领域",
+        "B.5G就是5Gbps",
+        "C.5G的投资建设对我国GDP的增长有着积极影响",
+        "D.5G可以带来更快的传输速度"
+    ],
+    answer: "B",
+    explanation: "5G是第五代移动通信技术，不仅仅是5Gbps。"
+},
+{
+    id: 113,
+    question: "生活中，人们在不同的场景，针对不同的需求，会使用不同的信息系统，下列不属于信息系统基本功能的是()",
+    options: [
+        "A.输入",
+        "B.存储",
+        "C.处理",
+        "D.支付"
+    ],
+    answer: "D",
+    explanation: "支付不是信息系统的基本功能。"
+},
+{
+    id: 114,
+    question: "智能手机中集成了多种传感器。关于传感器的功能，下列描述有误的是()",
+    options: [
+        "A.温度传感器：实时测量当地PM2.5情况",
+        "B.加速度传感器：运用在手机中可用来计步、判断手机朝向的方向",
+        "C.光线传感器：可自动调节手机亮度",
+        "D.指纹传感器：运用在手机中主要用于解锁、加密"
+    ],
+    answer: "A",
+    explanation: "温度传感器测量温度，不能测量PM2.5。"
+},
+{
+    id: 115,
+    question: "某学校计算机教室网络网关为192.168.0.1,则以下哪个IP地址可能是该网络中的设备的IP地址()",
+    options: [
+        "A.192.168.0.0",
+        "B.192.168.0.12",
+        "C.168.192.0.1",
+        "D.192.168.0.256"
+    ],
+    answer: "B",
+    explanation: "IP地址的每个部分范围是0-255，且与网关在同一网段。"
+},
+{
+    id: 116,
+    question: "华为\"Mate 60\"手机搭载了\"鸿蒙4.0\"系统，\"鸿蒙4.0\"在信息系统中被称为()",
+    options: [
+        "A.通信系统",
+        "B.信息系统",
+        "C.硬件系统",
+        "D.操作系统"
+    ],
+    answer: "D",
+    explanation: "\"鸿蒙4.0\"是操作系统。"
+}
+        ];
+
+        // 全局变量
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let testStartTime = null;
+        let timerInterval = null;
+        let totalQuestions = 0;
+        let testInProgress = false;
+
+        // DOM元素
+        const questionTitle = document.getElementById('question-title');
+        const optionsContainer = document.getElementById('options');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const progress = document.getElementById('progress');
+        const startTime = document.getElementById('start-time');
+        const elapsedTime = document.getElementById('elapsed-time');
+        const quickNav = document.getElementById('quick-nav');
+        const resultContainer = document.getElementById('result-container');
+        const statistics = document.getElementById('statistics');
+        const wrongQuestions = document.getElementById('wrong-questions');
+        const returnHomeBtn = document.getElementById('return-home-btn');
+        const btn10 = document.getElementById('btn-10');
+        const btn20 = document.getElementById('btn-20');
+        const btn30 = document.getElementById('btn-30');
+
+        // 初始化
+        function init() {
+            // 从本地存储加载进度
+            loadProgress();
+            
+            // 如果测试正在进行中，恢复测试
+            if (testInProgress) {
+                showQuestion(currentQuestionIndex);
+                updateProgress();
+                updateQuickNav();
+                startTimer();
+            } else {
+                // 否则显示题目数量选择
+                questionTitle.textContent = "请选择题目数量开始测试";
+                optionsContainer.innerHTML = "";
+                progress.textContent = "进度: 0/0";
+                startTime.textContent = "--:--:--";
+                elapsedTime.textContent = "00:00:00";
+                quickNav.innerHTML = "";
+            }
+            
+            // 添加事件监听器
+            prevBtn.addEventListener('click', goToPrevQuestion);
+            nextBtn.addEventListener('click', goToNextQuestion);
+            submitBtn.addEventListener('click', submitTest);
+            returnHomeBtn.addEventListener('click', returnToHome);
+            btn10.addEventListener('click', () => startTest(10));
+            btn20.addEventListener('click', () => startTest(20));
+            btn30.addEventListener('click', () => startTest(30));
+        }
+
+        // 开始测试
+        function startTest(count) {
+            // 重置状态
+            currentQuestions = getRandomQuestions(count);
+            currentQuestionIndex = 0;
+            userAnswers = new Array(count).fill(null);
+            testStartTime = new Date();
+            totalQuestions = count;
+            testInProgress = true;
+            
+            // 保存进度到本地存储
+            saveProgress();
+            
+            // 显示第一题
+            showQuestion(0);
+            updateProgress();
+            updateQuickNav();
+            startTimer();
+        }
+
+        // 获取随机题目 - 修改确保每次都是随机顺序
+        function getRandomQuestions(count) {
+            // 如果请求的题目数量超过可用题目数量，返回所有题目
+            if (count >= questions.length) {
+                // 随机打乱所有题目
+                return [...questions].sort(() => 0.5 - Math.random());
+            }
+            
+            // 创建题目索引数组并打乱
+            const indices = Array.from({length: questions.length}, (_, i) => i);
+            for (let i = indices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [indices[i], indices[j]] = [indices[j], indices[i]];
+            }
+            
+            // 选择前count个索引对应的题目
+            return indices.slice(0, count).map(index => questions[index]);
+        }
+
+        // 显示题目
+        function showQuestion(index) {
+            const question = currentQuestions[index];
+            questionTitle.textContent = `${index + 1}. ${question.question}`;
+            
+            // 清空选项容器
+            optionsContainer.innerHTML = "";
+            
+            // 添加选项
+            question.options.forEach((option, i) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'answer';
+                input.value = option.charAt(0); // A, B, C, D
+                input.id = `option-${i}`;
+                
+                // 如果用户已回答此题，选中对应的选项
+                if (userAnswers[index] === option.charAt(0)) {
+                    input.checked = true;
+                }
+                
+                input.addEventListener('change', () => {
+                    userAnswers[index] = option.charAt(0);
+                    saveProgress();
+                    updateQuickNav();
+                });
+                
+                const label = document.createElement('label');
+                label.htmlFor = `option-${i}`;
+                label.textContent = option;
+                
+                optionDiv.appendChild(input);
+                optionDiv.appendChild(label);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // 更新导航按钮状态
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === currentQuestions.length - 1;
+            
+            // 更新快速导航
+            updateQuickNav();
+        }
+
+        // 更新进度
+        function updateProgress() {
+            const answeredCount = userAnswers.filter(answer => answer !== null).length;
+            progress.textContent = `进度: ${answeredCount}/${totalQuestions}`;
+        }
+
+        // 更新快速导航
+        function updateQuickNav() {
+            quickNav.innerHTML = "";
+            
+            for (let i = 0; i < totalQuestions; i++) {
+                const button = document.createElement('button');
+                button.textContent = i + 1;
+                
+                if (i === currentQuestionIndex) {
+                    button.classList.add('current');
+                }
+                
+                if (userAnswers[i] !== null) {
+                    button.classList.add('answered');
+                }
+                
+                button.addEventListener('click', () => {
+                    currentQuestionIndex = i;
+                    showQuestion(i);
+                    updateProgress();
+                });
+                
+                quickNav.appendChild(button);
+            }
+        }
+
+        // 开始计时器
+        function startTimer() {
+            // 清除现有计时器
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            // 格式化开始时间
+            const startTimeStr = testStartTime.toLocaleTimeString();
+            startTime.textContent = startTimeStr;
+            
+            // 更新已用时间
+            timerInterval = setInterval(() => {
+                const now = new Date();
+                const elapsed = now - testStartTime;
+                const hours = Math.floor(elapsed / 3600000);
+                const minutes = Math.floor((elapsed % 3600000) / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                
+                elapsedTime.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // 上一题
+        function goToPrevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+                updateProgress();
+            }
+        }
+
+        // 下一题
+        function goToNextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+                updateProgress();
+            }
+        }
+
+        // 提交测试
+        function submitTest() {
+            if (confirm("确定要交卷吗？提交后将无法修改答案。")) {
+                // 停止计时器
+                clearInterval(timerInterval);
+                
+                // 计算成绩
+                const result = calculateResult();
+                
+                // 显示结果
+                showResult(result);
+                
+                // 重置测试状态
+                testInProgress = false;
+                saveProgress();
+            }
+        }
+
+        // 计算成绩
+        function calculateResult() {
+            let correctCount = 0;
+            const wrongQuestionsList = [];
+            
+            for (let i = 0; i < currentQuestions.length; i++) {
+                const question = currentQuestions[i];
+                const userAnswer = userAnswers[i];
+                
+                if (userAnswer === question.answer) {
+                    correctCount++;
+                } else {
+                    wrongQuestionsList.push({
+                        question: question,
+                        userAnswer: userAnswer,
+                        index: i
+                    });
+                }
+            }
+            
+            return {
+                total: currentQuestions.length,
+                correct: correctCount,
+                wrong: currentQuestions.length - correctCount,
+                accuracy: (correctCount / currentQuestions.length * 100).toFixed(2),
+                wrongQuestions: wrongQuestionsList
+            };
+        }
+
+        // 显示结果
+        function showResult(result) {
+            // 隐藏题目容器
+            document.getElementById('question-container').style.display = 'none';
+            document.getElementById('time-info').style.display = 'none';
+            document.getElementById('quick-nav').style.display = 'none';
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'none';
+            
+            // 显示结果容器
+            resultContainer.style.display = 'block';
+            
+            // 显示统计信息
+            statistics.innerHTML = `
+                <h3>学习统计</h3>
+                <p>总题数: ${result.total}</p>
+                <p>正确: <span class="correct">${result.correct}</span></p>
+                <p>错误: <span class="incorrect">${result.wrong}</span></p>
+                <p>正确率: ${result.accuracy}%</p>
+            `;
+            
+            // 显示错题集
+            if (result.wrongQuestions.length > 0) {
+                let wrongQuestionsHTML = '<h3>错题集</h3>';
+                
+                result.wrongQuestions.forEach(wrong => {
+                    wrongQuestionsHTML += `
+                        <div class="wrong-question">
+                            <p><strong>${wrong.index + 1}. ${wrong.question.question}</strong></p>
+                            <p>你的答案: <span class="incorrect">${wrong.userAnswer || '未作答'}</span></p>
+                            <p>正确答案: <span class="correct">${wrong.question.answer}</span></p>
+                            <p class="explanation">解析: ${wrong.question.explanation}</p>
+                        </div>
+                    `;
+                });
+                
+                wrongQuestions.innerHTML = wrongQuestionsHTML;
+            } else {
+                wrongQuestions.innerHTML = '<p>恭喜！没有错题。</p>';
+            }
+        }
+
+        // 返回首页
+        function returnToHome() {
+            // 重置所有状态
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            testStartTime = null;
+            totalQuestions = 0;
+            testInProgress = false;
+            
+            // 清除本地存储
+            localStorage.removeItem('testProgress');
+            
+            // 重新初始化
+            init();
+            
+            // 显示题目数量选择
+            document.getElementById('question-container').style.display = 'block';
+            document.getElementById('time-info').style.display = 'block';
+            document.getElementById('quick-nav').style.display = 'flex';
+            prevBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'inline-block';
+            resultContainer.style.display = 'none';
+        }
+
+        // 保存进度到本地存储
+        function saveProgress() {
+            const progress = {
+                currentQuestions: currentQuestions,
+                currentQuestionIndex: currentQuestionIndex,
+                userAnswers: userAnswers,
+                testStartTime: testStartTime,
+                totalQuestions: totalQuestions,
+                testInProgress: testInProgress
+            };
+            
+            localStorage.setItem('testProgress', JSON.stringify(progress));
+        }
+
+        // 从本地存储加载进度
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('testProgress');
+            
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                
+                currentQuestions = progress.currentQuestions || [];
+                currentQuestionIndex = progress.currentQuestionIndex || 0;
+                userAnswers = progress.userAnswers || [];
+                testStartTime = progress.testStartTime ? new Date(progress.testStartTime) : null;
+                totalQuestions = progress.totalQuestions || 0;
+                testInProgress = progress.testInProgress || false;
+            }
+        }
+
+        // 初始化应用
+        init();
+    </script>
+</body>
+</html>
