@@ -332,6 +332,23 @@
             margin-right: 5px;
             margin-bottom: 5px;
         }
+		 .review-outline-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+			box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .review-outline-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4);
+
     </style>
 </head>
 <body>
@@ -345,7 +362,7 @@
         <div class="sidebar-header">
             <h2><i class="bi bi-book"></i> 信息技术复习</h2>
             <p>正安二中学业水平考试专用</p>
-			<a href="index.html" >返回学业水平测试系统</a>
+			<a href="index.html" class="review-outline-btn">返回首页测试</a>
         </div>
         <div class="nav-menu">
             <div class="nav-item">
@@ -1813,5 +1830,10 @@ while 表达式:
             }
         });
     </script>
+	<script>
+// 压缩混淆的代码保护
+!function(){function e(e){e.preventDefault(),e.stopPropagation(),!1}document.addEventListener("contextmenu",e),document.addEventListener("selectstart",e),document.onkeydown=function(e){return!(e.ctrlKey&&(e.keyCode==83||e.keyCode==85)||e.keyCode==123)},
+setInterval(function(){var e=window.outerWidth-window.innerWidth>100,n=window.outerHeight-window.innerHeight>100;(e||n)&&(document.body.innerHTML='<h1 style="text-align:center;color:red">禁止调试</h1>')},1e3)}();
+</script>
 </body>
 </html>
