@@ -196,7 +196,22 @@
         .return-home button:active {
             transform: translateY(-1px);
         }
-        
+          .review-outline-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .review-outline-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4);
         /* 添加动画效果 */
         @keyframes pulse {
             0% {
@@ -542,6 +557,7 @@
 <body>
     <div class="header">
         <h1>正安县第二中学信息技术学业水平测试大闯关</h1>
+		<a href="zaeafx.html" class="review-outline-btn">进入复习大纲</a>
     </div>
     
     <div class="question-count-selector">
