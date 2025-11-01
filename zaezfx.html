@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息技术学业水平考试复习资料</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #5cb85c;
+            --dark-color: #2c3e50;
+            --light-bg: #f8f9fa;
+            --sidebar-width: 280px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: #333;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #357abd 100%);
+            color: white;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .sidebar-header p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin: 5px 0;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9);
+            padding: 12px 25px;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border-left-color: white;
+            padding-left: 30px;
+        }
+
+        .nav-link.active {
+            background-color: rgba(255,255,255,0.2);
+            border-left-color: white;
+            color: white;
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sub-menu {
+            display: none;
+            padding-left: 50px;
+            margin-top: 5px;
+        }
+
+        .sub-menu .nav-link {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+
+        .nav-item.has-submenu > .nav-link::after {
+            content: '▶';
+            float: right;
+            transition: transform 0.3s;
+        }
+
+        .nav-item.has-submenu.expanded > .nav-link::after {
+            transform: rotate(90deg);
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 章节标题样式 */
+        .section-title {
+            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .section-title h1 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .section-title p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+        }
+
+        /* 内容卡片样式 */
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .content-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+
+        .content-card h4 {
+            color: var(--dark-color);
+            margin: 20px 0 10px;
+            font-size: 1.1rem;
+        }
+
+        .content-card p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .content-card ul, .content-card ol {
+            padding-left: 25px;
+        }
+
+        .content-card li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        /* 表格样式 */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .custom-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .custom-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .custom-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* 代码块样式 */
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        /* 移动端菜单按钮 */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px 15px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .section-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .content-card {
+                padding: 20px;
+            }
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #357abd;
+            transform: translateY(-3px);
+        }
+
+        /* 高亮样式 */
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* 标签样式 */
+        .tag {
+            display: inline-block;
+            background-color: #e3f2fd;
+            color: var(--primary-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+		 .review-outline-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+			box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .review-outline-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4);
+
+    </style>
+</head>
+<body>
+    <!-- 移动端菜单按钮 -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- 侧边栏 -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="bi bi-book"></i> 信息技术复习</h2>
+            <p>正安二中学业水平考试专用</p>
+			<a href="index.html" class="review-outline-btn">返回首页测试</a>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-item">
+                <a href="#" class="nav-link active" data-section="data-info">
+                    <i class="bi bi-database"></i> 数据与信息
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" data-section="data-encoding">
+                    <i class="bi bi-code-slash"></i> 数据编码
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" data-section="computer-system">
+                    <i class="bi bi-cpu"></i> 计算机系统
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" data-section="network">
+                    <i class="bi bi-diagram-3"></i> 信息系统的网络
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" data-section="iot">
+                    <i class="bi bi-wifi"></i> 物联网
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" data-section="ai">
+                    <i class="bi bi-robot"></i> 人工智能
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" data-section="algorithm">
+                    <i class="bi bi-code-square"></i> 算法与程序设计
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 数据与信息部分 -->
+        <section id="data-info" class="content-section active">
+            <div class="section-title">
+                <h1><i class="bi bi-database"></i> 数据与信息</h1>
+                <p>信息技术学业水平考试复习大纲</p>
+            </div>
+
+            <div class="content-card">
+                <h3>数据与信息的基本概念</h3>
+                <p><strong>数据：</strong>数据是记录下来的某种可以识别的符号，是信息的原始形式。表现形式通常以数字、文字、图像、声音等形式存在。例如，一组学生的成绩数据、气温测量数据等。</p>
+                <p><strong>信息：</strong>信息是数据中所包含的意义，是对数据进行加工的结果。把数据有组织、有规律的采集在一起就形成了信息。例如，一份学生成绩报告、天气预报等。</p>
+                <p><strong>知识：</strong>知识是归纳，提炼出的有价值的信息。是实践活动中可用于指导实践的认识、规律和经验。例如，对学生成绩和学习情况进行分析后得出教育改进措施。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>数据与信息的特点</h3>
+                <p><span class="tag">传递共享</span>数据和信息在传递和共享的过程中不会产生损耗。</p>
+                <p><span class="tag">载体依赖</span>信息必须依附于某种载体才能存储、表达和传播。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>信息解决的一般过程</h3>
+                <ol>
+                    <li>信息收集</li>
+                    <li>信息存储</li>
+                    <li>信息加工</li>
+                    <li>信息发布</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>大数据的 4V 特征</h3>
+                <ol>
+                    <li>数据量大</li>
+                    <li>处理速度快</li>
+                    <li>多样性</li>
+                    <li>价值密度低</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>大数据思维</h3>
+                <ol>
+                    <li>大数据分析全体数据而不是抽样数据</li>
+                    <li>对于数据不再追求精确性，而是能够接受数据的混杂性</li>
+                    <li>不一定强调对事物因果关系的探求，更注重相关性</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>数据处理的一般过程</h3>
+                <ol>
+                    <li>明确目标</li>
+                    <li>数据采集</li>
+                    <li>数据加工</li>
+                    <li>数据分析</li>
+                    <li>数据可视化</li>
+                    <li>撰写报告</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>数据分析的方法</h3>
+                <ol>
+                    <li><strong>对比分析法：</strong>将两个或两个以上的数据对比，分析差异</li>
+                    <li><strong>平均分析法：</strong>利用计算平均数的分析方法</li>
+                    <li><strong>交叉分析法：</strong>从横向和纵向两个方向来计算两个或多个有联系的变量在交叉点的统计值</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>数据可视化</h3>
+                <p>数据可视化指将数据分析的结果通过表格、图表、图形等形式显示出来。</p>
+            </div>
+        </section>
+
+        <!-- 数据编码部分 -->
+        <section id="data-encoding" class="content-section">
+            <div class="section-title">
+                <h1><i class="bi bi-code-slash"></i> 数据编码</h1>
+                <p>计算机数据存储与编码基础</p>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机数据存储基础</h3>
+                <p>计算机以二进制编码的方式存储数据，存储的基本单位是字节（Byte,简写B），最小单位是二进制位（bit,简写 b），1B=8b。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>进制表示</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>进制</th>
+                            <th>标记符</th>
+                            <th>数码</th>
+                            <th>基数</th>
+                            <th>权值</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2</td>
+                            <td>B</td>
+                            <td>0、1</td>
+                            <td>2</td>
+                            <td>2<sup>n-1</sup></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>O</td>
+                            <td>0、1、2、3、4、5、6、7</td>
+                            <td>8</td>
+                            <td>8<sup>n-1</sup></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>D</td>
+                            <td>0、1、2、3、4、5、6、7、8、9</td>
+                            <td>10</td>
+                            <td>10<sup>n-1</sup></td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>H</td>
+                            <td>0、1、2、3、4、5、6、7、8、9、A、B、C、D、E、F</td>
+                            <td>16</td>
+                            <td>16<sup>n-1</sup></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>字符存储</h3>
+                <p>存储一个汉字占用 2 个字节，一个英文字符占用 1 个字节。</p>
+                <p>相较于一维条形码，二维码的信息存储量更大，功能更强大，使用过程中需注意安全隐患。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>ASCII码</h3>
+                <ol>
+                    <li>一个 ASCII 码共使用了 8 个二进制位，即 8bit，进行编号，其中七位用作标识英文字符，最高一位用作校验位，记为 0。存储时占用 1 个字节。</li>
+                    <li>共有 2<sup>7</sup>=128 种不同的组合，表达 128 个字符。</li>
+                    <li>在 ASCII 码表的排序中，数字＜26 个大写英文字母＜26 个小写英文字母。</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>声音数字化</h3>
+                <p><strong>基本过程：</strong></p>
+                <ol>
+                    <li>采样</li>
+                    <li>量化</li>
+                    <li>编码</li>
+                </ol>
+                <p><strong>采样频率单位：</strong>赫兹（Hz）。采样频率越高，声音样本数据越多，声音保真度越高。</p>
+                <p><strong>量化位数：</strong>量化位数越大，量化等级越高，量化取值越精确，声音音质越好。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>声音的存储容量</h3>
+                <div class="code-block">
+声音存储空间（Byte）=采样频率（Hz）×时间（s）×量化位数（bit）×声道数÷8
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>图像基本计量单位</h3>
+                <p>像素（pixel），颜色种类越多，色彩越逼真，所需存储空间越大。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>图像的存储容量</h3>
+                <div class="code-block">
+存储数据量（Byte）=分辨率×二进制位数（bit）÷8
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>数据压缩</h3>
+                <p>是一种编码方式，分为有损压缩和无损压缩。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>常见的文件类型及扩展名</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>文件类型</th>
+                            <th>扩展名</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>文本文件</td>
+                            <td>.txt、.docx、.pdf、.wps</td>
+                        </tr>
+                        <tr>
+                            <td>网页文件</td>
+                            <td>.htm、.html</td>
+                        </tr>
+                        <tr>
+                            <td>音频文件</td>
+                            <td>.wav、.mp3</td>
+                        </tr>
+                        <tr>
+                            <td>图像文件</td>
+                            <td>.jpg、.bmp、.png、.gif、.tif、.psd</td>
+                        </tr>
+                        <tr>
+                            <td>视频文件</td>
+                            <td>.avi、.mp4、.mpg</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 计算机系统部分 -->
+        <section id="computer-system" class="content-section">
+            <div class="section-title">
+                <h1><i class="bi bi-cpu"></i> 计算机系统</h1>
+                <p>计算机硬件与软件基础</p>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机发展史</h3>
+                <p>"计算机之父"冯·诺依曼。</p>
+                <p><strong>计算机发展的四个阶段：</strong></p>
+                <ol>
+                    <li>第一阶段，电子管计算机</li>
+                    <li>第二阶段，晶体管计算机</li>
+                    <li>第三阶段，小规模集成电路计算机</li>
+                    <li>第四阶段，大规模集成电路计算机</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机系统组成</h3>
+                <p>完整的计算机系统:硬件系统和软件系统。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机硬件构成</h3>
+                <p><strong>五大逻辑部件：</strong>运算器、控制器、存储器、输入设备、输出设备。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>中央处理器(CPU)</h3>
+                <p>简称CPU，由控制器和运算器构成，是计算机运作的核心部件。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>存储器</h3>
+                <p>分为内存储器和外存储器，简称为内存和外存。</p>
+                
+                <h4>内存储器</h4>
+                <p>又称为主存储器，涉及 RAM(随机访问存储器)和 ROM(只读存储器)。</p>
+                <ul>
+                    <li><strong>随机存储器 RAM：</strong>能读能写，断电后 RAM 中的数据会丢失。</li>
+                    <li><strong>只读存储器 ROM：</strong>只能读不能写，断电后 ROM 中的数据会保留。</li>
+                </ul>
+                
+                <h4>外存储器</h4>
+                <p>涉及硬盘、光盘、U盘、软盘等。</p>
+                
+                <h4>存储器的重要性能指标</h4>
+                <p>存储容量。</p>
+                
+                <h4>存储容量的基本单位</h4>
+                <p>字节（B），存储容量的单位分别为 B、KB、MB、GB、TB 五个级别。关系如下：</p>
+                <ul>
+                    <li>1KB=1024B</li>
+                    <li>1MB=1024KB</li>
+                    <li>1GB=1024MB</li>
+                    <li>1TB=1024GB</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>软件与硬件的关系</h3>
+                <p>相互依存、协同发展。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>应用软件的开发</h3>
+                <ol>
+                    <li>需求分析</li>
+                    <li>系统设计</li>
+                    <li>编码</li>
+                    <li>软件测试</li>
+                    <li>投放使用</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机的工作原理</h3>
+                <ol>
+                    <li>输入</li>
+                    <li>处理（运算与控制）</li>
+                    <li>存储</li>
+                    <li>输出</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机病毒</h3>
+                <p>计算机病毒是"能够侵入计算机系统并给计算机系统带来故障的一种具有自我繁殖能力的指令序列或程序"。</p>
+                
+                <h4>计算机病毒特性</h4>
+                <ul>
+                    <li>潜伏性</li>
+                    <li>破坏性</li>
+                    <li>传播性</li>
+                    <li>隐蔽性</li>
+                    <li>依赖性</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机系统架构</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">硬件系统</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2"><strong>主机</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">中央处理器 CPU</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">内存处理器</td>
+                        </tr>
+                        <tr>
+                            <td>只读存储器 ROM</td>
+                            <td>随机存储器 RAM</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>外部设备</strong></td>
+                        </tr>
+                        <tr>
+                            <td>外部存储器</td>
+                            <td>硬盘、U盘</td>
+                        </tr>
+                        <tr>
+                            <td>输入设备</td>
+                            <td>键盘、鼠标、扫描仪</td>
+                        </tr>
+                        <tr>
+                            <td>输出设备</td>
+                            <td>显示器、打印机</td>
+                        </tr>
+                        <tr>
+                            <td>其他设备</td>
+                            <td>调制解调器</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>软件系统</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">系统软件</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2"><strong>操作系统</strong></td>
+                        </tr>
+                        <tr>
+                            <td>PC端</td>
+                            <td>Windows、Linux、Unix</td>
+                        </tr>
+                        <tr>
+                            <td>移动端</td>
+                            <td>IOS、Android、Harmony OS</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>程序语言处理系统</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Python、VC、VB</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>数据库管理系统</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">orade、MySQL</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>设备驱动程序</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">检查、诊断、排错</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>应用软件</h3>
+                <p>Office2010、App等</p>
+            </div>
+        </section>
+
+        <!-- 信息系统的网络部分 -->
+        <section id="network" class="content-section">
+            <div class="section-title">
+                <h1><i class="bi bi-diagram-3"></i> 信息系统的网络</h1>
+                <p>计算机网络基础知识</p>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机网络定义</h3>
+                <p>计算机网络是现代通信技术与计算机技术相结合的产物。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机网络的功能</h3>
+                <ol>
+                    <li><strong>数据通信：</strong>网络最基本的功能。如发送文本、图像、声音等。</li>
+                    <li><strong>资源共享：</strong>节省投资、避免反复存储。</li>
+                    <li><strong>分布式解决：</strong>火车票、飞机票代售点。</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机网络的组成</h3>
+                
+                <h4>网络的硬件</h4>
+                <ul>
+                    <li>服务器（文件，打印，数据库，通信服务器）</li>
+                    <li>工作站或客户机（普通计算机）</li>
+                    <li>连接设备（网卡、集线器、交换机、路由器）</li>
+                    <li>传输介质</li>
+                    <ul>
+                        <li>有线：双绞线，同轴电缆，光缆</li>
+                        <li>无线：微波，卫星，红外线，蓝牙</li>
+                    </ul>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>网络的软件</h3>
+                <p>TCP/IP协议</p>
+                
+                <h4>基于 TCP 的协议</h4>
+                <ul>
+                    <li>http（超文本）</li>
+                    <li>ftp（文件传输）</li>
+                    <li>telnet（远程登陆）</li>
+                    <li>DNS（域名解析）</li>
+                    <li>smtp（邮件发送）</li>
+                    <li>pop3（邮件接收）</li>
+                </ul>
+                
+                <h4>基于 UDP 的协议</h4>
+                <ul>
+                    <li>DHCP（动态主机配置）</li>
+                    <li>SNMP（简单网络管理）</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>计算机网络的分类</h3>
+                
+                <h4>按照地理位置</h4>
+                <ul>
+                    <li>广域网（WAN）</li>
+                    <li>城域网（MAN）</li>
+                    <li>局域网（LAN）</li>
+                </ul>
+                
+                <h4>按照网络拓扑结构</h4>
+                <ul>
+                    <li>星型</li>
+                    <li>环型</li>
+                    <li>总线型</li>
+                    <li>网状型</li>
+                    <li>树型</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>IP 地址</h3>
+                <ol>
+                    <li>相当于计算机的标记，是唯一标识(相当于身份证号码)。</li>
+                    <li>包括公网 IP 和私用IP。</li>
+                    <li>现有 IPv4（32 位）和 IPv6（128 位）两个版本。</li>
+                    <li>IP 地址由 32 位二进制数构成。采用"点分十进制"格式：a.b.c.d</li>
+                    <li>IP 地址分成 4 段，每段 8 个二进制位，每段地址的数字在 0~255 之间。</li>
+                    <li>IP 地址有两部分构成，一部分为网络地址，一部分为主机地址。</li>
+                </ol>
+                
+                <h4>IP 地址的分类</h4>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>类别</th>
+                            <th>地址范围</th>
+                            <th>构成</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>A 类</td>
+                            <td>1-127</td>
+                            <td>1 个网络号 + 3 个主机号</td>
+                        </tr>
+                        <tr>
+                            <td>B 类</td>
+                            <td>128-191</td>
+                            <td>2 个网络号 + 2 个主机号</td>
+                        </tr>
+                        <tr>
+                            <td>C 类</td>
+                            <td>192-223</td>
+                            <td>3 个网络号 + 1 个主机号</td>
+                        </tr>
+                        <tr>
+                            <td>D 类</td>
+                            <td>224-239</td>
+                            <td>组播地址</td>
+                        </tr>
+                        <tr>
+                            <td>E 类</td>
+                            <td>240-255</td>
+                            <td>保留地址</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>子网掩码</h3>
+                <ol>
+                    <li>作用于划分某个IP 的网络地址和主机地址，不能单独存在，必须结合 IP 地址一起使用。</li>
+                    <li>在子网掩码中，网络部分和子网络部分对应的位全为"1"，主机部分对应的位全为"0"。</li>
+                    <li>IP 类型默认的子网掩码：</li>
+                    <ul>
+                        <li>A 类网络：255.0.0.0</li>
+                        <li>B 类网络：255.255.0.0</li>
+                        <li>C 类网络：255.255.255.0</li>
+                    </ul>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>DNS 域名</h3>
+                <p>实现域名与IP 地址的转换。由主机名.网络名.机构名.最高层域名组成。如：www.xinlang.com.cn</p>
+                
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>域名类型</th>
+                            <th>域名</th>
+                            <th>类型</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="4">机构域名</td>
+                            <td>com</td>
+                            <td>商业机构</td>
+                        </tr>
+                        <tr>
+                            <td>edu</td>
+                            <td>教育机构</td>
+                        </tr>
+                        <tr>
+                            <td>gov</td>
+                            <td>政府机构</td>
+                        </tr>
+                        <tr>
+                            <td>org</td>
+                            <td>非盈利性机构</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">地理域名</td>
+                            <td>cn</td>
+                            <td>中国</td>
+                        </tr>
+                        <tr>
+                            <td>uk</td>
+                            <td>英国</td>
+                        </tr>
+                        <tr>
+                            <td>hk</td>
+                            <td>中国香港</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>动态主机配置（DHCP）</h3>
+                <p>自动为网络中的主机分配 IP 地址。</p>
+            </div>
+        </section>
+
+        <!-- 物联网部分 -->
+        <section id="iot" class="content-section">
+            <div class="section-title">
+                <h1><i class="bi bi-wifi"></i> 物联网</h1>
+                <p>物联网体系架构与技术</p>
+            </div>
+
+            <div class="content-card">
+                <h3>物联网体系架构</h3>
+                <p>物联网是一个层次化网络。可分为感知层、传输层、数据处理层、应用服务层：</p>
+                
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>层次</th>
+                            <th>作用</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>感知层</strong></td>
+                            <td>实现对现实世界的智能感知识别</td>
+                        </tr>
+                        <tr>
+                            <td><strong>传输层</strong></td>
+                            <td>主要实现信息的传输，其中应用最为广泛的通信技术应是蜂窝移动网络(2G、3G、4G、5G)、Wi-Fi、蓝牙(BlueTooth)等</td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据处理层</strong></td>
+                            <td>实现对数据的处理</td>
+                        </tr>
+                        <tr>
+                            <td><strong>应用服务层</strong></td>
+                            <td>实现物联网的各种应用</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>传感器</h3>
+                <p>由敏感元件和转换元件组成。</p>
+                
+                <p><strong>常见的传感器有：</strong></p>
+                <ul>
+                    <li>位移传感器</li>
+                    <li>形变传感器</li>
+                    <li>重力传感器</li>
+                    <li>加速度传感器</li>
+                    <li>湿度传感器</li>
+                    <li>超声波测距传感器</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>物联网通信技术</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>功能</th>
+                            <th>应用场景</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>蓝牙</strong></td>
+                            <td>一种无线技术标准，可实现两个设备之间的无线短距离数据交换</td>
+                            <td>蓝牙鼠标、蓝牙音箱</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZigBee</strong></td>
+                            <td>基于 IEEE802.15.4 标准的低功耗局域网协议。是一种短距离、低功耗的无线通信技术</td>
+                            <td>实现自动控制和远程控制</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Z-Wave</strong></td>
+                            <td>基于射频的、低成本、低功耗、高可靠、适于网络的短距离无线通信技术</td>
+                            <td>智能家居领域</td>
+                        </tr>
+                        <tr>
+                            <td><strong>射频识别（RFID）</strong></td>
+                            <td>一种无线通信技术，可通过无线电信号识别特定目标并读写相关数据，而无需在识别系统与特定目标之间建立机成或光学接触</td>
+                            <td>物流管理、门禁控制</td>
+                        </tr>
+                        <tr>
+                            <td><strong>近场通信（NFC）</strong></td>
+                            <td>一种短距离的高频无线通信技术</td>
+                            <td>交通一卡通、支付卡、门禁卡</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 人工智能部分 -->
+        <section id="ai" class="content-section">
+            <div class="section-title">
+                <h1><i class="bi bi-robot"></i> 人工智能</h1>
+                <p>人工智能基础与应用</p>
+            </div>
+
+            <div class="content-card">
+                <h3>人工智能的发展阶段</h3>
+                <ol>
+                    <li>运算智能</li>
+                    <li>感知智能</li>
+                    <li>认知智能</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>人工智能基础</h3>
+                <p><strong>人工智能(Artificial Intelligence)英文缩写为 AI。</strong></p>
+                <p><strong>人工智能之父：</strong>艾伦·图灵。提出的"图灵测试"被广泛认为是测试机器智能的重要标准。</p>
+            </div>
+
+            <div class="content-card">
+                <h3>自然语言处理</h3>
+                <p><strong>主要应用：</strong></p>
+                <ul>
+                    <li>机器翻译</li>
+                    <li>文本分类</li>
+                    <li>问题回答</li>
+                    <li>语音识别</li>
+                    <li>中文 OCR</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>人工智能的产品应用</h3>
+                <ul>
+                    <li>语音识别</li>
+                    <li>文字识别</li>
+                    <li>人脸识别</li>
+                    <li>机器学习</li>
+                    <li>自然语言</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>信息社会的特征</h3>
+                <ul>
+                    <li>网络社会</li>
+                    <li>数字生活</li>
+                    <li>在线政府</li>
+                    <li>信息经济</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>人工智能的七大应用领域</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>应用类型</th>
+                            <th>应用特点</th>
+                            <th>应用方向</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>智能制造</strong></td>
+                            <td>具有自感知、自学习、自决策、自执行、自适应等功能的新型生产方式</td>
+                            <td>智能装备、智能工厂、智能服务</td>
+                        </tr>
+                        <tr>
+                            <td><strong>智能家居</strong></td>
+                            <td>基于物联网技术，是由硬件、软件系统、云计算平台构成的家居生态圈</td>
+                            <td>智能语音技术操控家居、指纹锁（模式识别）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>智能教育</strong></td>
+                            <td>人工智能工具应用于教育领域</td>
+                            <td>智能导师、教学机器人</td>
+                        </tr>
+                        <tr>
+                            <td><strong>智能交通</strong></td>
+                            <td>是通信、信息和控制技术在交通系统中集成应用的产物</td>
+                            <td>ETC、智能抓拍</td>
+                        </tr>
+                        <tr>
+                            <td><strong>智能安防</strong></td>
+                            <td>是一种利用人工智能对视频、图像进行存储和分析，从中识别安全隐患并对其进行处理的技术</td>
+                            <td>智能安防与传统安防的最大区别在于智能化</td>
+                        </tr>
+                        <tr>
+                            <td><strong>智能物流</strong></td>
+                            <td>利用条形码、射频识别技术、传感器、全球定位系统等方面优化改善运输、仓储、配送装卸等物流业活动</td>
+                            <td>搬运机器人、货架穿梭车、分拣机器人</td>
+                        </tr>
+                        <tr>
+                            <td><strong>智能医疗</strong></td>
+                            <td>智能导诊、问诊，病灶识别与标注，病例结构化、分级诊疗、专家系统，医疗机器人</td>
+                            <td>虚拟助理、医学影像、辅助诊疗、医院管理</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 算法与程序设计部分 -->
+        <section id="algorithm" class="content-section">
+            <div class="section-title">
+                <h1><i class="bi bi-code-square"></i> 算法与程序设计</h1>
+                <p>算法基础与Python编程</p>
+            </div>
+
+            <div class="content-card">
+                <h3>流程图符号</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>符号</th>
+                            <th>符号名称</th>
+                            <th>功能说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div style="width: 60px; height: 40px; border-radius: 20%; background: #4a90e2; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto;">◇</div></td>
+                            <td>起止框</td>
+                            <td>表示算法的开始和结束</td>
+                        </tr>
+                        <tr>
+                            <td><div style="width: 50px; height: 30px; background: #4a90e2; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto;">□</div></td>
+                            <td>处理框</td>
+                            <td>表示执行一个步骤</td>
+                        </tr>
+                        <tr>
+                            <td><div style="width: 40px; height: 40px; background: #4a90e2; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">◇</div></td>
+                            <td>判断框</td>
+                            <td>表示要根据条件执行线路</td>
+                        </tr>
+                        <tr>
+                            <td> <div style="width: 40px; height: 30px; background: #4a90e2; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto; transform: skewX(-20deg);">
+    ▢</div></td>
+                            <td>输入输出框</td>
+                            <td>表示用户输入或由计算机自动输出的信息</td>
+                        </tr>
+                        <tr>
+                            <td><div style="
+      width: 40px; 
+      height: 2px; 
+      background: #4a90e2; 
+      position: relative;
+      margin: 0 auto;
+  ">
+    <div style="
+        position: absolute;
+        right: -8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-left: 8px solid #4a90e2;
+    "></div>
+  </div></td>
+                            <td>流程线</td>
+                            <td>指示流程方向</td>
+                        </tr>
+                        <tr>
+                            <td><div style="
+      width: 10px; 
+      height: 10px; 
+      border: 2px solid #4a90e2; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin: 0 auto;
+  ">
+  </div></td>
+                            <td>连接点</td>
+                            <td>表示算法中的转接</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>算法的特征</h3>
+                <ol>
+                    <li><strong>可行性：</strong>算法中的每一步都是可以执行的。</li>
+                    <li><strong>有穷性：</strong>算法的处理步骤必须是有限的。</li>
+                    <li><strong>确切性：</strong>算法的每一步骤必须有确切的定义。</li>
+                    <li><strong>输入：</strong>一个算法有 0 个或多个输入。</li>
+                    <li><strong>输出：</strong>一个算法有一个或多个输出。</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>算法描述</h3>
+                <ol>
+                    <li><strong>自然语言</strong>（通俗易懂，容易出现歧义，比较繁琐）</li>
+                    <li><strong>流程图</strong>（结构清晰，分支增多时影响算法理解）</li>
+                    <li><strong>伪代码</strong>（简洁直观、符号接近计算机程序代码）</li>
+                    <li><strong>程序设计语言</strong>描述算法</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>常量与变量</h3>
+                <ul>
+                    <li><strong>常量：</strong>在执行过程中保持固定不变的数据。</li>
+                    <li><strong>变量：</strong>在执行过程中可以被修改，发生改变的数据。</li>
+                </ul>
+                
+                <h4>变量的命名规则</h4>
+                <ol>
+                    <li>不能是 Python 保留字</li>
+                    <li>不能以数字开头</li>
+                    <li>只能由数字，字母，下划线组成</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>算法结构</h3>
+                
+                <h4>顺序结构</h4>
+                <p>每个步骤按照顺序执行，且只执行一次。</p>
+                <div class="code-block">
+x = int(input("请输入一个华氏度"))
+y = (x-32)/1.8
+print(y)
+                </div>
+                
+                <h4>分支结构</h4>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>类型</th>
+                            <th>特点</th>
+                            <th>范例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>单分支</td>
+                            <td>先进行条件判断，根据条件满足与否来决定执行哪个分支</td>
+                            <td>
+                                <div class="code-block">
+score = int(input("请输入你的成绩"))
+if score >= 60:
+    print("pass")
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>双分支</td>
+                            <td>根据条件判断执行两个分支中的一个</td>
+                            <td>
+                                <div class="code-block">
+score = int(input("请输入你的成绩"))
+if score >= 60:
+    print("pass")
+else:
+    print("fail")
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>多分支</td>
+                            <td>根据多个条件判断执行多个分支中的一个</td>
+                            <td>
+                                <div class="code-block">
+if 表达式1:
+    语句1
+elif 表达式N:
+    语句N
+else:
+    语句N+1
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>循环结构</h4>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>类型</th>
+                            <th>特点</th>
+                            <th>范例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>for循环</td>
+                            <td>遍历序列中的每个元素</td>
+                            <td>
+                                <div class="code-block">
+for 循环变量 in 序列:
+    循环体
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>while循环</td>
+                            <td>当条件为真时重复执行循环体</td>
+                            <td>
+                                <div class="code-block">
+while 表达式:
+    语句或语句组
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>运算符</h3>
+                
+                <h4>算术运算符</h4>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>运算符</th>
+                            <th>描述</th>
+                            <th>示例</th>
+                            <th>运算结果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>+</td>
+                            <td>加法</td>
+                            <td>53+21</td>
+                            <td>74</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>减法</td>
+                            <td>63.1-2.2</td>
+                            <td>60.9</td>
+                        </tr>
+                        <tr>
+                            <td>*</td>
+                            <td>乘法</td>
+                            <td>300*1.5</td>
+                            <td>450.0</td>
+                        </tr>
+                        <tr>
+                            <td>/</td>
+                            <td>除法</td>
+                            <td>1/8</td>
+                            <td>0.125</td>
+                        </tr>
+                        <tr>
+                            <td>//</td>
+                            <td>整除</td>
+                            <td>1//8</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>**</td>
+                            <td>幂次</td>
+                            <td>5**2</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>%</td>
+                            <td>求余数</td>
+                            <td>17%3</td>
+                            <td>2</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>赋值运算符</h4>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>运算符</th>
+                            <th>描述</th>
+                            <th>示例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>=</td>
+                            <td>简单的赋值运算</td>
+                            <td>c=a+b</td>
+                        </tr>
+                        <tr>
+                            <td>+=</td>
+                            <td>加法赋值运算符</td>
+                            <td>c+=a 等效于 c=c+a</td>
+                        </tr>
+                        <tr>
+                            <td>-=</td>
+                            <td>减法赋值运算符</td>
+                            <td>c-=a 等效于 c=c-a</td>
+                        </tr>
+                        <tr>
+                            <td>*=</td>
+                            <td>乘法赋值运算符</td>
+                            <td>c*=a 等效于 c=c*a</td>
+                        </tr>
+                        <tr>
+                            <td>/=</td>
+                            <td>除法赋值运算符</td>
+                            <td>c/=a 等效于 c=c/a</td>
+                        </tr>
+                        <tr>
+                            <td>%=</td>
+                            <td>取模赋值运算符</td>
+                            <td>c%=a 等效于 c=c%a</td>
+                        </tr>
+                        <tr>
+                            <td>**=</td>
+                            <td>幂赋值运算符</td>
+                            <td>c**=a 等效于 c=c**a</td>
+                        </tr>
+                        <tr>
+                            <td>//=</td>
+                            <td>整除赋值运算符</td>
+                            <td>c//=a 等效于 c=c//a</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>比较运算符</h4>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>运算符</th>
+                            <th>描述</th>
+                            <th>示例</th>
+                            <th>运算结果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>==</td>
+                            <td>等于</td>
+                            <td>ln 1=0</td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td>!=</td>
+                            <td>不等于</td>
+                            <td>ln 1!=0</td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td>></td>
+                            <td>大于</td>
+                            <td>ln 1>0</td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><</td>
+                            <td>小于</td>
+                            <td>ln 1<0</td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td>>=</td>
+                            <td>大于等于</td>
+                            <td>ln 1>=0</td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><=</td>
+                            <td>小于等于</td>
+                            <td>ln 1<=0</td>
+                            <td>True</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>逻辑运算符</h4>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>运算符</th>
+                            <th>描述</th>
+                            <th>示例</th>
+                            <th>运算结果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>and</td>
+                            <td>与。左右为真，结果为真</td>
+                            <td>2>3 and 3>2</td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td>and</td>
+                            <td>与。左右为真，结果为真</td>
+                            <td>2>1 and 3>2</td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td>or</td>
+                            <td>或。一边为真，结果为真</td>
+                            <td>2>3 or 3>2</td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td>or</td>
+                            <td>或。一边为真，结果为真</td>
+                            <td>2>1 or 3<2</td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td>not</td>
+                            <td>非。等于一个反义词</td>
+                            <td>not(2>1)</td>
+                            <td>False</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>数据类型</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>类型</th>
+                            <th>含义</th>
+                            <th>概念</th>
+                            <th>示例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>int</td>
+                            <td>整数</td>
+                            <td>与数学中整数的概念一致</td>
+                            <td>1、2</td>
+                        </tr>
+                        <tr>
+                            <td>float</td>
+                            <td>浮点数</td>
+                            <td>类似于数学中的小数</td>
+                            <td>1.0、2.0</td>
+                        </tr>
+                        <tr>
+                            <td>str</td>
+                            <td>字符串</td>
+                            <td>包裹在双引号、单引号或三引号内</td>
+                            <td>"1"、'yi'</td>
+                        </tr>
+                        <tr>
+                            <td>bool</td>
+                            <td>布尔</td>
+                            <td>只有True 和False 两个值，分别代表真和假。参与运算时 True=1，False=0</td>
+                            <td>True、False</td>
+                        </tr>
+                        <tr>
+                            <td>list</td>
+                            <td>列表</td>
+                            <td>①放置在"[]"中的有序序列，存放的元素可以是各种类型的数据，以逗号分隔。<br>②列表中每个元素都有对应的索引号：左 0 右-1。</td>
+                            <td>list1=[1,2.0,"A"]<br>列表元素索引号从左到右依次为 0，1，2。<br>从右到左依次为-1，-2，-3。<br>如 list1[1]=2.0 list1[-1]="A"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>Python 常用函数</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>函数类型</th>
+                            <th>描述</th>
+                            <th>示例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>print( )</td>
+                            <td>输出，打印</td>
+                            <td>print("Hello")</td>
+                        </tr>
+                        <tr>
+                            <td>input（ ）</td>
+                            <td>输入，且输入数据类型都是字符串</td>
+                            <td>input("请输入：")</td>
+                        </tr>
+                        <tr>
+                            <td>str（x）</td>
+                            <td>将 x 转为字符串</td>
+                            <td>str(2)返回"2"</td>
+                        </tr>
+                        <tr>
+                            <td>int（x）</td>
+                            <td>将 x 转为整数</td>
+                            <td>int(2.0)返回 2</td>
+                        </tr>
+                        <tr>
+                            <td>float（x）</td>
+                            <td>将 x 转为浮点数</td>
+                            <td>float(2)返回 2.0</td>
+                        </tr>
+                        <tr>
+                            <td>type（x）</td>
+                            <td>返回数值类型</td>
+                            <td>type(2)返回 int</td>
+                        </tr>
+                        <tr>
+                            <td>round（x,n）</td>
+                            <td>取小数点后 n 位，返回取后的值</td>
+                            <td>round(5.62,1)返回 5.6</td>
+                        </tr>
+                        <tr>
+                            <td>range（起始值，终值，步长）</td>
+                            <td>返回一个由数字组成的序列，步长和起始值不输入默认为 1 和 0，负步长就是序列元素从大到小排列。</td>
+                            <td>range(3)#[0,1,2]<br>range(1,3)#[1,2]<br>range(1,3,1)#[1,2]<br>range(3,1,-1)#[3,2]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>程序设计的一般过程</h3>
+                <ol>
+                    <li>分析问题</li>
+                    <li>设计算法</li>
+                    <li>编写程序</li>
+                    <li>调试运行</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>程序语言设计的发展</h3>
+                <ol>
+                    <li>机器语言</li>
+                    <li>汇编语言</li>
+                    <li>高级语言</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 侧边栏切换
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+        }
+
+        // 导航切换
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 移除所有活动状态
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                
+                // 添加当前活动状态
+                this.classList.add('active');
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+                
+                // 移动端自动关闭侧边栏
+                if (window.innerWidth <= 768) {
+                    toggleSidebar();
+                }
+            });
+        });
+
+        // 返回顶部按钮
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 点击页面其他区域关闭移动端侧边栏
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !menuBtn.contains(e.target) && 
+                sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // 响应式处理
+        window.addEventListener('resize', () => {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('show');
+            }
+        });
+    </script>
+	<script>
+// 压缩混淆的代码保护
+!function(){function e(e){e.preventDefault(),e.stopPropagation(),!1}document.addEventListener("contextmenu",e),document.addEventListener("selectstart",e),document.onkeydown=function(e){return!(e.ctrlKey&&(e.keyCode==83||e.keyCode==85)||e.keyCode==123)},
+setInterval(function(){var e=window.outerWidth-window.innerWidth>100,n=window.outerHeight-window.innerHeight>100;(e||n)&&(document.body.innerHTML='<h1 style="text-align:center;color:red">禁止调试</h1>')},1e3)}();
+</script>
+</body>
+</html>
