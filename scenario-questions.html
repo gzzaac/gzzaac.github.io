@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正安二中信息技术学业水平测试 - 情景应用题</title>
+    <style>
+        /* 复用单选题页面的样式 */
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .progress {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .scenario-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .scenario-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .scenario-content {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .scenario-image {
+            max-width: 100%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .question-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .question-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .options {
+            margin-bottom: 20px;
+        }
+        .option {
+            margin-bottom: 10px;
+        }
+        .option input {
+            margin-right: 10px;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .navigation button {
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .navigation #prev-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .navigation #next-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .navigation #submit-btn {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+        .navigation button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .navigation button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        .navigation button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .time-info {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .quick-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 8px;
+        }
+        .quick-nav button {
+            width: 40px;
+            height: 40px;
+            margin: 0;
+            border: 2px solid #e0e0e0;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .quick-nav button:hover:not(.answered):not(:disabled) {
+            border-color: #2196F3;
+            transform: scale(1.1);
+        }
+        .quick-nav button.answered {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: white;
+            border-color: transparent;
+        }
+        .quick-nav button.current {
+            border: 3px solid #2196F3;
+            background-color: #e3f2fd;
+            color: #1976d2;
+            font-weight: bold;
+        }
+        .result-container {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .statistics {
+            margin-bottom: 20px;
+        }
+        .wrong-questions {
+            margin-bottom: 20px;
+        }
+        .wrong-question {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .explanation {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .correct {
+            color: #4CAF50;
+        }
+        .incorrect {
+            color: #F44336;
+        }
+        .return-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .return-home button {
+            padding: 15px 40px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+        .return-home button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        .return-home button:active {
+            transform: translateY(-1px);
+        }
+        .review-outline-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .review-outline-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4);
+        }
+        
+        /* 新增样式 */
+        .start-test-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(67, 206, 162, 0.3);
+            transition: all 0.3s ease;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .start-test-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 206, 162, 0.4);
+        }
+        
+        .scenario-info {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        /* 添加动画效果 */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+        
+        .navigation button:active:not(:disabled),
+        .quick-nav button:active:not(:disabled),
+        .return-home button:active {
+            animation: pulse 0.3s;
+        }
+        
+        /* 响应式设计 - 多平台适配 */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .scenario-container, .question-container {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .scenario-title, .question-title {
+                font-size: 16px;
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+            
+            .option {
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .navigation button {
+                width: 100%;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .time-info {
+                font-size: 12px;
+                margin-bottom: 15px;
+            }
+            
+            .quick-nav {
+                gap: 6px;
+                margin-bottom: 15px;
+            }
+            
+            .quick-nav button {
+                width: 35px;
+                height: 35px;
+                font-size: 12px;
+            }
+            
+            .result-container {
+                padding: 15px;
+            }
+            
+            .return-home button {
+                padding: 12px 30px;
+                font-size: 16px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .scenario-container, .question-container {
+                padding: 12px;
+            }
+            
+            .scenario-title, .question-title {
+                font-size: 15px;
+            }
+            
+            .option {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+            
+            .option input {
+                margin-right: 6px;
+                transform: scale(0.9);
+            }
+            
+            .navigation button {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+            
+            .quick-nav button {
+                width: 30px;
+                height: 30px;
+                font-size: 11px;
+            }
+            
+            .time-info {
+                font-size: 11px;
+            }
+            
+            .result-container h2 {
+                font-size: 1.3rem;
+            }
+            
+            .statistics h3,
+            .wrong-questions h3 {
+                font-size: 1.1rem;
+            }
+            
+            .wrong-question {
+                font-size: 13px;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .explanation {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>正安县第二中学信息技术情景应用题测试闯关</h1>
+        <a href="index.html" class="review-outline-btn">返回首页</a>
+        <button id="start-test-btn" class="start-test-btn">随机出题</button>
+    </div>
+    
+    <div class="progress" id="progress">进度: 0/0</div>
+    
+    <div class="scenario-container" id="scenario-container">
+        <div class="scenario-title" id="scenario-title">请点击"随机出题"按钮开始测试</div>
+        <div class="scenario-content" id="scenario-content"></div>
+        <div class="scenario-image-container" id="scenario-image-container"></div>
+    </div>
+    
+    <div class="question-container" id="question-container">
+        <div class="question-title" id="question-title">请先阅读上方情景描述，然后回答相关问题</div>
+        <div class="options" id="options"></div>
+    </div>
+    
+    <div class="navigation">
+        <button id="prev-btn">上一题</button>
+        <button id="submit-btn">马上交卷</button>
+        <button id="next-btn">下一题</button>
+    </div>
+    
+    <div class="time-info" id="time-info">
+        <div>开始时间: <span id="start-time">--:--:--</span></div>
+        <div>已使用时间: <span id="elapsed-time">00:00:00</span></div>
+    </div>
+    
+    <div class="quick-nav" id="quick-nav"></div>
+    
+    <div class="result-container" id="result-container">
+        <h2>测试结果</h2>
+        <div class="statistics" id="statistics"></div>
+        <div class="wrong-questions" id="wrong-questions"></div>
+        <div class="return-home">
+            <button id="return-home-btn">结束本次考试返回首页</button>
+        </div>
+    </div>
+
+    <script>
+        // 情景应用题数据 - 包含总题干和多个子问题
+        const scenarioQuestions = [
+  {
+    "id": 1,
+    "scenarioTitle": "网络配置分析",
+    "scenarioContent": "观察下图所示的网络配置界面，回答以下问题：",
+    "scenarioImage": "media/image1.png",
+    "questions": [
+      {
+        "id": 1,
+        "question": "从上图中可以看出该计算机的IPv4地址是()",
+        "options": [
+          "A.10.10.1.5",
+          "B.255.255.255.0",
+          "C.10.10.1.254",
+          "D. 202.98.192.67"
+        ],
+        "answer": "A",
+        "explanation": "从图片中可以看出，IPv4地址显示为10.10.1.5"
+      },
+      {
+        "id": 2,
+        "question": "以下IPv4地址错误的是()",
+        "options": [
+          "A.10.10.1.20",
+          "B.10.10.1.110",
+          "C.10.10.1.259",
+          "D.10.10.1.220"
+        ],
+        "answer": "C",
+        "explanation": "IPv4地址每个字节的范围是0-255，259超出了这个范围"
+      },
+      {
+        "id": 3,
+        "question": "图2中的网络拓扑结构是()",
+        "options": [
+          "A.线状",
+          "B.星状",
+          "C. 环状",
+          "D. 混合型"
+        ],
+        "answer": "B",
+        "explanation": "从拓扑图可以看出，所有设备都连接到一个中心节点，这是典型的星状结构"
+      },
+      {
+        "id": 4,
+        "question": "IPv4地址分为网络标识和主机标识两部分。结合该计算机的IPv4地址和子网掩码,该网络标志下可以容纳最大主机数量(含网关的地址)是()",
+        "options": [
+          "A.150台",
+          "B.255台",
+          "C. 259台",
+          "D. 254台"
+        ],
+        "answer": "D",
+        "explanation": "子网掩码255.255.255.0表示前24位为网络位，后8位为主机位，可容纳2^8-2=254台主机（减去网络地址和广播地址）"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "scenarioTitle": "百度识图应用",
+    "scenarioContent": "百度识图是一款基于图像识别技术的搜索工具，分析其技术原理和应用特点：",
+    "scenarioImage": "media/image2.png",
+    "questions": [
+      {
+        "id": 5,
+        "question": "百度识图不能识别以下哪种格式的文件()",
+        "options": [
+          "A. JPEG",
+          "B. BMP",
+          "C. WAV",
+          "D. PNG"
+        ],
+        "answer": "C",
+        "explanation": "WAV是音频文件格式，百度识图是图像识别工具，不能识别音频文件"
+      },
+      {
+        "id": 6,
+        "question": "百度识图使用了图像识别技术，图像识别技术利用计算机对图像进行处理、分析和理解，以识别不同模式的目标和对象。图像识别技术属于()",
+        "options": [
+          "A. 增强现实技术",
+          "B.人工智能技术",
+          "C. 云计算技术",
+          "D. 区块链技术"
+        ],
+        "answer": "B",
+        "explanation": "图像识别是人工智能技术的重要分支，属于计算机视觉领域"
+      },
+      {
+        "id": 7,
+        "question": "可以将不认识的植物拍照上传到百度识图进行识别，则拍摄的图像数字化经过的环节是()",
+        "options": [
+          "A. 量化→采样→编码",
+          "B.编码→采样→量化",
+          "C.量化→编码→采样",
+          "D.采样→量化→编码"
+        ],
+        "answer": "D",
+        "explanation": "图像数字化过程：采样（空间离散化）→量化（亮度值离散化）→编码（数据压缩存储）"
+      },
+      {
+        "id": 8,
+        "question": "关于百度识图，以下说法正确的是()",
+        "options": [
+          "A.通过百度识图，能查询到任何人的信息",
+          "B.百度图片可以随意转载和使用",
+          "C.百度识图能找到相似的图片，使用图片时要注意版权",
+          "D.使用百度识图软件不会导致信息泄露"
+        ],
+        "answer": "C",
+        "explanation": "百度识图可以找到相似图片，但使用时需要注意图片的版权问题，避免侵权"
+      },
+      {
+        "id": 9,
+        "question": "如图2，小明查看到拍摄的图像中某一像素的RGB值如下图所示，以下说法正确的是()",
+        "options": [
+          "A.图像可以看作由许多彩色或各种级别灰度的点组成的，这些点纵横排列，称为像素",
+          "B.使用不同的规则进行编码会影响图像的像素总和",
+          "C.图像像素的多少不会影响图像的存储容量",
+          "D.每个像素只能采用8位和16位二进制位数进行存储"
+        ],
+        "answer": "A",
+        "explanation": "图像确实是由像素点组成的，每个像素点包含颜色信息，纵横排列形成完整图像"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "scenarioTitle": "智能物流系统",
+    "scenarioContent": "智能物流系统是现代物流管理的重要应用，分析其技术组成和工作原理：",
+    "scenarioImage": "media/image3.png",
+    "questions": [
+      {
+        "id": 10,
+        "question": "\"智能物流系统\"是一个由人、硬件、软件、网络和数据等构成的人机交互系统，这种人机交互系统称为()",
+        "options": [
+          "A. 信息系统",
+          "B.软件系统"
+        ],
+        "answer": "A",
+        "explanation": "由人、硬件、软件、网络和数据等构成的系统称为信息系统"
+      },
+      {
+        "id": 11,
+        "question": "客户可以通过手机号码、货物单号等在手机APP或网页端上查看相关物流信息。采集货物物流信息采用了RFID电子标签()",
+        "options": [
+          "A.对",
+          "B.错"
+        ],
+        "answer": "A",
+        "explanation": "智能物流系统通常采用RFID电子标签来采集货物物流信息"
+      },
+      {
+        "id": 12,
+        "question": "智能物流是物联网的应用之一，物联网的核心和基础是()",
+        "options": [
+          "A.射频识别",
+          "B.互联网"
+        ],
+        "answer": "B",
+        "explanation": "物联网的核心和基础是互联网，是在互联网基础上延伸和扩展的网络"
+      },
+      {
+        "id": 13,
+        "question": "智能物流的各个环节都会采集到很多数据。以下不属于数据采集方法的是()",
+        "options": [
+          "A.传感器采集",
+          "B.网络爬虫采集",
+          "C.打印文件",
+          "D. 在线问卷采集"
+        ],
+        "answer": "C",
+        "explanation": "打印文件是数据输出方式，不是数据采集方法"
+      },
+      {
+        "id": 14,
+        "question": "下列关于物流信息系统安全的说法,正确的是()",
+        "options": [
+          "A. 对信息系统中的敏感信息进行加密后数据就一定不会泄露",
+          "B. 为提升数据的传输速率，关闭服务器防火墙",
+          "C. 对物流系统中的数据进行备份不是导致数据安全风险的因素",
+          "D.物流信息系统没有用到大数据技术"
+        ],
+        "answer": "C",
+        "explanation": "数据备份是数据安全保护措施，不是安全风险因素"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "scenarioTitle": "二维码技术应用",
+    "scenarioContent": "二维码在现代生活中广泛应用，分析其技术特点和安全注意事项：",
+    "scenarioImage": "media/image4.png",
+    "questions": [
+      {
+        "id": 15,
+        "question": "材料中的二维码主要利用以下哪项人工智能技术进行识别和支付()",
+        "options": [
+          "A.模式识别",
+          "B.声音识别"
+        ],
+        "answer": "A",
+        "explanation": "二维码识别主要利用模式识别技术，通过图像分析识别二维码图案"
+      },
+      {
+        "id": 16,
+        "question": "上方图3的二维码如果缺失了右上角的部分，还能被正确扫码识别吗?",
+        "options": [
+          "A.能",
+          "B.不能"
+        ],
+        "answer": "A",
+        "explanation": "二维码具有纠错能力，即使部分损坏仍能被正确识别"
+      },
+      {
+        "id": 17,
+        "question": "下列关于条形码与二维码的描述正确的一项是()",
+        "options": [
+          "A. 二维码比传统的条形码能存更多的信息，也能表示更多的数据类型。",
+          "B.二维码比传统的条形码能存储更少的信息，能表示更少的数据类型。",
+          "C.传统的条形码比二维码存储更多的信息，能表示更多的数据类型。",
+          "D.传统的条形码和二维码存储的信息一 样多，表示的数据类型也- -样。"
+        ],
+        "answer": "A",
+        "explanation": "二维码在水平和垂直方向都存储信息，容量远大于传统一维条形码"
+      },
+      {
+        "id": 18,
+        "question": "用户利用手机拍摄包含特定信息的二维码图像，通过手机客户端软件进行解码后不太可能触发下列哪项关联操作()",
+        "options": [
+          "A. 手机上网",
+          "B.名片识读",
+          "C.拨打电话",
+          "D.自动降温"
+        ],
+        "answer": "D",
+        "explanation": "二维码解码后可以触发上网、识读名片、拨打电话等操作，但不会直接导致手机自动降温"
+      },
+      {
+        "id": 19,
+        "question": "二维码的使用也是一把\"双刃剑\"，使用者务必要提高防范意识，以下说法错误的是()",
+        "options": [
+          "A. 扫描前先判断二维码发布来源是否权威可信",
+          "B.报纸、杂志，商场的海报.上提供的维码一 定是安全的",
+          "C.在网站上发布的不知来源的二维码需要引|起警惕",
+          "D.应该选用专业的加入了监测功能的扫码工具，扫到可疑网址时，会有安全提醒"
+        ],
+        "answer": "B",
+        "explanation": "任何来源的二维码都不能保证绝对安全，需要保持警惕"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "scenarioTitle": "计算机教室网络配置",
+    "scenarioContent": "分析计算机教室的网络配置情况，理解TCP/IP协议和网络设备的作用：",
+    "scenarioImage": "media/image5.png",
+    "questions": [
+      {
+        "id": 20,
+        "question": "根据上图所示，该网络的网关是()",
+        "options": [
+          "A.255.255.255.0",
+          "B.192.168.84.1"
+        ],
+        "answer": "B",
+        "explanation": "从网络配置图中可以看出，默认网关设置为192.168.84.1"
+      },
+      {
+        "id": 21,
+        "question": "该计算机教室所有电脑都需要安装TCP/IP协议()",
+        "options": [
+          "A.错",
+          "B.对"
+        ],
+        "answer": "B",
+        "explanation": "TCP/IP协议是互联网的基础协议，所有联网计算机都需要安装"
+      },
+      {
+        "id": 22,
+        "question": "根据图示，请为教师机配置一个可用的IP地址 ()",
+        "options": [
+          "A.192.168.84.2",
+          "B.192.168.84.1",
+          "C.192.168.84.0",
+          "D. 192.168.84.255"
+        ],
+        "answer": "A",
+        "explanation": "192.168.84.2在同一网段且不是网络地址、广播地址或网关地址，可用作主机IP"
+      },
+      {
+        "id": 23,
+        "question": "为了保证计算机教室每一台计算机都能正常上网,需要用到下面哪一个连接设备 ()",
+        "options": [
+          "A.路由器",
+          "B.网线",
+          "C.扬声器",
+          "D.扫描仪"
+        ],
+        "answer": "A",
+        "explanation": "路由器负责网络间的数据转发，是连接不同网络的关键设备"
+      },
+      {
+        "id": 24,
+        "question": "根据网络中心分配给该教室的网络号与子网掩码,该计算机教室最多可以接入多少台计算机()",
+        "options": [
+          "A.127",
+          "B.253",
+          "C.511",
+          "D.1023"
+        ],
+        "answer": "B",
+        "explanation": "C类地址子网掩码255.255.255.0，可用主机地址为254个，减去网关地址，最多可接253台计算机"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "scenarioTitle": "校园网络架构",
+    "scenarioContent": "分析校园网络的拓扑结构和相关网络技术：",
+    "scenarioImage": "media/image6.png",
+    "questions": [
+      {
+        "id": 25,
+        "question": "校园内部组建的网络称为局域网，简称LAN()",
+        "options": [
+          "A.对",
+          "B.错"
+        ],
+        "answer": "A",
+        "explanation": "LAN即Local Area Network，指在有限地理范围内组建的网络"
+      },
+      {
+        "id": 26,
+        "question": "由图可知，该校的网络拓扑结构是星型结构()",
+        "options": [
+          "A.对",
+          "B.错"
+        ],
+        "answer": "A",
+        "explanation": "从拓扑图可以看出，所有设备都连接到中心交换机，形成星型结构"
+      },
+      {
+        "id": 27,
+        "question": "图中教学楼办公电脑接入的①处设备可能是()",
+        "options": [
+          "A.处理器",
+          "B.调制解调器",
+          "C.交换机",
+          "D.扫描仪"
+        ],
+        "answer": "C",
+        "explanation": "在网络拓扑中，连接多台计算机的设备通常是交换机"
+      },
+      {
+        "id": 28,
+        "question": "学校的办公电脑使用IPV4进行局域网通信，其中错误的IP地址是()",
+        "options": [
+          "A. 192.168.1.5",
+          "B. 10.40.0.256",
+          "C. 192.168.0.2",
+          "D.10.40.1.10"
+        ],
+        "answer": "B",
+        "explanation": "IP地址每个字节范围是0-255，256超出了这个范围"
+      },
+      {
+        "id": 29,
+        "question": "图中在互联网与校园内网之间有一道防火墙，关于防火墙的说法，不正确的是()",
+        "options": [
+          "A. 防火墙可以用于加强访问控制，免受别人的攻击",
+          "B.防火墙分为硬件防火墙和软件防火墙",
+          "C.防火墙可以预防火灾向校园内部蔓延",
+          "D. 防火墙可以防止内部信息外泄，并进行日志记录"
+        ],
+        "answer": "C",
+        "explanation": "网络防火墙是网络安全设备，不能预防物理火灾"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "scenarioTitle": "计算机硬件组成",
+    "scenarioContent": "基于冯·诺依曼体系结构，分析计算机各硬件组成部分的功能：",
+    "scenarioImage": "media/image7.png",
+    "questions": [
+      {
+        "id": 30,
+        "question": "计算机的鼠标属于上图中的()",
+        "options": [
+          "A. 输入设备",
+          "B.输出设备",
+          "C.存储器",
+          "D.控制器"
+        ],
+        "answer": "A",
+        "explanation": "鼠标用于向计算机输入指令和信息，属于输入设备"
+      },
+      {
+        "id": 31,
+        "question": "计算机中的存储器分为内存储器和外存储器，移动硬盘属于()",
+        "options": [
+          "A. 内存储器",
+          "B. 输入设备",
+          "C.外存储器",
+          "D.控制器"
+        ],
+        "answer": "C",
+        "explanation": "移动硬盘用于长期存储数据，属于外存储器"
+      },
+      {
+        "id": 32,
+        "question": "使用某计算机软件时，用#AF34E6表示某颜色的编码, 这是用什么进制表示的()",
+        "options": [
+          "A.十六进制",
+          "B.八进制",
+          "C.十进制",
+          "D.二进制"
+        ],
+        "answer": "A",
+        "explanation": "#号开头接6位十六进制数是网页颜色编码的标准格式"
+      },
+      {
+        "id": 33,
+        "question": "运算器和控制器通常被称为()",
+        "options": [
+          "A.CPI",
+          "B. CPO",
+          "C. CPU",
+          "D. CPD"
+        ],
+        "answer": "C",
+        "explanation": "CPU中央处理器包含运算器和控制器两大部件"
+      },
+      {
+        "id": 34,
+        "question": "我们经常在阅读许多计算机类资料时看到\"IPO\"这一英文简称，它指的是()",
+        "options": [
+          "A.  运算→处理→输出结果",
+          "B.控制→处理→输出结果",
+          "C.输入指令→处理→输出结果",
+          "D.存储→处理→输出结果"
+        ],
+        "answer": "C",
+        "explanation": "IPO即Input-Process-Output，指输入→处理→输出的基本工作模式"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "scenarioTitle": "电子邮件系统",
+    "scenarioContent": "分析电子邮件系统的工作原理和相关网络协议：",
+    "scenarioImage": "media/image8.png",
+    "questions": [
+      {
+        "id": 35,
+        "question": "假设该比赛主委会网站的域名是www.wrjbs.edu.cn，其中edu表明该网站属于()",
+        "options": [
+          "A.商业机构",
+          "B.教育机构"
+        ],
+        "answer": "B",
+        "explanation": "edu是教育机构的顶级域名"
+      },
+      {
+        "id": 36,
+        "question": "下列E-mail地址正确的是()",
+        "options": [
+          "A. wrjbs@ 126.com",
+          "B. wrjbs@@ 126.com"
+        ],
+        "answer": "A",
+        "explanation": "正确的电子邮件格式为username@domain.com，只有一个@符号"
+      },
+      {
+        "id": 37,
+        "question": "小宇在家中想要成功发送报名表至组委会邮箱，他的电脑至少需要连接以下哪个网络()",
+        "options": [
+          "A.互联网",
+          "B.物联网",
+          "C. 物流网",
+          "D.购物网"
+        ],
+        "answer": "A",
+        "explanation": "发送电子邮件需要连接互联网"
+      },
+      {
+        "id": 38,
+        "question": "\"电子邮件系统工作示意图\"中的①处使用的协议是()",
+        "options": [
+          "A. IP协议",
+          "B. SMTP协议",
+          "C. HTTP协议",
+          "D. DNS协议"
+        ],
+        "answer": "B",
+        "explanation": "发送邮件使用SMTP协议"
+      },
+      {
+        "id": 39,
+        "question": "使用客户端软件和浏览器收发电子邮件描述正确的是()",
+        "options": [
+          "A. 浏览器不能收发邮件附件",
+          "B.服务器不能存放超大容量邮件附件",
+          "C.客户端软件接收邮件后，服务器自动移除该邮件",
+          "D.客户端软件和浏览器都能收发图文并茂的电子邮件"
+        ],
+        "answer": "D",
+        "explanation": "现代电子邮件客户端和网页邮箱都支持收发图文并茂的邮件和附件"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "scenarioTitle": "手机应用软件",
+    "scenarioContent": "分析手机应用软件的特点和使用注意事项：",
+    "scenarioImage": "media/image9.png",
+    "questions": [
+      {
+        "id": 40,
+        "question": "根据用户需求开发一款手机APP,这款手机APP是()",
+        "options": [
+          "A.  系统软件",
+          "B.应用软件"
+        ],
+        "answer": "B",
+        "explanation": "满足特定用户需求的软件属于应用软件"
+      },
+      {
+        "id": 41,
+        "question": "手机上不同APP软件的应用，满足了用户的个性化需求,给用户提供了便利()",
+        "options": [
+          "A.是",
+          "B.否"
+        ],
+        "answer": "A",
+        "explanation": "各种APP确实满足不同用户需求，提供便利"
+      },
+      {
+        "id": 42,
+        "question": "以下对于手机应用软件说法正确的是()",
+        "options": [
+          "A.凡是应用软件，都可以放心下载，不存在风险",
+          "B.手机软件就是系统软件",
+          "C.软件的应用权限要谨慎打开，防止信息泄露",
+          "D.软件安装越多越好，不影响手机存储容量"
+        ],
+        "answer": "C",
+        "explanation": "安装软件时需要谨慎授权，防止个人信息泄露"
+      },
+      {
+        "id": 43,
+        "question": "手机屏幕的\"自动旋转\"功能需要手机具备哪种传感器()",
+        "options": [
+          "A. 视觉传感器",
+          "B.重力传感器",
+          "C.温度传感器",
+          "D.距离传感器"
+        ],
+        "answer": "B",
+        "explanation": "自动旋转功能通过重力传感器检测手机方向变化"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "scenarioTitle": "在线学习平台",
+    "scenarioContent": "分析在线学习平台的域名系统和网络安全问题：",
+    "scenarioImage": "media/image10.png",
+    "questions": [
+      {
+        "id": 44,
+        "question": "www.smartedu.cn为该平台的域名()",
+        "options": [
+          "A.  对",
+          "B.错"
+        ],
+        "answer": "A",
+        "explanation": "www.smartedu.cn符合域名格式要求"
+      },
+      {
+        "id": 45,
+        "question": "该平台上的学习资源都是免费的()",
+        "options": [
+          "A.对",
+          "B.错"
+        ],
+        "answer": "B",
+        "explanation": "并非所有在线学习平台的资源都是免费的，有些需要付费"
+      },
+      {
+        "id": 46,
+        "question": "下列不是在使用信息系统时面临的安全风险是()",
+        "options": [
+          "A.数据整理",
+          "B.软硬件漏洞",
+          "C. 恶意攻击",
+          "D.人为失误"
+        ],
+        "answer": "A",
+        "explanation": "数据整理是正常的数据处理过程，不是安全风险"
+      },
+      {
+        "id": 47,
+        "question": "下列依次表示网络机构、教育行业和商业机构域名正确的是()",
+        "options": [
+          "A. net、edu、com",
+          "B. net、gov、 hk",
+          "C.com、edu、cn",
+          "D. com、gov、edu"
+        ],
+        "answer": "A",
+        "explanation": "net表示网络机构，edu表示教育机构，com表示商业机构"
+      },
+      {
+        "id": 48,
+        "question": "生活中，经常会遇到各种网络安全问题，下列不属于网络安全防范措施的是()",
+        "options": [
+          "A. 在公共计算机上登陆某网站时保存用户名和密码可以方便下次查询",
+          "B. 安装防火墙和杀毒软件，定期升级病毒库",
+          "C. 不随意打开他人发送的不明文件和网页链接",
+          "D.及时安装补丁程序,修复系统漏洞"
+        ],
+        "answer": "A",
+        "explanation": "在公共计算机保存密码存在安全风险，不属于安全防范措施"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "scenarioTitle": "共享单车系统",
+    "scenarioContent": "共享单车系统是物联网技术的典型应用，分析其系统组成和工作原理：",
+    "scenarioImage": "media/image11.png",
+    "questions": [
+      {
+        "id": 49,
+        "question": "后台对车辆位置进行管理，使用的方法是()",
+        "options": [
+          "A.工作人员随车记录",
+          "B.导航系统定位"
+        ],
+        "answer": "B",
+        "explanation": "共享单车通过内置的GPS等导航系统进行定位管理"
+      },
+      {
+        "id": 50,
+        "question": "后台通过下列哪个系统可了解到小明的基本信息、消费记录、骑行路线等()",
+        "options": [
+          "A.信息系统",
+          "B.生活系统"
+        ],
+        "answer": "A",
+        "explanation": "用户信息、消费记录等数据由信息系统进行管理"
+      },
+      {
+        "id": 51,
+        "question": "小明骑行共享单车时，手机数据能同步连接到系统中是靠()",
+        "options": [
+          "A.人",
+          "B.通讯网络",
+          "C.数据",
+          "D.过程"
+        ],
+        "answer": "B",
+        "explanation": "通过移动通信网络实现手机与系统的数据同步"
+      },
+      {
+        "id": 52,
+        "question": "下列关于共享单车说法正确的是()",
+        "options": [
+          "A.手机APP和共享单车组成了该系统的硬件",
+          "B.共享单车和后台操作系统组成了该系统的软件",
+          "C.共享单车的用户仅指租车的人",
+          "D.共享单车的唯一编号，出租人的个人信息，车辆行程等都属于该系统的数据"
+        ],
+        "answer": "D",
+        "explanation": "车辆编号、用户信息、行程记录等都是系统的重要数据"
+      },
+      {
+        "id": 53,
+        "question": "共享单车系统中下列选项属于采集数据的设备是()",
+        "options": [
+          "A.人",
+          "B.数据库",
+          "C.手机和智能锁",
+          "D.共享单车系统中的软件"
+        ],
+        "answer": "C",
+        "explanation": "手机和智能锁是数据采集的终端设备"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "scenarioTitle": "冯·诺依曼体系结构",
+    "scenarioContent": "基于冯·诺依曼计算机体系结构，分析计算机各组成部分的功能：",
+    "scenarioImage": "media/image12.png",
+    "questions": [
+      {
+        "id": 54,
+        "question": "显示器属于上图中的()",
+        "options": [
+          "A.输入设备",
+          "B.输出设备",
+          "C.存储器",
+          "D.控制器"
+        ],
+        "answer": "B",
+        "explanation": "显示器用于输出信息，属于输出设备"
+      },
+      {
+        "id": 55,
+        "question": "计算机中的存储器有只读存储器和读写存储器，下列是只读存储器的是()",
+        "options": [
+          "A.移动硬盘",
+          "B.只读光盘",
+          "C.内存条",
+          "D.U盘"
+        ],
+        "answer": "B",
+        "explanation": "只读光盘(CD-ROM)是典型的只读存储器"
+      },
+      {
+        "id": 56,
+        "question": "在计算机中，计算和存储的数据采用的进制是()",
+        "options": [
+          "A.十六进制",
+          "B.八进制",
+          "C.十进制",
+          "D.二进制"
+        ],
+        "answer": "D",
+        "explanation": "计算机内部使用二进制进行计算和存储"
+      },
+      {
+        "id": 57,
+        "question": "中央处理器(CPU)是由上图中的两部分组成，即运算器和()",
+        "options": [
+          "A.存储器",
+          "B.控制器",
+          "C.输入设备",
+          "D.输出设备"
+        ],
+        "answer": "B",
+        "explanation": "CPU由运算器和控制器组成"
+      },
+      {
+        "id": 58,
+        "question": "下列说法错误的是()",
+        "options": [
+          "A.计算机体系结构的核心分为运算器、控制器、存储器、输入设备和输出设备五个部分",
+          "B.巨型计算机和移动终端的基本体系结构大体相同",
+          "C.智能手机和平板电脑都可以看作是特殊用途的计算机",
+          "D.智能手机和平板电脑的基本体系结构与计算机是不同的"
+        ],
+        "answer": "D",
+        "explanation": "智能手机和平板电脑也遵循冯·诺依曼体系结构"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "scenarioTitle": "智慧校园网络",
+    "scenarioContent": "分析校园网络的组成结构和相关网络技术：",
+    "scenarioImage": "media/image13.png",
+    "questions": [
+      {
+        "id": 59,
+        "question": "在智慧校园网络中，域名\"www.tsinghua.edu.cn\"中的\"edu\"表示()",
+        "options": [
+          "A.教育机构",
+          "B.政府机构",
+          "C.商业组织",
+          "D.网络服务提供商"
+        ],
+        "answer": "A",
+        "explanation": "edu是教育机构的顶级域名"
+      },
+      {
+        "id": 60,
+        "question": "该校园内部网络属于()",
+        "options": [
+          "A.局域网",
+          "B.城域网",
+          "C.广域网",
+          "D.个域网"
+        ],
+        "answer": "A",
+        "explanation": "校园网络属于局域网(LAN)"
+      },
+      {
+        "id": 61,
+        "question": "将一台新购的电脑连接到学校校园网络里面，需要给它分配一个()",
+        "options": [
+          "A.MAC地址",
+          "B.IP地址",
+          "C.域名",
+          "D.服务器"
+        ],
+        "answer": "B",
+        "explanation": "联网设备需要分配IP地址才能进行网络通信"
+      },
+      {
+        "id": 62,
+        "question": "IP地址由四组数字组成，每组数字之间用点号分隔。下列属于有效IP地址的是()",
+        "options": [
+          "A.256.100.50.0",
+          "B.0.172.254.1",
+          "C.172.16.0.124",
+          "D.255.255.255.256"
+        ],
+        "answer": "C",
+        "explanation": "172.16.0.124是有效的私有IP地址"
+      },
+      {
+        "id": 63,
+        "question": "在\"智慧校园\"中，每个子网都分配了一个子网掩码，它的主要作用是()",
+        "options": [
+          "A.域名与IP地址的相互转换",
+          "B.区分网络地址和主机地址",
+          "C.加快数据传输速度",
+          "D.防止网络病毒"
+        ],
+        "answer": "B",
+        "explanation": "子网掩码用于区分IP地址中的网络部分和主机部分"
+      }
+    ]
+  },
+   {
+    "id": 14,
+    "scenarioTitle": "局域网配置分析",
+    "scenarioContent": "观察下图所示的局域网配置界面，分析网络参数设置和网络设备功能：",
+    "scenarioImage": "media/image14.png",
+    "questions": [
+      {
+        "id": 64,
+        "question": "在局域网设置中，如上图所示手动设置IP地址为172.25.135.3,子网掩码为255.255.255.0,下列哪个IP地址与该主机在同一子网内()",
+        "options": [
+          "A.172.25.134.5",
+          "B.172.25.135.10",
+          "C.172.26.135.3",
+          "D.171.25.135.3"
+        ],
+        "answer": "B",
+        "explanation": "子网掩码255.255.255.0表示前24位为网络位，172.25.135.x都在同一子网内"
+      },
+      {
+        "id": 65,
+        "question": "如上图所示，首选DNS服务器地址为211.139.5.29,DNS服务器的主要作用是()",
+        "options": [
+          "A.分配IP地址",
+          "B.域名和IP地址的自动翻译(解析)",
+          "C.连接不同局域网",
+          "D.检测网络故障"
+        ],
+        "answer": "B",
+        "explanation": "DNS服务器的主要作用是将域名解析为对应的IP地址"
+      },
+      {
+        "id": 66,
+        "question": "在局域网组建中，若要实现设备之间的无线连接，通常不使用下列哪种设备()",
+        "options": [
+          "A.无线路由器",
+          "B.无线接入点",
+          "C.光纤收发器",
+          "D.无线网卡"
+        ],
+        "answer": "C",
+        "explanation": "光纤收发器用于光纤信号转换，不直接提供无线连接功能"
+      },
+      {
+        "id": 67,
+        "question": "在局域网络组建中，如果所有计算机都连接到一台中心设备上，这种网络拓扑结构是()",
+        "options": [
+          "A.总线型",
+          "B.星型",
+          "C.环型",
+          "D.网状型"
+        ],
+        "answer": "B",
+        "explanation": "所有设备连接到一个中心设备的拓扑结构是星型结构"
+      },
+      {
+        "id": 68,
+        "question": "上图中有\"自动获得IP地址(O)\"选项，若选择此选项，主机通常从下列哪个设备获取IP地址()",
+        "options": [
+          "A.域名服务器",
+          "B.网关",
+          "C.动态主机配置协议(DHCP)服务器",
+          "D.防火墙"
+        ],
+        "answer": "C",
+        "explanation": "自动获取IP地址通过DHCP协议从DHCP服务器获取"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "scenarioTitle": "智能家居网络系统",
+    "scenarioContent": "分析家庭智能家居网络系统的组成和工作原理：",
+    "scenarioImage": "media/image15.png",
+    "questions": [
+      {
+        "id": 69,
+        "question": "依据网络覆盖地域范围区分，这样的家庭网络属于()",
+        "options": [
+          "A.广域网",
+          "B.局域网"
+        ],
+        "answer": "B",
+        "explanation": "家庭网络覆盖范围有限，属于局域网(LAN)"
+      },
+      {
+        "id": 70,
+        "question": "负责安防的摄像头属于该信息系统的基本工作过程的哪个部分()",
+        "options": [
+          "A.输入/输出",
+          "B.处理"
+        ],
+        "answer": "A",
+        "explanation": "摄像头用于采集图像信息，属于输入设备"
+      },
+      {
+        "id": 71,
+        "question": "除手机外，系统中还可以包含其他移动终端，下列不属于移动终端的是()",
+        "options": [
+          "A.可穿戴智能设备",
+          "B.笔记本电脑",
+          "C.平板电脑",
+          "D.指纹锁"
+        ],
+        "answer": "D",
+        "explanation": "指纹锁是固定安装的门禁设备，不属于移动终端"
+      },
+      {
+        "id": 72,
+        "question": "小罗使用手机APP远程打开家里的空调。支持该功能的实现，系统的组成要素除硬件外，还应有()①SMTP协议 ②人 ③数据 ④软件",
+        "options": [
+          "A.①②③",
+          "B.②③④",
+          "C.①②④",
+          "D.①③④"
+        ],
+        "answer": "B",
+        "explanation": "远程控制需要人操作、数据传输和软件支持，SMTP是邮件协议不相关"
+      },
+      {
+        "id": 73,
+        "question": "如图所示接入因特网的所有设备，均需设置IP地址。负责此规则与约定的网络协议名称是()",
+        "options": [
+          "A.HTTP协议",
+          "B.TCP/IP协议",
+          "C.SMTP协议",
+          "D.FTP协议"
+        ],
+        "answer": "B",
+        "explanation": "TCP/IP协议是互联网的基础协议，规定了IP地址的分配和使用规则"
+      }
+    ]
+  }
+        ];
+
+        // 全局变量
+        let currentScenario = null;
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let testStartTime = null;
+        let timerInterval = null;
+        let totalQuestions = 0;
+        let testInProgress = false;
+
+        // DOM元素
+        const scenarioTitle = document.getElementById('scenario-title');
+        const scenarioContent = document.getElementById('scenario-content');
+        const scenarioImageContainer = document.getElementById('scenario-image-container');
+        const questionTitle = document.getElementById('question-title');
+        const optionsContainer = document.getElementById('options');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const progress = document.getElementById('progress');
+        const startTime = document.getElementById('start-time');
+        const elapsedTime = document.getElementById('elapsed-time');
+        const quickNav = document.getElementById('quick-nav');
+        const resultContainer = document.getElementById('result-container');
+        const statistics = document.getElementById('statistics');
+        const wrongQuestions = document.getElementById('wrong-questions');
+        const returnHomeBtn = document.getElementById('return-home-btn');
+        const startTestBtn = document.getElementById('start-test-btn');
+
+        // 初始化
+        function init() {
+            // 从本地存储加载进度
+            loadProgress();
+            
+            // 如果测试正在进行中，恢复测试
+            if (testInProgress) {
+                showScenario(currentScenario);
+                showQuestion(currentQuestionIndex);
+                updateProgress();
+                updateQuickNav();
+                startTimer();
+            } else {
+                // 否则显示初始界面
+                resetUI();
+            }
+            
+            // 添加事件监听器
+            prevBtn.addEventListener('click', goToPrevQuestion);
+            nextBtn.addEventListener('click', goToNextQuestion);
+            submitBtn.addEventListener('click', submitTest);
+            returnHomeBtn.addEventListener('click', returnToHome);
+            startTestBtn.addEventListener('click', startTest);
+        }
+
+        // 开始测试
+        function startTest() {
+            console.log("开始测试按钮被点击");
+            
+            // 随机选择一个情景
+            const randomIndex = Math.floor(Math.random() * scenarioQuestions.length);
+            currentScenario = scenarioQuestions[randomIndex];
+            
+            // 重置状态
+            currentQuestions = currentScenario.questions;
+            currentQuestionIndex = 0;
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            testStartTime = new Date();
+            totalQuestions = currentQuestions.length;
+            testInProgress = true;
+            
+            // 保存进度到本地存储
+            saveProgress();
+            
+            // 显示情景和第一题
+            showScenario(currentScenario);
+            showQuestion(0);
+            updateProgress();
+            updateQuickNav();
+            startTimer();
+        }
+
+        // 显示情景
+        function showScenario(scenario) {
+            scenarioTitle.textContent = scenario.scenarioTitle;
+            scenarioContent.textContent = scenario.scenarioContent;
+            
+            // 清空图片容器
+            scenarioImageContainer.innerHTML = "";
+            
+            // 添加图片（如果有）
+            if (scenario.scenarioImage) {
+                const img = document.createElement('img');
+                img.src = scenario.scenarioImage;
+                img.alt = "情景相关图片";
+                img.className = 'scenario-image';
+                scenarioImageContainer.appendChild(img);
+            }
+            
+            // 添加情景信息
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'scenario-info';
+            infoDiv.textContent = `本情景包含 ${scenario.questions.length} 个问题，请仔细阅读情景描述后作答。`;
+            scenarioContent.appendChild(infoDiv);
+        }
+
+        // 显示题目
+        function showQuestion(index) {
+            if (index < 0 || index >= currentQuestions.length) return;
+            
+            const question = currentQuestions[index];
+            questionTitle.textContent = `${index + 1}. ${question.question}`;
+            
+            // 清空选项
+            optionsContainer.innerHTML = "";
+            
+            // 添加选项
+            question.options.forEach((option, i) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'answer';
+                input.value = String.fromCharCode(65 + i); // A, B, C, D
+                input.id = `option-${i}`;
+                
+                // 如果用户已经选择了这个选项，设置为选中
+                if (userAnswers[index] === input.value) {
+                    input.checked = true;
+                }
+                
+                input.addEventListener('change', () => {
+                    userAnswers[index] = input.value;
+                    updateQuickNav();
+                    updateProgress();
+                    saveProgress();
+                });
+                
+                const label = document.createElement('label');
+                label.htmlFor = `option-${i}`;
+                label.textContent = option;
+                
+                optionDiv.appendChild(input);
+                optionDiv.appendChild(label);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // 更新导航按钮状态
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === currentQuestions.length - 1;
+            
+            // 更新当前题目索引
+            currentQuestionIndex = index;
+            
+            // 保存进度
+            saveProgress();
+        }
+
+        // 更新进度
+        function updateProgress() {
+            const answeredCount = userAnswers.filter(answer => answer !== null).length;
+            progress.textContent = `进度: ${answeredCount}/${totalQuestions}`;
+        }
+
+        // 更新快速导航
+        function updateQuickNav() {
+            quickNav.innerHTML = "";
+            
+            for (let i = 0; i < currentQuestions.length; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i + 1;
+                
+                if (userAnswers[i] !== null) {
+                    btn.classList.add('answered');
+                }
+                
+                if (i === currentQuestionIndex) {
+                    btn.classList.add('current');
+                }
+                
+                btn.addEventListener('click', () => {
+                    showQuestion(i);
+                    updateProgress();
+                });
+                
+                quickNav.appendChild(btn);
+            }
+        }
+
+        // 开始计时器
+        function startTimer() {
+            // 清除现有计时器
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            // 更新开始时间
+            const startTimeStr = testStartTime.toLocaleTimeString();
+            startTime.textContent = startTimeStr;
+            
+            // 更新已用时间
+            timerInterval = setInterval(() => {
+                const now = new Date();
+                const elapsed = Math.floor((now - testStartTime) / 1000);
+                
+                const hours = Math.floor(elapsed / 3600);
+                const minutes = Math.floor((elapsed % 3600) / 60);
+                const seconds = elapsed % 60;
+                
+                elapsedTime.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // 上一题
+        function goToPrevQuestion() {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        // 下一题
+        function goToNextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                showQuestion(currentQuestionIndex + 1);
+            }
+        }
+
+        // 提交测试
+        function submitTest() {
+            // 检查是否所有题目都已作答
+            const unansweredCount = userAnswers.filter(answer => answer === null).length;
+            
+            if (unansweredCount > 0) {
+                if (!confirm(`您还有 ${unansweredCount} 道题目未作答，确定要交卷吗？`)) {
+                    return;
+                }
+            }
+            
+            // 停止计时器
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            // 计算分数
+            let correctCount = 0;
+            const wrongQuestionsList = [];
+            
+            for (let i = 0; i < currentQuestions.length; i++) {
+                if (userAnswers[i] === currentQuestions[i].answer) {
+                    correctCount++;
+                } else {
+                    wrongQuestionsList.push({
+                        index: i,
+                        question: currentQuestions[i],
+                        userAnswer: userAnswers[i]
+                    });
+                }
+            }
+            
+            const score = Math.round((correctCount / currentQuestions.length) * 100);
+            
+            // 显示结果
+            showResults(score, correctCount, wrongQuestionsList);
+            
+            // 重置测试状态
+            testInProgress = false;
+            saveProgress();
+        }
+
+        // 显示结果
+        function showResults(score, correctCount, wrongQuestionsList) {
+            // 隐藏题目容器
+            document.querySelector('.scenario-container').style.display = 'none';
+            document.querySelector('.question-container').style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.time-info').style.display = 'none';
+            document.querySelector('.quick-nav').style.display = 'none';
+            document.querySelector('.progress').style.display = 'none';
+            
+            // 显示结果容器
+            resultContainer.style.display = 'block';
+            
+            // 更新统计信息
+            statistics.innerHTML = `
+                <h3>测试统计</h3>
+                <p>总分: <span class="${score >= 60 ? 'correct' : 'incorrect'}">${score}分</span></p>
+                <p>正确题数: ${correctCount}/${totalQuestions}</p>
+                <p>用时: ${elapsedTime.textContent}</p>
+                <p>测试情景: ${currentScenario.scenarioTitle}</p>
+            `;
+            
+            // 更新错题信息
+            if (wrongQuestionsList.length > 0) {
+                let wrongQuestionsHTML = '<h3>错题解析</h3>';
+                
+                wrongQuestionsList.forEach(item => {
+                    wrongQuestionsHTML += `
+                        <div class="wrong-question">
+                            <p><strong>${item.index + 1}. ${item.question.question}</strong></p>
+                            <p>你的答案: <span class="incorrect">${item.userAnswer || '未作答'}</span></p>
+                            <p>正确答案: <span class="correct">${item.question.answer}</span></p>
+                            <p class="explanation">解析: ${item.question.explanation}</p>
+                        </div>
+                    `;
+                });
+                
+                wrongQuestions.innerHTML = wrongQuestionsHTML;
+            } else {
+                wrongQuestions.innerHTML = '<h3>恭喜你！全部答对！</h3>';
+            }
+        }
+
+        // 返回首页
+        function returnToHome() {
+            // 重置所有状态
+            currentScenario = null;
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            testStartTime = null;
+            totalQuestions = 0;
+            testInProgress = false;
+            
+            // 清除本地存储
+            localStorage.removeItem('scenarioTestProgress');
+            
+            // 重新显示初始界面
+            resetUI();
+        }
+
+        // 重置UI到初始状态
+        function resetUI() {
+            document.querySelector('.scenario-container').style.display = 'block';
+            document.querySelector('.question-container').style.display = 'block';
+            document.querySelector('.navigation').style.display = 'flex';
+            document.querySelector('.time-info').style.display = 'block';
+            document.querySelector('.quick-nav').style.display = 'flex';
+            document.querySelector('.progress').style.display = 'block';
+            resultContainer.style.display = 'none';
+            
+            scenarioTitle.textContent = "请点击\"随机出题\"按钮开始测试";
+            scenarioContent.textContent = "";
+            scenarioImageContainer.innerHTML = "";
+            questionTitle.textContent = "请先阅读上方情景描述，然后回答相关问题";
+            optionsContainer.innerHTML = "";
+            progress.textContent = "进度: 0/0";
+            startTime.textContent = "--:--:--";
+            elapsedTime.textContent = "00:00:00";
+            quickNav.innerHTML = "";
+        }
+
+        // 保存进度到本地存储
+        function saveProgress() {
+            const progress = {
+                currentScenario,
+                currentQuestions,
+                currentQuestionIndex,
+                userAnswers,
+                testStartTime: testStartTime ? testStartTime.getTime() : null,
+                totalQuestions,
+                testInProgress
+            };
+            
+            localStorage.setItem('scenarioTestProgress', JSON.stringify(progress));
+        }
+
+        // 从本地存储加载进度
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('scenarioTestProgress');
+            
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                
+                currentScenario = progress.currentScenario;
+                currentQuestions = progress.currentQuestions;
+                currentQuestionIndex = progress.currentQuestionIndex;
+                userAnswers = progress.userAnswers;
+                testStartTime = progress.testStartTime ? new Date(progress.testStartTime) : null;
+                totalQuestions = progress.totalQuestions;
+                testInProgress = progress.testInProgress;
+            }
+        }
+
+        // 页面加载时初始化
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
