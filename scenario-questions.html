@@ -260,7 +260,8 @@
         
         .navigation button:active:not(:disabled),
         .quick-nav button:active:not(:disabled),
-        .return-home button:active {
+        .return-home button:active,
+        .start-test-btn:active {
             animation: pulse 0.3s;
         }
         
@@ -322,6 +323,21 @@
                 font-size: 16px;
                 width: 100%;
             }
+            
+            .start-test-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+                margin: 5px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .scenario-info {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -379,6 +395,21 @@
             
             .explanation {
                 font-size: 12px;
+            }
+            
+            .start-test-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+                margin: 3px;
+            }
+            
+            .header h1 {
+                font-size: 1.3rem;
+            }
+            
+            .review-outline-btn {
+                padding: 8px 16px;
+                font-size: 14px;
             }
         }
     </style>
@@ -1775,5 +1806,4 @@
         window.addEventListener('load', init);
     </script>
 </body>
-
 </html>

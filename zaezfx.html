@@ -256,34 +256,6 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.show {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 20px 15px;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .section-title h1 {
-                font-size: 1.5rem;
-            }
-
-            .content-card {
-                padding: 20px;
-            }
-        }
-
         /* 返回顶部按钮 */
         .back-to-top {
             position: fixed;
@@ -332,7 +304,8 @@
             margin-right: 5px;
             margin-bottom: 5px;
         }
-		 .review-outline-btn {
+        
+        .review-outline-btn {
             display: inline-block;
             padding: 10px 20px;
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -341,14 +314,163 @@
             border-radius: 25px;
             font-weight: 600;
             font-size: 16px;
-			box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
             transition: all 0.3s ease;
             margin-top: 10px;
         }
         .review-outline-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
 
+        /* 添加动画效果 */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+        
+        .navigation button:active:not(:disabled),
+        .quick-nav button:active:not(:disabled),
+        .return-home button:active,
+        .start-test-btn:active,
+        .mobile-menu-btn:active,
+        .back-to-top:active {
+            animation: pulse 0.3s;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px 15px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .section-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .content-card {
+                padding: 20px;
+            }
+            
+            .section-title {
+                padding: 15px 20px;
+            }
+            
+            .custom-table {
+                font-size: 0.85rem;
+            }
+            
+            .custom-table th, 
+            .custom-table td {
+                padding: 8px 10px;
+            }
+            
+            .sidebar-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-link {
+                padding: 10px 20px;
+            }
+            
+            .code-block {
+                padding: 12px;
+                font-size: 0.8rem;
+            }
+            
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            
+            .main-content {
+                padding: 15px 10px;
+            }
+            
+            .section-title h1 {
+                font-size: 1.3rem;
+            }
+            
+            .content-card {
+                padding: 15px;
+            }
+            
+            .content-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .content-card h4 {
+                font-size: 1rem;
+            }
+            
+            .custom-table {
+                font-size: 0.8rem;
+            }
+            
+            .custom-table th, 
+            .custom-table td {
+                padding: 6px 8px;
+            }
+            
+            .code-block {
+                padding: 10px;
+                font-size: 0.75rem;
+            }
+            
+            .mobile-menu-btn {
+                top: 15px;
+                left: 15px;
+                padding: 8px 12px;
+            }
+            
+            .back-to-top {
+                width: 35px;
+                height: 35px;
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .review-outline-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .sidebar-header {
+                padding: 15px;
+            }
+            
+            .sidebar-header h2 {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -362,7 +484,7 @@
         <div class="sidebar-header">
             <h2><i class="bi bi-book"></i> 信息技术复习</h2>
             <p>正安二中学业水平考试专用</p>
-			<a href="index.html" class="review-outline-btn">返回首页</a>
+            <a href="index.html" class="review-outline-btn">返回首页</a>
         </div>
         <div class="nav-menu">
             <div class="nav-item">
@@ -1830,10 +1952,10 @@ while 表达式:
             }
         });
     </script>
-	<script>
-// 压缩混淆的代码保护
-!function(){function e(e){e.preventDefault(),e.stopPropagation(),!1}document.addEventListener("contextmenu",e),document.addEventListener("selectstart",e),document.onkeydown=function(e){return!(e.ctrlKey&&(e.keyCode==83||e.keyCode==85)||e.keyCode==123)},
-setInterval(function(){var e=window.outerWidth-window.innerWidth>100,n=window.outerHeight-window.innerHeight>100;(e||n)&&(document.body.innerHTML='<h1 style="text-align:center;color:red">禁止调试</h1>')},1e3)}();
-</script>
+    <script>
+    // 压缩混淆的代码保护
+    !function(){function e(e){e.preventDefault(),e.stopPropagation(),!1}document.addEventListener("contextmenu",e),document.addEventListener("selectstart",e),document.onkeydown=function(e){return!(e.ctrlKey&&(e.keyCode==83||e.keyCode==85)||e.keyCode==123)},
+    setInterval(function(){var e=window.outerWidth-window.innerWidth>100,n=window.outerHeight-window.innerHeight>100;(e||n)&&(document.body.innerHTML='<h1 style="text-align:center;color:red">禁止调试</h1>')},1e3)}();
+    </script>
 </body>
 </html>
