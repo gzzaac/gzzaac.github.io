@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正安二中信息技术学业水平测试—python程序题</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 10px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .card h2 {
+            color: #1a2a6c;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #fdbb2d;
+            font-size: 1.3rem;
+        }
+        
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .question-container {
+            margin-bottom: 12px;
+            padding: 12px;
+            background-color: #f0f8ff;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .question-title {
+            font-weight: bold;
+            color: #1a2a6c;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .question-description {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .code-container {
+            position: relative;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 350px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            resize: vertical;
+            background: #f8f9fa;
+            line-height: 1.4;
+        }
+        
+        /* 新增程序代码显示样式 */
+        .program-code {
+            background-color: #2d2d2d;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 12px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #f8f8f2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        .program-line {
+            display: block;
+            margin-bottom: 2px;
+            white-space: pre;
+        }
+        
+        /* 公告栏样式 */
+        .announcement-bar {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .announcement-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        .announcement-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .announcement-icon {
+            font-size: 20px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .announcement-text {
+            flex-grow: 1;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .announcement-date {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-left: 12px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.2);
+            padding: 3px 8px;
+            border-radius: 15px;
+        }
+        
+        /* 按钮样式更新 */
+        .btn {
+            display: inline-block;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 8px 4px 8px 0;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            animation: pulse 0.3s;
+        }
+        
+        .btn-question {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .btn-run {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .btn-answer {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+        
+        .btn-clear {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        }
+        
+        .output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 12px;
+            border-radius: 4px;
+            min-height: 350px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            color: #fdbb2d;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .status-ready {
+            background-color: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-loading {
+            background-color: #FFC107;
+        }
+        
+        .status-error {
+            background-color: #F44336;
+        }
+        
+        .example-list {
+            list-style-type: none;
+        }
+        
+        .example-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .example-list li:hover {
+            color: #1a2a6c;
+        }
+        
+        .info-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-section h2 {
+            color: #1a2a6c;
+            margin-bottom: 12px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-card h3 {
+            color: #1a2a6c;
+            margin-bottom: 8px;
+        }
+        
+        .answer-analysis {
+            display: none;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            border-left: 4px solid #6610f2;
+        }
+        
+        .answer-analysis h3 {
+            color: #6610f2;
+            margin-bottom: 8px;
+        }
+        
+        .answer-code {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin: 8px 0;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        /* 自定义输入对话框样式 */
+        .input-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .input-dialog-content {
+            background-color: white;
+            padding: 15px;
+            border-radius: 6px;
+            width: 95%;
+            max-width: 450px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .input-dialog h3 {
+            margin-bottom: 12px;
+            color: #1a2a6c;
+        }
+        
+        .input-dialog input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        
+        .input-dialog-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+        
+        .input-dialog-buttons button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .input-dialog-submit {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .input-dialog-cancel {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        /* 添加动画效果 */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+        
+        /* 响应式设计 - 多平台适配 */
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            
+            .question-container {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .question-title {
+                font-size: 1rem;
+                margin-bottom: 6px;
+                line-height: 1.3;
+            }
+            
+            .card {
+                padding: 12px;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+                margin: 6px 3px 6px 0;
+            }
+            
+            textarea {
+                height: 250px;
+                font-size: 12px;
+            }
+            
+            .output {
+                min-height: 250px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header {
+                margin-bottom: 15px;
+            }
+            
+            .example-list li {
+                padding: 8px 0;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .question-container {
+                padding: 8px;
+            }
+            
+            .question-title {
+                font-size: 0.95rem;
+            }
+            
+            .card {
+                padding: 10px;
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 12px;
+                margin: 4px 2px 4px 0;
+            }
+            
+            textarea {
+                height: 200px;
+                font-size: 11px;
+                padding: 8px;
+            }
+            
+            .output {
+                min-height: 200px;
+                padding: 8px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .content {
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .info-section {
+                padding: 12px;
+                margin-top: 12px;
+            }
+            
+            .info-card {
+                padding: 10px;
+            }
+            
+            .answer-analysis {
+                padding: 10px;
+            }
+            
+            .answer-code {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>正安县第二中学信息技术Python程序题测试大闯关</h1>
+            <button class="btn btn-question" id="random-question-btn">随机出题</button>
+            <a href="index.html" class="btn btn-home">返回首页</a>
+        </header>
+        
+        <!-- 公告栏 -->
+        <div class="announcement-bar">
+            <div class="announcement-content">
+                <div class="announcement-icon">📢</div>
+                <div class="announcement-text">环境就绪后请点击"随机出题"作答。本Python代码在浏览器运行无需服务器支持。限制：1.无法使用需要网络或文件系统的Python库；2.首次加载需要下载Pyodide(约5MB)；3.性能不如本地Python解释器。支持：标准库、数学计算、列表操作等。
+</div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="card">
+                <h2>答题区</h2>
+                
+                <div id="question-container" style="display: none;">
+                    <div class="question-container">
+                        <div class="question-title" id="question-title"></div>
+                        <div class="question-description" id="question-description"></div>
+                    </div>
+                </div>
+                
+                <div class="code-container">
+                    <textarea id="code" placeholder="在这里输入Python代码..."># 请稍候片刻，等待python环境就绪
+# 以下是一个简单的Python代码示例，请点击"运行代码"测试
+
+def fibonacci(n):
+    """生成斐波那契数列"""
+    a, b = 0, 1
+    result = []
+    for _ in range(n):
+        result.append(a)
+        a, b = b, a + b
+    return result
+
+# 计算前10个斐波那契数
+fib_sequence = fibonacci(10)
+print("斐波那契数列前10项:")
+print(fib_sequence)
+
+# 简单的数学计算
+print("\n数学计算示例:")
+x = 15
+y = 4
+print(f"{x} + {y} = {x + y}")
+print(f"{x} * {y} = {x * y}")
+
+# 列表推导式示例
+squares = [i**2 for i in range(1, 6)]
+print(f"\n1到5的平方: {squares}")</textarea>
+                </div>
+                <button class="btn btn-run" id="run-btn">运行代码</button>
+                <button class="btn btn-reset" id="reset-btn">重置代码</button>
+                <button class="btn btn-clear" id="clear-btn">清除输出</button>
+                <button class="btn btn-answer" id="answer-btn">答案解析</button>
+            </div>
+            
+            <div class="card">
+                <h2>控制台 <span id="status-indicator"><span class="status-indicator status-loading"></span>环境加载中...</span></h2>
+                <div class="loading" id="loading">正在加载Pyodide，请稍候...</div>
+                <pre class="output" id="output">Python环境初始化中，请稍等...</pre>
+                
+                <!-- 答案解析区域 -->
+                <div class="answer-analysis" id="answer-analysis">
+                    <h3>答案与解析</h3>
+                    <div id="answer-content"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 自定义输入对话框 -->
+        <div class="input-dialog" id="input-dialog">
+            <div class="input-dialog-content">
+                <h3 id="input-prompt">请输入:</h3>
+                <input type="text" id="input-value" placeholder="输入值" required>
+                <div class="input-validation" id="input-validation" style="color: red; font-size: 12px; margin-bottom: 8px; display: none;"></div>
+                <div class="input-dialog-buttons">
+                    <button class="input-dialog-cancel" id="input-cancel">取消</button>
+                    <button class="input-dialog-submit" id="input-submit">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <script>
+        let pyodide;
+        let currentQuestion = null;
+        let isRunning = false;
+        let pyodideReady = false;
+        
+        // Python题目数据
+        const questions = [
+            {
+                id: 1,
+                title: "题目1：输出指定范围内的奇数",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n给定两个正整数a、b(a≤b),找出a～b范围内的所有奇数并输出。【输入格式】第一行，一个正整数a;第二行，一个正整数b;【输出格式】若干行，每行一个数，为[a,b]内的奇数，按升序输出。",
+                baseCode: `a=【1】(input('请输入正整数a:'))
+b=int(input('请输入正整数b:'))
+while a【2】b:
+    if a【3】2!=0:
+        print(a)
+    a+=1`,
+                answerCode: `a=int(input('请输入正整数a:'))
+b=int(input('请输入正整数b:'))
+while a<=b:
+    if a%2!=0:
+        print(a)
+    a+=1`,
+                analysis: "解析：\n1. 【1】处应该填写 int，因为输入的是字符串类型，需要转换为整数类型才能进行比较和算术运算。\n2. 【2】处应该填写 <=，因为题目已经给定a≤b，要求包含a和b在内的所有奇数，所以条件应该是a小于等于b。\n3. 【3】处应该填写 %，因为一个数如果是奇数，那么它除以2的余数不等于0。"
+            },
+            {
+                id: 2,
+                title: "题目2：判断完全数",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n阅读以下材料内容，完成程序的补充。输入一个正整数，判断是否是完全数。完全数是一种特殊的自然数，它所有的真因子(即除了自身以外的约数)的和恰好等于它本身，例如6是一个完全数，6=1+2+3。调试运行样例：输入一个正整数：28，输出：是完全数!",
+                baseCode: `a =【1】(input("输入一个正整数："))
+s=0    #存储因子和
+for i in 【2】 (1,a):
+    if a % i == 0:    #判断i是不是a的因子
+        s=s+i    #将因子紧加到s中
+if a 【3】 s:
+    print("是完全数!")
+else:
+    print("不是完全数!")`,
+                answerCode: `a = int(input("输入一个正整数："))
+s=0    #存储因子和
+for i in range (1,a):
+    if a % i == 0:    #判断i是不是a的因子
+        s=s+i    #将因子紧加到s中
+if a == s:
+    print("是完全数!")
+else:
+    print("不是完全数!")`,
+                analysis: "解析：\n1. 【1】处应该填写 int，因为输入的是字符串类型，需要转换为整数类型。\n2. 【2】处应该填写 range，表示遍历从1到a-1的所有整数，寻找a的因子。\n3. 【3】处应该填写 ==，因为完全数的定义是数本身等于其所有真因子的和，所以需要判断a是否等于s。"
+            },
+            {
+                id: 3,
+                title: "题目3：商品折扣计算",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n输入购买某件商品的单价p和数量n，判断购买数量多少，如果数量大于10，则输出7折后的总金额，否则输出9折后的总金额。",
+                baseCode: `p=int(【1】("请输入一个不为零的整数："))
+n=int(input("请输入一个不为零的整数："))
+【2】  n>10:
+    print(【3】)
+else:
+   print(p*0.9*n)`,
+                answerCode: `p=int(input("请输入一个不为零的整数："))
+n=int(input("请输入一个不为零的整数："))
+if n>10:
+    print(p*0.7*n)
+else:
+   print(p*0.9*n)`,
+                analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的单价\n2. 【2】处应该填写 if，开始条件判断\n3. 【3】处应该填写 p*0.7*n，当数量大于10时打7折"
+            },
+            {
+                id: 4,
+                title: "题目4：商场优惠券计算",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】、【4】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n某商场店庆活动，赠送20元现金券，凡是在商场消费满200元即可使用。请完善以下程序，计算出实际支付的金额。",
+                baseCode: `i=int(【1】("请输入金额:"))
+if  i>=【2】:
+     i =【3】
+     print ("你实际支付",i)
+else【4】
+      print("对不起，你不能享受优惠")`,
+                answerCode: `i=int(input("请输入金额:"))
+if  i>=200:
+     i =i-20
+     print ("你实际支付",i)
+else:
+      print("对不起，你不能享受优惠")`,
+                analysis: "解析：\n1. 【1】处应该填写 input，用于接收消费金额\n2. 【2】处应该填写 200，满200元才能使用优惠券\n3. 【3】处应该填写 i-20，减去20元优惠券\n4. 【4】处应该填写 :，条件不满足的情况"
+            },
+            {
+                id: 5,
+                title: "题目5：成绩评定",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n输入两门学科成绩score1，score2（各学科满分为100分），如果两门成绩都大于等于60分就输出通过，否则就输出加油。",
+                baseCode: `score1=int(input("请输入第一门成绩："))
+score2=int(【1】("请输入第二门成绩："))
+if  score1>=60  【2】  score2>=60:
+     print("通过")
+【3】:
+     print("加油")`,
+                answerCode: `score1=int(input("请输入第一门成绩："))
+score2=int(input("请输入第二门成绩："))
+if  score1>=60  and  score2>=60:
+     print("通过")
+else:
+     print("加油")`,
+                analysis: "解析：\n1. 【1】处应该填写 input，用于接收第二门成绩\n2. 【2】处应该填写 and，表示两门成绩都要满足条件\n3. 【3】处应该填写 else，条件不满足的情况"
+            },
+            {
+                id: 6,
+                title: "题目6：整除判断",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n判断a是否能被b整除，如果能够整除，则输出a//b，否则输出a%b。",
+                baseCode: `a=【1】(input("请输入一个不为零的整数："))
+b=int(input("请输入一个不为零的整数："))
+if   a%b==0:
+      print(a//b)
+else:
+       print(【2】)`,
+                answerCode: `a=int(input("请输入一个不为零的整数："))
+b=int(input("请输入一个不为零的整数："))
+if   a%b==0:
+      print(a//b)
+else:
+       print(a%b)`,
+                analysis: "解析：\n1. 【1】处应该填写 int，将输入转换为整数\n2. 【2】处应该填写 a%b，求余数运算"
+            },
+            {
+                id: 7,
+                title: "题目7：阶乘计算",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n正整数的阶乘是所有小于及等于该数的正整数积。即：n！=1*2*3*4*…*n，举例：3的阶乘就是1*2*3，要求编写程序，计算正整数n的阶乘。",
+                baseCode: `n= 【1】(input("请输入一个正整数："))
+pd = 1
+for i in range(1, 【2】):
+      pd = 【3】
+print("pd =",pd)`,
+                answerCode: `n= int(input("请输入一个正整数："))
+pd = 1
+for i in range(1, n+1):
+      pd = pd * i
+print("pd =",pd)`,
+                analysis: "解析：\n1. 【1】处应该填写 int，将输入转换为整数\n2. 【2】处应该填写 n+1，因为range是左闭右开区间\n3. 【3】处应该填写 pd * i，累乘计算阶乘"
+            },
+            {
+                id: 8,
+                title: "题目8：偶数求和",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n计算1到100之间所有偶数的和。",
+                baseCode: `s=0     
+for i in range(2,【1】,【2】):
+       s =s+i
+print("结果为：",s)`,
+                answerCode: `s=0     
+for i in range(2,101,2):
+       s =s+i
+print("结果为：",s)`,
+                analysis: "解析：\n1. 【1】处应该填写 101，因为range是左闭右开区间\n2. 【2】处应该填写 2，步长为2，只取偶数"
+            },
+            {
+    id: 9,
+    title: "题目9：苹果数量计算",
+    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n小明买了一箱苹果，里面有10个，不幸的是箱子里混进了虫子。虫子每4小时能吃掉一个苹果，假设虫子在吃完一个苹果之前不会吃另一个，经过y(0<=y<=40)小时还有m个完整的苹果，输出m的值。(1)调试运行样例1:请你输入y的值：9，经过y小时小明还有完整的苹果数量为：7(2)调试运行样例2:请你输入y的值：13，经过y小时小明还有完整的苹果数量为：6。",
+    baseCode: `y=int(【1】("请你输入y的值:"))
+if y%4==0:
+  m=10-y//4
+【2】:
+  m=10-y//4-1
+print("经过y小时你还有完整的苹果数量为：",【3】)`,
+    answerCode: `y=int(input("请你输入y的值:"))
+if y%4==0:
+  m=10-y//4
+else:
+  m=10-y//4-1
+print("经过y小时你还有完整的苹果数量为：",m)`,
+    analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的小时数\n2. 【2】处应该填写 else，当y不能被4整除时的情况\n3. 【3】处应该填写 m，输出剩余的苹果数量"
+},
+{
+    id: 10,
+    title: "题目10：成绩等级评定",
+    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n为了对考试成绩划分等级，利用选择结构及关系运算符完成成绩等级判定，当输入一个分数，需要把分数的数据类型转换为整型，成绩等级判定依据为：(a)分数>=85为A；(b)分数小于85且大于等于70为B；(c)分数小于70且大于等于60为C；(d)小于60为D。(1)调试运行样例1:请输入成绩(正整数):80，您的等级为：B；(2)调试运行样例2:请输入成绩(正整数):90，您的等级为：A。",
+    baseCode: `n =int(【1】("请输入成绩(正整数):"))
+if n>=85:
+  grade ="A"
+elif 70<=n<=84:
+  【2】="B"
+elif 60<=n<=69:
+  grade="C"
+else:
+  【3】="D"
+print("您的等级为：",grade)`,
+    answerCode: `n =int(input("请输入成绩(正整数):"))
+if n>=85:
+  grade ="A"
+elif 70<=n<=84:
+  grade="B"
+elif 60<=n<=69:
+  grade="C"
+else:
+  grade="D"
+print("您的等级为：",grade)`,
+    analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的成绩\n2. 【2】处应该填写 grade，给grade变量赋值为B等级\n3. 【3】处应该填写 grade，给grade变量赋值为D等级"
+},
+{
+    id: 11,
+    title: "题目11：累加求和找n值",
+    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n输入一个正整数m,需要找到一个正整数n,使得从1开始连续加数直至n,即s=1+2+3+..n,当加到n时，s的值首次超过m。输出这个n的值。(1)调试运行样例1:请你输入m的值：1000，第n项的值是：45；(2)调试运行样例2:请你输入m的值：2000，第n项的值是：63。",
+    baseCode: `m=int(【1】("请你输入m的值:"))
+s=0
+n=0
+while s<=m:
+    n+=1
+    s+=【2】
+print("第n项的值是：",【3】)`,
+    answerCode: `m=int(input("请你输入m的值:"))
+s=0
+n=0
+while s<=m:
+    n+=1
+    s+=n
+print("第n项的值是：",n)`,
+    analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的m值\n2. 【2】处应该填写 n，将当前n值累加到s中\n3. 【3】处应该填写 n，输出首次使s超过m的n值"
+},
+{
+    id: 12,
+    title: "题目12：1到n的累加和",
+    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n该程序的功能是：输入一个整数n,编程输出1+2+3+……+n的和。程序请关注流程图、程序语句、程序结构、数据类型转换、表达式和算法等。调试运行样例：输入：3，输出结果：和是：6。",
+    baseCode: `n =【1】(input("请输入一个整数："))
+i=1
+s=0
+while i<=n:
+    s=s+【2】
+    i+=1
+print("和是：",【3】)`,
+    answerCode: `n =int(input("请输入一个整数："))
+i=1
+s=0
+while i<=n:
+    s=s+i
+    i+=1
+print("和是：",s)`,
+    analysis: "解析：\n1. 【1】处应该填写 int，将输入的字符串转换为整数\n2. 【2】处应该填写 i，将当前的i值累加到s中\n3. 【3】处应该填写 s，输出累加和的结果"
+},
+{
+    id: 13,
+    title: "题目13：模糊单据号码查找",
+    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n有一张由5位数构成的单据号码，其千位和百位上的数字模糊不清了，已知这个数能够被57或67整除，请使用计算机求这张单据号码。问题分析：假设这个5位数为abcde,则abcde=a*10000+b*1000+c*100+d*10+e。本问题中，已知万位、十位、个位上的数字a、d、e(可由用户输入),而千位和百位上的数字b、c是待求的，因此可以采用枚举法列举b、c所有可能的数字(0~9),每列列举一次，判断构造的号码能否被57或67整除，若能则输出该号码。调试运行样例：请输入万位上的数字：1，请输入十位上的数字：2，请输入个位上的数字：3，这张单据号码为：11323，这张单据号码为：13623，这张单据号码为：18023，这张单据号码为：19323。",
+    baseCode: `a=【1】(input("请输入万位上的数字："))
+d=int(input("请输入十位上的数字："))
+e=int(input("请输入个位上的数字："))
+【2】 b in range(0,10):
+    for c in range(0,10):
+        num=a*10000+b*1000+c*100+d*10+e
+        if(num%57==0 or num%67==0):
+            print("这张单据号码为：",【3】)`,
+    answerCode: `a=int(input("请输入万位上的数字："))
+d=int(input("请输入十位上的数字："))
+e=int(input("请输入个位上的数字："))
+for b in range(0,10):
+    for c in range(0,10):
+        num=a*10000+b*1000+c*100+d*10+e
+        if(num%57==0 or num%67==0):
+            print("这张单据号码为：",num)`,
+    analysis: "解析：\n1. 【1】处应该填写 int，将输入的万位数字转换为整数\n2. 【2】处应该填写 for，开始对千位数字b的循环枚举\n3. 【3】处应该填写 num，输出符合条件的单据号码"
+}
+        ];
+        
+        // 更新状态指示器
+        function updateStatusIndicator(status, message) {
+            const indicator = document.getElementById('status-indicator');
+            const statusDot = indicator.querySelector('.status-indicator');
+            
+            // 移除所有状态类
+            statusDot.classList.remove('status-ready', 'status-loading', 'status-error');
+            
+            // 添加新状态类
+            statusDot.classList.add(`status-${status}`);
+            
+            // 更新消息
+            indicator.innerHTML = `<span class="status-indicator status-${status}"></span>${message}`;
+        }
+        
+        // 初始化Pyodide
+        async function initializePyodide() {
+            const loadingElement = document.getElementById('loading');
+            const outputElement = document.getElementById('output');
+            
+            loadingElement.style.display = 'block';
+            outputElement.textContent = '正在初始化Python环境...';
+            updateStatusIndicator('loading', '环境加载中...');
+            
+            try {
+                // 显示加载进度
+                outputElement.textContent = '正在下载Pyodide (约5MB)，请耐心等待...';
+                
+                // 加载Pyodide
+                pyodide = await loadPyodide({
+                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/"
+                });
+                
+                // 设置标准输出重定向
+                await pyodide.runPythonAsync(`
+import sys
+import js
+from io import StringIO
+
+class JsOutput:
+    def write(self, text):
+        js.document.getElementById("output").textContent += text
+    def flush(self):
+        pass
+
+sys.stdout = JsOutput()
+sys.stderr = JsOutput()
+`);
+                
+                outputElement.textContent = '✅ Python环境已就绪！可以运行代码了。';
+                updateStatusIndicator('ready', '环境已就绪');
+                pyodideReady = true;
+                
+                // 启用运行按钮
+                document.getElementById('run-btn').disabled = false;
+                
+            } catch (error) {
+                console.error('Pyodide初始化失败:', error);
+                outputElement.textContent = `❌ 初始化失败: ${error.message}\n\n请检查网络连接并刷新页面重试。`;
+                updateStatusIndicator('error', '环境加载失败');
+            } finally {
+                loadingElement.style.display = 'none';
+            }
+        }
+        
+        // 显示输入对话框
+        function showInputDialog(prompt) {
+            return new Promise((resolve) => {
+                // 设置对话框提示
+                document.getElementById('input-prompt').textContent = prompt || '请输入:';
+                document.getElementById('input-value').value = '';
+                document.getElementById('input-validation').style.display = 'none';
+                
+                // 显示对话框
+                const dialog = document.getElementById('input-dialog');
+                dialog.style.display = 'flex';
+                
+                // 聚焦输入框
+                setTimeout(() => {
+                    document.getElementById('input-value').focus();
+                }, 100);
+                
+                // 验证输入
+                const validateInput = () => {
+                    const value = document.getElementById('input-value').value.trim();
+                    const validationElement = document.getElementById('input-validation');
+                    
+                    if (value === '') {
+                        validationElement.textContent = '输入不能为空，请输入有效的值';
+                        validationElement.style.display = 'block';
+                        return false;
+                    }
+                    
+                    // 检查是否为有效数字（针对需要数字输入的情况）
+                    if (prompt.includes('正整数') || prompt.includes('数字')) {
+                        if (!/^\d+$/.test(value)) {
+                            validationElement.textContent = '请输入有效的正整数';
+                            validationElement.style.display = 'block';
+                            return false;
+                        }
+                    }
+                    
+                    validationElement.style.display = 'none';
+                    return true;
+                };
+                
+                // 设置回调函数
+                const handleSubmit = () => {
+                    if (!validateInput()) {
+                        return;
+                    }
+                    
+                    const value = document.getElementById('input-value').value;
+                    dialog.style.display = 'none';
+                    resolve(value);
+                    cleanup();
+                };
+                
+                const handleCancel = () => {
+                    dialog.style.display = 'none';
+                    resolve(null); // 取消时返回null
+                    cleanup();
+                };
+                
+                const handleKeyPress = (e) => {
+                    if (e.key === 'Enter') {
+                        handleSubmit();
+                    } else if (e.key === 'Escape') {
+                        handleCancel();
+                    }
+                };
+                
+                // 清理事件监听器
+                const cleanup = () => {
+                    document.getElementById('input-submit').removeEventListener('click', handleSubmit);
+                    document.getElementById('input-cancel').removeEventListener('click', handleCancel);
+                    document.getElementById('input-value').removeEventListener('keydown', handleKeyPress);
+                    document.getElementById('input-value').removeEventListener('input', validateInput);
+                };
+                
+                // 添加事件监听器
+                document.getElementById('input-submit').addEventListener('click', handleSubmit);
+                document.getElementById('input-cancel').addEventListener('click', handleCancel);
+                document.getElementById('input-value').addEventListener('keydown', handleKeyPress);
+                document.getElementById('input-value').addEventListener('input', validateInput);
+            });
+        }
+        
+        // 清理代码中的不可见字符
+        function cleanCode(code) {
+            // 替换全角空格为半角空格，移除其他不可见字符
+            return code.replace(/\u3000/g, ' ').replace(/[^\x20-\x7E\u4e00-\u9fa5\n\r\t]/g, '');
+        }
+        
+        // 运行Python代码
+        async function runPythonCode() {
+            if (!pyodideReady) {
+                document.getElementById('output').textContent = '❌ Python环境尚未加载完成，请稍候...\n当前状态：' + document.getElementById('status-indicator').textContent;
+                return;
+            }
+            
+            if (isRunning) {
+                document.getElementById('output').textContent = '代码正在运行中，请稍候...';
+                return;
+            }
+            
+            isRunning = true;
+            const originalCode = document.getElementById('code').value;
+            const outputElement = document.getElementById('output');
+            
+            try {
+                // 清理代码中的不可见字符
+                const cleanedCode = cleanCode(originalCode);
+                
+                // 清空输出区域
+                outputElement.textContent = '代码执行中...\n';
+                
+                // 使用新的方法：代码转换
+                const processedCode = await convertInputCalls(cleanedCode);
+                
+                if (processedCode === null) {
+                    outputElement.textContent = '❌ 代码执行被取消：输入为空或无效';
+                    return;
+                }
+                
+                // 执行转换后的代码
+                await pyodide.runPythonAsync(processedCode);
+                
+            } catch (error) {
+                outputElement.textContent += `\n❌ 错误: ${error.message}`;
+            } finally {
+                isRunning = false;
+            }
+        }
+        
+        // 转换代码中的input调用
+        async function convertInputCalls(code) {
+            const lines = code.split('\n');
+            let processedLines = [];
+            
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i];
+                
+                // 检查是否包含input调用
+                if (line.includes('input(')) {
+                    // 提取完整的input调用（处理多行情况）
+                    let fullInputLine = line;
+                    let bracketCount = (line.match(/\(/g) || []).length - (line.match(/\)/g) || []).length;
+                    
+                    // 如果括号不匹配，继续读取下一行
+                    let j = i;
+                    while (bracketCount > 0 && j + 1 < lines.length) {
+                        j++;
+                        fullInputLine += '\n' + lines[j];
+                        bracketCount += (lines[j].match(/\(/g) || []).length - (lines[j].match(/\)/g) || []).length;
+                    }
+                    
+                    // 提取prompt
+                    const promptMatch = fullInputLine.match(/input\(([^)]+)\)/);
+                    let prompt = "请输入:";
+                    if (promptMatch) {
+                        const quoteMatch = promptMatch[1].match(/['"]([^'"]*)['"]/);
+                        if (quoteMatch) {
+                            prompt = quoteMatch[1];
+                        }
+                    }
+                    
+                    // 获取用户输入
+                    const userInput = await showInputDialog(prompt);
+                    
+                    // 如果用户取消输入，返回null
+                    if (userInput === null) {
+                        return null;
+                    }
+                    
+                    // 替换input调用
+                    if (fullInputLine.includes('=') && fullInputLine.includes('input(')) {
+                        // 变量赋值的情况
+                        const assignmentParts = fullInputLine.split('=');
+                        const varName = assignmentParts[0].trim();
+                        const restOfLine = assignmentParts.slice(1).join('=');
+                        const replacedRest = restOfLine.replace(/input\([^)]+\)/, `"${userInput}"`);
+                        processedLines.push(`${varName} = ${replacedRest}`);
+                    } else {
+                        // 直接使用input的情况
+                        const replacedLine = fullInputLine.replace(/input\([^)]+\)/, `"${userInput}"`);
+                        processedLines.push(replacedLine);
+                    }
+                    
+                    // 跳过已经处理的多行
+                    if (j > i) {
+                        i = j;
+                    }
+                } else {
+                    processedLines.push(line);
+                }
+            }
+            
+            return processedLines.join('\n');
+        }
+        
+        // 重置代码编辑器
+        function resetCode() {
+            if (currentQuestion) {
+                document.getElementById('code').value = currentQuestion.baseCode;
+            } else {
+                document.getElementById('code').value = '# Python代码已重置\nprint("Hello, Python!")';
+            }
+        }
+        
+        // 清除输出
+        function clearOutput() {
+            document.getElementById('output').textContent = '输出已清除';
+            document.getElementById('answer-analysis').style.display = 'none';
+        }
+        
+        // 显示答案解析
+        function showAnswerAnalysis() {
+            if (!currentQuestion) {
+                document.getElementById('answer-analysis').style.display = 'none';
+                return;
+            }
+            
+            const answerAnalysis = document.getElementById('answer-analysis');
+            const answerContent = document.getElementById('answer-content');
+            
+            answerContent.innerHTML = `
+                <p>正确代码：</p>
+                <div class="answer-code">${currentQuestion.answerCode}</div>
+                <p>${currentQuestion.analysis.replace(/\n/g, '<br>')}</p>
+            `;
+            
+            answerAnalysis.style.display = 'block';
+        }
+        
+        // 回到首页
+        function goToHome() {
+            // 隐藏题目容器
+            document.getElementById('question-container').style.display = 'none';
+            
+            // 隐藏答案解析
+            document.getElementById('answer-analysis').style.display = 'none';
+            
+            // 重置代码编辑器到默认状态
+            document.getElementById('code').value = `# Python环境已就绪
+# 以下是一个简单的Python代码示例，请点击"运行代码"测试
+
+def fibonacci(n):
+    """生成斐波那契数列"""
+    a, b = 0, 1
+    result = []
+    for _ in range(n):
+        result.append(a)
+        a, b = b, a + b
+    return result
+
+# 计算前10个斐波那契数
+fib_sequence = fibonacci(10)
+print("斐波那契数列前10项:")
+print(fib_sequence)
+
+# 简单的数学计算
+print("\\n数学计算示例:")
+x = 15
+y = 4
+print(f"{x} + {y} = {x + y}")
+print(f"{x} * {y} = {x * y}")
+
+# 列表推导式示例
+squares = [i**2 for i in range(1, 6)]
+print(f"\\n1到5的平方: {squares}")`;
+            
+            // 清除输出
+            clearOutput();
+            
+            // 重置当前题目
+            currentQuestion = null;
+        }
+        
+        // 事件监听
+        document.getElementById('run-btn').addEventListener('click', runPythonCode);
+        document.getElementById('reset-btn').addEventListener('click', resetCode);
+        document.getElementById('clear-btn').addEventListener('click', clearOutput);
+        document.getElementById('answer-btn').addEventListener('click', showAnswerAnalysis);
+        document.getElementById('random-question-btn').addEventListener('click', loadRandomQuestion);
+        
+        // 页面加载完成后初始化
+        window.addEventListener('load', function() {
+            // 初始禁用运行按钮
+            document.getElementById('run-btn').disabled = true;
+            // 初始化Pyodide
+            initializePyodide();
+        });
+        
+        // 加载随机题目函数
+        function loadRandomQuestion() {
+            if (!pyodideReady) {
+                alert('Python环境尚未加载完成，请稍候再试。');
+                return;
+            }
+            
+            const questionContainer = document.getElementById('question-container');
+            const questionTitle = document.getElementById('question-title');
+            const questionDescription = document.getElementById('question-description');
+            
+            // 随机选择一个题目
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const question = questions[randomIndex];
+            currentQuestion = question;
+            
+            // 显示题目容器
+            questionContainer.style.display = 'block';
+            
+            // 设置题目内容
+            questionTitle.textContent = question.title;
+            questionDescription.textContent = question.fullDescription;
+            
+            // 设置代码编辑器内容
+            document.getElementById('code').value = question.baseCode;
+            
+            // 隐藏答案解析
+            document.getElementById('answer-analysis').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
