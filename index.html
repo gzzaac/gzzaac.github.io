@@ -13,15 +13,28 @@
         }
         
         body {
-            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.85)), 
-                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23667eea"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%23764ba2" stroke-width="1"/></svg>');
-            background-size: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23667eea"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%23764ba2" stroke-width="1"/></svg>');
+            background-size: 100px 100px;
+            z-index: -1;
         }
         
         .container {
@@ -220,15 +233,18 @@
     </div>
 
     <script>
-        // 图片加载失败时的备用方案
+        // 页面加载完成后确保背景显示
         document.addEventListener('DOMContentLoaded', function() {
-            const bgImage = new Image();
-            bgImage.onerror = function() {
-                console.log('背景图片加载失败，使用备用背景');
-                document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            };
-            // 使用内联SVG作为背景，避免外部图片加载问题
-            bgImage.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23667eea"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%23764ba2" stroke-width="1"/></svg>';
+            // 添加备用背景方案
+            const body = document.body;
+            const computedStyle = window.getComputedStyle(body);
+            const bgColor = computedStyle.backgroundColor;
+            
+            // 如果背景颜色是默认值（通常是白色），则应用备用背景
+            if (bgColor === 'rgba(0, 0, 0, 0)' || bgColor === 'rgb(255, 255, 255)') {
+                console.log('应用备用背景方案');
+                body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            }
         });
     </script>
 </body>
