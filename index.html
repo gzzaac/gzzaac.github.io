@@ -39,7 +39,7 @@
         
         .container {
             width: 90%;
-            max-width: 1200px;
+            max-width: 1400px; /* 增加最大宽度以容纳更多内容 */
             margin: 0 auto;
         }
         
@@ -83,7 +83,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
+            gap: 20px; /* 减小间距以容纳更多卡片 */
             margin-top: 20px;
         }
         
@@ -91,12 +91,13 @@
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(12px);
             border-radius: 15px;
-            padding: 30px;
-            width: 300px;
+            padding: 25px; /* 稍微减小内边距 */
+            width: 280px; /* 调整卡片宽度 */
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.4);
+            flex: 0 0 auto; /* 防止卡片过度拉伸 */
         }
         
         .card:hover {
@@ -108,13 +109,14 @@
         .card h2 {
             color: #2196F3;
             margin-bottom: 15px;
-            font-size: 1.8rem;
+            font-size: 1.7rem; /* 稍微减小字体大小 */
         }
         
         .card p {
             color: #555;
             margin-bottom: 20px;
             line-height: 1.6;
+            font-size: 0.95rem; /* 稍微减小字体大小 */
         }
         
         .btn {
@@ -127,6 +129,7 @@
             font-weight: bold;
             transition: all 0.3s;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            font-size: 0.95rem; /* 稍微减小字体大小 */
         }
         
         .btn:hover {
@@ -150,18 +153,63 @@
             background: linear-gradient(45deg, #2196F3, #03A9F4);
         }
         
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .card {
+                width: 260px; /* 在中等屏幕上进一步调整宽度 */
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .nav-cards {
+                gap: 15px; /* 进一步减小间距 */
+            }
+            
+            .card {
+                width: 240px; /* 在小屏幕上进一步调整宽度 */
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .nav-cards {
+                flex-wrap: wrap; /* 允许换行 */
+            }
+            
+            .card {
+                width: calc(50% - 20px); /* 两列布局 */
+                max-width: 300px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .nav-cards {
                 flex-direction: column;
                 align-items: center;
+                gap: 20px;
             }
             
             .card {
                 width: 90%;
+                max-width: 400px;
             }
             
             h1 {
                 font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+            
+            .card {
+                width: 100%;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -174,7 +222,7 @@
         </header>
         
         <div class="notification-bar">
-            📢 解决程序代码块不能分段缩进显示及出框问题，题库新增300题。本站题库持续开放更新，助力大家深化理解、夯实基础。学无止境，气有浩然！
+            📢 新增Python程序设计题，Python代码在浏览器运行无需服务器支持；解决选择题中程序代码块不能分段缩进显示及出框问题，题库新增300题。本站题库持续开放更新，助力大家深化理解、夯实基础。学无止境，气有浩然！
         </div>
         
         <div class="nav-cards">
