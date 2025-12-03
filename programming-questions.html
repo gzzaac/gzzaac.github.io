@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>正安二中信息技术学业水平测试—python程序题</title>
     <style>
+        /* 原有CSS样式保持不变 */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -642,15 +643,21 @@ print(f"\n1到5的平方: {squares}")</textarea>
         </div>
     </div>
 
-    <!-- 加载Pyodide -->
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <!-- 混合加载方案：本地优先，CDN后备 -->
     <script>
+        // Pyodide配置
+        const PYODIDE_CONFIG = {
+            LOCAL_PATH: "./pyodide/",  // 本地核心版路径
+            CDN_PATH: "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/",  // CDN后备路径
+            VERSION: "0.29.0"
+        };
+        
         let pyodide;
         let currentQuestion = null;
         let isRunning = false;
         let pyodideReady = false;
         
-        // Python题目数据
+        // Python题目数据（保持不变）
         const questions = [
             {
                 id: 1,
@@ -780,7 +787,7 @@ pd = 1
 for i in range(1, n+1):
       pd = pd * i
 print("pd =",pd)`,
-                analysis: "解析：\n1. 【1】处应该填写 int，括号内提示“请输入一个正整数”，而 input 函数返回的数据类型属于字符串，所以需要使用整数型数据类型转换函数 int 将其转换为整数。\n2. 【2】处应该填写 n+1，依题意，要计算正整数 n 的阶乘，range（）函数返回的列表要包含 n 本身，由题可知，起始值为 1，步长默认为 1，所以终值为 n+1，返回列表元素最后一位就是 n 本身。\n3. 【3】处应该填写 pd * i，由②可知，代码返回列表元素 i=[1,2,3,……,n],代码使用变量 pd 表示阶乘的乘积且起始值为 1，i=1 时，pd=pd*1，此时 pd 的值为 1*1=1；i=2 时，pd=pd*2，此时 pd 的值为 2*1=2；i=3 时，pd=pd*3，此时 pd 的值为 2*3=6，因此，遍历到最后一个元素 i=n 时终止循环，pd=pd*i。"
+                analysis: "解析：\n1. 【1】处应该填写 int，括号内提示"请输入一个正整数"，而 input 函数返回的数据类型属于字符串，所以需要使用整数型数据类型转换函数 int 将其转换为整数。\n2. 【2】处应该填写 n+1，依题意，要计算正整数 n 的阶乘，range（）函数返回的列表要包含 n 本身，由题可知，起始值为 1，步长默认为 1，所以终值为 n+1，返回列表元素最后一位就是 n 本身。\n3. 【3】处应该填写 pd * i，由②可知，代码返回列表元素 i=[1,2,3,……,n],代码使用变量 pd 表示阶乘的乘积且起始值为 1，i=1 时，pd=pd*1，此时 pd 的值为 1*1=1；i=2 时，pd=pd*2，此时 pd 的值为 2*1=2；i=3 时，pd=pd*3，此时 pd 的值为 2*3=6，因此，遍历到最后一个元素 i=n 时终止循环，pd=pd*i。"
             },
             {
                 id: 8,
@@ -797,28 +804,28 @@ print("结果为：",s)`,
                 analysis: "解析：\n1. 【1】处应该填写 101，因为range是左闭右开区间\n2. 【2】处应该填写 2，步长为2，只取偶数"
             },
             {
-    id: 9,
-    title: "题目9：苹果数量计算",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n小明买了一箱苹果，里面有10个，不幸的是箱子里混进了虫子。虫子每4小时能吃掉一个苹果，假设虫子在吃完一个苹果之前不会吃另一个，经过y(0<=y<=40)小时还有m个完整的苹果，输出m的值。(1)调试运行样例1:请你输入y的值：9，经过y小时小明还有完整的苹果数量为：7(2)调试运行样例2:请你输入y的值：13，经过y小时小明还有完整的苹果数量为：6。",
-    baseCode: `y=int(【1】("请你输入y的值:"))
+                id: 9,
+                title: "题目9：苹果数量计算",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n小明买了一箱苹果，里面有10个，不幸的是箱子里混进了虫子。虫子每4小时能吃掉一个苹果，假设虫子在吃完一个苹果之前不会吃另一个，经过y(0<=y<=40)小时还有m个完整的苹果，输出m的值。(1)调试运行样例1:请你输入y的值：9，经过y小时小明还有完整的苹果数量为：7(2)调试运行样例2:请你输入y的值：13，经过y小时小明还有完整的苹果数量为：6。",
+                baseCode: `y=int(【1】("请你输入y的值:"))
 if y%4==0:
   m=10-y//4
 【2】:
   m=10-y//4-1
 print("经过y小时你还有完整的苹果数量为：",【3】)`,
-    answerCode: `y=int(input("请你输入y的值:"))
+                answerCode: `y=int(input("请你输入y的值:"))
 if y%4==0:
   m=10-y//4
 else:
   m=10-y//4-1
 print("经过y小时你还有完整的苹果数量为：",m)`,
-    analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的小时数\n2. 【2】处应该填写 else，当y不能被4整除时的情况\n3. 【3】处应该填写 m，输出剩余的苹果数量"
-},
-{
-    id: 10,
-    title: "题目10：成绩等级评定",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n为了对考试成绩划分等级，利用选择结构及关系运算符完成成绩等级判定，当输入一个分数，需要把分数的数据类型转换为整型，成绩等级判定依据为：(a)分数>=85为A；(b)分数小于85且大于等于70为B；(c)分数小于70且大于等于60为C；(d)小于60为D。(1)调试运行样例1:请输入成绩(正整数):80，您的等级为：B；(2)调试运行样例2:请输入成绩(正整数):90，您的等级为：A。",
-    baseCode: `n =int(【1】("请输入成绩(正整数):"))
+                analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的小时数\n2. 【2】处应该填写 else，当y不能被4整除时的情况\n3. 【3】处应该填写 m，输出剩余的苹果数量"
+            },
+            {
+                id: 10,
+                title: "题目10：成绩等级评定",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n为了对考试成绩划分等级，利用选择结构及关系运算符完成成绩等级判定，当输入一个分数，需要把分数的数据类型转换为整型，成绩等级判定依据为：(a)分数>=85为A；(b)分数小于85且大于等于70为B；(c)分数小于70且大于等于60为C；(d)小于60为D。(1)调试运行样例1:请输入成绩(正整数):80，您的等级为：B；(2)调试运行样例2:请输入成绩(正整数):90，您的等级为：A。",
+                baseCode: `n =int(【1】("请输入成绩(正整数):"))
 if n>=85:
   grade ="A"
 elif 70<=n<=84:
@@ -828,7 +835,7 @@ elif 60<=n<=69:
 else:
   【3】="D"
 print("您的等级为：",grade)`,
-    answerCode: `n =int(input("请输入成绩(正整数):"))
+                answerCode: `n =int(input("请输入成绩(正整数):"))
 if n>=85:
   grade ="A"
 elif 70<=n<=84:
@@ -838,53 +845,53 @@ elif 60<=n<=69:
 else:
   grade="D"
 print("您的等级为：",grade)`,
-    analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的成绩\n2. 【2】处应该填写 grade，给grade变量赋值为B等级\n3. 【3】处应该填写 grade，给grade变量赋值为D等级"
-},
-{
-    id: 11,
-    title: "题目11：累加求和找n值",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n输入一个正整数m,需要找到一个正整数n,使得从1开始连续加数直至n,即s=1+2+3+..n,当加到n时，s的值首次超过m。输出这个n的值。(1)调试运行样例1:请你输入m的值：1000，第n项的值是：45；(2)调试运行样例2:请你输入m的值：2000，第n项的值是：63。",
-    baseCode: `m=int(【1】("请你输入m的值:"))
+                analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的成绩\n2. 【2】处应该填写 grade，给grade变量赋值为B等级\n3. 【3】处应该填写 grade，给grade变量赋值为D等级"
+            },
+            {
+                id: 11,
+                title: "题目11：累加求和找n值",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n输入一个正整数m,需要找到一个正整数n,使得从1开始连续加数直至n,即s=1+2+3+..n,当加到n时，s的值首次超过m。输出这个n的值。(1)调试运行样例1:请你输入m的值：1000，第n项的值是：45；(2)调试运行样例2:请你输入m的值：2000，第n项的值是：63。",
+                baseCode: `m=int(【1】("请你输入m的值:"))
 s=0
 n=0
 while s<=m:
     n+=1
     s+=【2】
 print("第n项的值是：",【3】)`,
-    answerCode: `m=int(input("请你输入m的值:"))
+                answerCode: `m=int(input("请你输入m的值:"))
 s=0
 n=0
 while s<=m:
     n+=1
     s+=n
 print("第n项的值是：",n)`,
-    analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的m值\n2. 【2】处应该填写 n，将当前n值累加到s中\n3. 【3】处应该填写 n，输出首次使s超过m的n值"
-},
-{
-    id: 12,
-    title: "题目12：1到n的累加和",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n该程序的功能是：输入一个整数n,编程输出1+2+3+……+n的和。程序请关注流程图、程序语句、程序结构、数据类型转换、表达式和算法等。调试运行样例：输入：3，输出结果：和是：6。",
-    baseCode: `n =【1】(input("请输入一个整数："))
+                analysis: "解析：\n1. 【1】处应该填写 input，用于接收用户输入的m值\n2. 【2】处应该填写 n，将当前n值累加到s中\n3. 【3】处应该填写 n，输出首次使s超过m的n值"
+            },
+            {
+                id: 12,
+                title: "题目12：1到n的累加和",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n该程序的功能是：输入一个整数n,编程输出1+2+3+……+n的和。程序请关注流程图、程序语句、程序结构、数据类型转换、表达式和算法等。调试运行样例：输入：3，输出结果：和是：6。",
+                baseCode: `n =【1】(input("请输入一个整数："))
 i=1
 s=0
 while i<=n:
     s=s+【2】
     i+=1
 print("和是：",【3】)`,
-    answerCode: `n =int(input("请输入一个整数："))
+                answerCode: `n =int(input("请输入一个整数："))
 i=1
 s=0
 while i<=n:
     s=s+i
     i+=1
 print("和是：",s)`,
-    analysis: "解析：\n1. 【1】处应该填写 int，将输入的字符串转换为整数\n2. 【2】处应该填写 i，将当前的i值累加到s中\n3. 【3】处应该填写 s，输出累加和的结果"
-},
-{
-    id: 13,
-    title: "题目13：模糊单据号码查找",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n有一张由5位数构成的单据号码，其千位和百位上的数字模糊不清了，已知这个数能够被57或67整除，请使用计算机求这张单据号码。问题分析：假设这个5位数为abcde,则abcde=a*10000+b*1000+c*100+d*10+e。本问题中，已知万位、十位、个位上的数字a、d、e(可由用户输入),而千位和百位上的数字b、c是待求的，因此可以采用枚举法列举b、c所有可能的数字(0~9),每列列举一次，判断构造的号码能否被57或67整除，若能则输出该号码。调试运行样例：请输入万位上的数字：1，请输入十位上的数字：2，请输入个位上的数字：3，这张单据号码为：11323，这张单据号码为：13623，这张单据号码为：18023，这张单据号码为：19323。",
-    baseCode: `a=【1】(input("请输入万位上的数字："))
+                analysis: "解析：\n1. 【1】处应该填写 int，将输入的字符串转换为整数\n2. 【2】处应该填写 i，将当前的i值累加到s中\n3. 【3】处应该填写 s，输出累加和的结果"
+            },
+            {
+                id: 13,
+                title: "题目13：模糊单据号码查找",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n有一张由5位数构成的单据号码，其千位和百位上的数字模糊不清了，已知这个数能够被57或67整除，请使用计算机求这张单据号码。问题分析：假设这个5位数为abcde,则abcde=a*10000+b*1000+c*100+d*10+e。本问题中，已知万位、十位、个位上的数字a、d、e(可由用户输入),而千位和百位上的数字b、c是待求的，因此可以采用枚举法列举b、c所有可能的数字(0~9),每列列举一次，判断构造的号码能否被57或67整除，若能则输出该号码。调试运行样例：请输入万位上的数字：1，请输入十位上的数字：2，请输入个位上的数字：3，这张单据号码为：11323，这张单据号码为：13623，这张单据号码为：18023，这张单据号码为：19323。",
+                baseCode: `a=【1】(input("请输入万位上的数字："))
 d=int(input("请输入十位上的数字："))
 e=int(input("请输入个位上的数字："))
 【2】 b in range(0,10):
@@ -892,7 +899,7 @@ e=int(input("请输入个位上的数字："))
         num=a*10000+b*1000+c*100+d*10+e
         if(num%57==0 or num%67==0):
             print("这张单据号码为：",【3】)`,
-    answerCode: `a=int(input("请输入万位上的数字："))
+                answerCode: `a=int(input("请输入万位上的数字："))
 d=int(input("请输入十位上的数字："))
 e=int(input("请输入个位上的数字："))
 for b in range(0,10):
@@ -900,48 +907,48 @@ for b in range(0,10):
         num=a*10000+b*1000+c*100+d*10+e
         if(num%57==0 or num%67==0):
             print("这张单据号码为：",num)`,
-    analysis: "解析：\n1. 【1】处应该填写 int，将输入的万位数字转换为整数\n2. 【2】处应该填写 for，开始对千位数字b的循环枚举\n3. 【3】处应该填写 num，输出符合条件的单据号码"
-},
-{
-    id: 14,
-    title: "题目14：图书采购折扣计算",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n某图书超市举办图书节展销活动，图书采购满50本以上打五折，少于50本但满20本以上打7折，少于20本打九折。某班主任计划采购一批课外阅读书籍奖励班上坚持阅读打卡的同学，因为书籍种类数量不同，于是为她设计一个采购程序，方便计算在该超市采购图书时实际应付款金额。",
-    baseCode: "n=int(【1】(\"请输入购买的图书数量：\"))\nprice=float(input(\"请输入图书单价：\"))\nif n>=50:\n    j=0.5\nif 50>n>=20:\n    j=【2】\nif 20>n>=1:\n    j=0.9\ntotal=price*j*n\nprint(\"实际应付款金额为：\",【3】,\"元\")",
-    answerCode: "n=int(input(\"请输入购买的图书数量：\"))\nprice=float(input(\"请输入图书单价：\"))\nif n>=50:\n    j=0.5\nif 50>n>=20:\n    j=0.7\nif 20>n>=1:\n    j=0.9\ntotal=price*j*n\nprint(\"实际应付款金额为：\",total,\"元\")",
-    analysis: "解析：\n1. 【1】处应该填写 input，因为需要从用户处获取图书数量的输入。\n2. 【2】处应该填写 0.7，根据题目描述，购买数量在20-49本之间（包含20本）打7折。\n3. 【3】处应该填写 total，这是计算出的实际应付款金额，需要输出给用户。"
-},
-{
-    id: 15,
-    title: "题目15：运动手环卡路里计算",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n运动手环是一种比较流行的穿戴式设备，通过手环记录日常生活中的锻炼、睡眠等实时数据，并将这些数据与手机、平板等同步，起到通过数据指导健康生活的作用。部分手环换算卡路里的公式是：卡路里(keal)=体重(kg)×步行距离(km)×1.036现要求输入体重和步行距离，输出对应的卡路里。",
-    baseCode: "w=float(input(\"请输入你的体重(kg):\"))\ndis=float(【1】(\"请输入你的步行距离(km):\"))\nkcal=w*【2】*1.036\nprint(\"你消耗的卡路里是：\",【3】)",
-    answerCode: "w=float(input(\"请输入你的体重(kg):\"))\ndis=float(input(\"请输入你的步行距离(km):\"))\nkcal=w*dis*1.036\nprint(\"你消耗的卡路里是：\",kcal)",
-    analysis: "解析：\n1. 【1】处应该填写 input，因为需要从用户处获取步行距离的输入。\n2. 【2】处应该填写 dis，根据题目给出的公式：卡路里=体重×步行距离×1.036。\n3. 【3】处应该填写 kcal，这是计算出的卡路里值，需要输出给用户。"
-},
-{
-    id: 16,
-    title: "题目16：机器人竞赛计分程序",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n学生参加机器人竞赛活动取得前六名成绩，并将名次列入班级积分。计分规则如下表所示：现要求输入选手名次，可获得选手计分。名次第1名，计分7；名次第2名，计分5；名次第3名，计分4；名次第4名，计分3；名次其他，计分0。",
-    baseCode: "m=【1】(input(\"输入名次为：\"))\n【2】  m==1:\n    print(\"所得计分为：7\")\nelif m==2:\n    print(\"所得计分为：5\")\nelif m==3:\n    print(\"所得计分为：4\")\nelif m==4:\n    print(\"所得计分为：3\")\n【3】:\n    print(\"所得计分为：0\")",
-    answerCode: "m=int(input(\"输入名次为：\"))\nif m==1:\n    print(\"所得计分为：7\")\nelif m==2:\n    print(\"所得计分为：5\")\nelif m==3:\n    print(\"所得计分为：4\")\nelif m==4:\n    print(\"所得计分为：3\")\nelse:\n    print(\"所得计分为：0\")",
-    analysis: "解析：\n1. 【1】处应该填写 int，因为输入的是字符串类型，需要转换为整数类型才能进行数值比较。\n2. 【2】处应该填写 if，用于开始条件判断，检查名次是否为1。\n3. 【3】处应该填写 else，用于处理所有不符合前面条件的情况（即名次不是1-4的情况）。"
-},
-{
-    id: 17,
-    title: "题目17：学生成绩分级程序",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】、【4】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n利用计算机编程对学生的成绩进行分级，其划分标准为：小于60分为努力加油；60～70分为及格；70～80分为良好；80～90分为优秀，90～100分为非常棒。输入你的成绩，最终输出分级信息。",
-    baseCode: "score=【1】(input(\"请输入你的成绩：\"))\nif score>=90 【2】 score<=100:\n    print(\"非常棒!\")\nelif score>=80 and score<90:\n    print(\"优秀!\")\nelif score>=70 and score<80:\n    print(\"良好!\")\nelif score>=60 and score<70:\n    print(\"【3】\")\nelse:\n    【4】(\"要努力加油!\")",
-    answerCode: "score=int(input(\"请输入你的成绩：\"))\nif score>=90 and score<=100:\n    print(\"非常棒!\")\nelif score>=80 and score<90:\n    print(\"优秀!\")\nelif score>=70 and score<80:\n    print(\"良好!\")\nelif score>=60 and score<70:\n    print(\"及格!\")\nelse:\n    print(\"要努力加油!\")",
-    analysis: "解析：\n1. 【1】处应该填写 int，因为成绩是数值类型，需要将输入的字符串转换为整数。\n2. 【2】处应该填写 and，这是一个逻辑运算符，表示需要同时满足 score>=90 和 score<=100 两个条件。\n3. 【3】处应该填写 及格!，根据题目描述，60-70分对应的是\"及格\"。\n4. 【4】处应该填写 print，这是Python的输出函数，用于显示信息。"
-},
-{
-    id: 18,
-    title: "题目18：网约车计价程序",
-    fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n网约车出行都按里程计价，请根据以下某网约车平台的计价方式，完善程序，根据输入的里程数(公里),计算出行程订单的费用(元)。起步价：5元；里程范围：3公里内(包含3公里);当超出里程范围时，将在起步价的基础上根据里程费进行累加计费。里程费：1.5元/公里。远途费：超出8公里-15公里，加收远途费1元/公里；超出15公里后，加收远途费1.5元/公里。",
-    baseCode: "s=【1】(input(\"请输入里程数(公里):\"))\nmoney=0\nif s<=3:\n    money=5\n【2】 3<s<=8:\n    money=5+(s-3)*1.5\nelif 8<s<=【3】:\n    money=5+(s-3)*1.5+(s-8)*1\nelse:\n    money=5+(s-3)*1.5+(s-15)*1.5\nprint(\"此次行程产生的费用为(元):\",money)",
-    answerCode: "s=float(input(\"请输入里程数(公里):\"))\nmoney=0\nif s<=3:\n    money=5\nelif 3<s<=8:\n    money=5+(s-3)*1.5\nelif 8<s<=15:\n    money=5+(s-3)*1.5+(s-8)*1\nelse:\n    money=5+(s-3)*1.5+(s-15)*1.5\nprint(\"此次行程产生的费用为(元):\",money)",
-    analysis: "解析：\n1. 【1】处应该填写 float，因为里程数可能是小数（如3.5公里），需要转换为浮点数才能进行精确计算。\n2. 【2】处应该填写 elif，用于连接多个条件判断，当前面的if条件不满足时检查下一个条件。\n3. 【3】处应该填写 15，根据题目描述，8-15公里是一个区间，在这个区间内加收1元/公里的远途费。"
-}
+                analysis: "解析：\n1. 【1】处应该填写 int，将输入的万位数字转换为整数\n2. 【2】处应该填写 for，开始对千位数字b的循环枚举\n3. 【3】处应该填写 num，输出符合条件的单据号码"
+            },
+            {
+                id: 14,
+                title: "题目14：图书采购折扣计算",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n某图书超市举办图书节展销活动，图书采购满50本以上打五折，少于50本但满20本以上打7折，少于20本打九折。某班主任计划采购一批课外阅读书籍奖励班上坚持阅读打卡的同学，因为书籍种类数量不同，于是为她设计一个采购程序，方便计算在该超市采购图书时实际应付款金额。",
+                baseCode: "n=int(【1】(\"请输入购买的图书数量：\"))\nprice=float(input(\"请输入图书单价：\"))\nif n>=50:\n    j=0.5\nif 50>n>=20:\n    j=【2】\nif 20>n>=1:\n    j=0.9\ntotal=price*j*n\nprint(\"实际应付款金额为：\",【3】,\"元\")",
+                answerCode: "n=int(input(\"请输入购买的图书数量：\"))\nprice=float(input(\"请输入图书单价：\"))\nif n>=50:\n    j=0.5\nif 50>n>=20:\n    j=0.7\nif 20>n>=1:\n    j=0.9\ntotal=price*j*n\nprint(\"实际应付款金额为：\",total,\"元\")",
+                analysis: "解析：\n1. 【1】处应该填写 input，因为需要从用户处获取图书数量的输入。\n2. 【2】处应该填写 0.7，根据题目描述，购买数量在20-49本之间（包含20本）打7折。\n3. 【3】处应该填写 total，这是计算出的实际应付款金额，需要输出给用户。"
+            },
+            {
+                id: 15,
+                title: "题目15：运动手环卡路里计算",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n运动手环是一种比较流行的穿戴式设备，通过手环记录日常生活中的锻炼、睡眠等实时数据，并将这些数据与手机、平板等同步，起到通过数据指导健康生活的作用。部分手环换算卡路里的公式是：卡路里(keal)=体重(kg)×步行距离(km)×1.036现要求输入体重和步行距离，输出对应的卡路里。",
+                baseCode: "w=float(input(\"请输入你的体重(kg):\"))\ndis=float(【1】(\"请输入你的步行距离(km):\"))\nkcal=w*【2】*1.036\nprint(\"你消耗的卡路里是：\",【3】)",
+                answerCode: "w=float(input(\"请输入你的体重(kg):\"))\ndis=float(input(\"请输入你的步行距离(km):\"))\nkcal=w*dis*1.036\nprint(\"你消耗的卡路里是：\",kcal)",
+                analysis: "解析：\n1. 【1】处应该填写 input，因为需要从用户处获取步行距离的输入。\n2. 【2】处应该填写 dis，根据题目给出的公式：卡路里=体重×步行距离×1.036。\n3. 【3】处应该填写 kcal，这是计算出的卡路里值，需要输出给用户。"
+            },
+            {
+                id: 16,
+                title: "题目16：机器人竞赛计分程序",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n学生参加机器人竞赛活动取得前六名成绩，并将名次列入班级积分。计分规则如下表所示：现要求输入选手名次，可获得选手计分。名次第1名，计分7；名次第2名，计分5；名次第3名，计分4；名次第4名，计分3；名次其他，计分0。",
+                baseCode: "m=【1】(input(\"输入名次为：\"))\n【2】  m==1:\n    print(\"所得计分为：7\")\nelif m==2:\n    print(\"所得计分为：5\")\nelif m==3:\n    print(\"所得计分为：4\")\nelif m==4:\n    print(\"所得计分为：3\")\n【3】:\n    print(\"所得计分为：0\")",
+                answerCode: "m=int(input(\"输入名次为：\"))\nif m==1:\n    print(\"所得计分为：7\")\nelif m==2:\n    print(\"所得计分为：5\")\nelif m==3:\n    print(\"所得计分为：4\")\nelif m==4:\n    print(\"所得计分为：3\")\nelse:\n    print(\"所得计分为：0\")",
+                analysis: "解析：\n1. 【1】处应该填写 int，因为输入的是字符串类型，需要转换为整数类型才能进行数值比较。\n2. 【2】处应该填写 if，用于开始条件判断，检查名次是否为1。\n3. 【3】处应该填写 else，用于处理所有不符合前面条件的情况（即名次不是1-4的情况）。"
+            },
+            {
+                id: 17,
+                title: "题目17：学生成绩分级程序",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】、【4】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n利用计算机编程对学生的成绩进行分级，其划分标准为：小于60分为努力加油；60～70分为及格；70～80分为良好；80～90分为优秀，90～100分为非常棒。输入你的成绩，最终输出分级信息。",
+                baseCode: "score=【1】(input(\"请输入你的成绩：\"))\nif score>=90 【2】 score<=100:\n    print(\"非常棒!\")\nelif score>=80 and score<90:\n    print(\"优秀!\")\nelif score>=70 and score<80:\n    print(\"良好!\")\nelif score>=60 and score<70:\n    print(\"【3】\")\nelse:\n    【4】(\"要努力加油!\")",
+                answerCode: "score=int(input(\"请输入你的成绩：\"))\nif score>=90 and score<=100:\n    print(\"非常棒!\")\nelif score>=80 and score<90:\n    print(\"优秀!\")\nelif score>=70 and score<80:\n    print(\"良好!\")\nelif score>=60 and score<70:\n    print(\"及格!\")\nelse:\n    print(\"要努力加油!\")",
+                analysis: "解析：\n1. 【1】处应该填写 int，因为成绩是数值类型，需要将输入的字符串转换为整数。\n2. 【2】处应该填写 and，这是一个逻辑运算符，表示需要同时满足 score>=90 和 score<=100 两个条件。\n3. 【3】处应该填写 及格!，根据题目描述，60-70分对应的是\"及格\"。\n4. 【4】处应该填写 print，这是Python的输出函数，用于显示信息。"
+            },
+            {
+                id: 18,
+                title: "题目18：网约车计价程序",
+                fullDescription: "在作答界面上删除基础程序中序号【1】、【2】、【3】,并在删除处填写正确的代码并调试运行，实现题目所描述功能。\n\n网约车出行都按里程计价，请根据以下某网约车平台的计价方式，完善程序，根据输入的里程数(公里),计算出行程订单的费用(元)。起步价：5元；里程范围：3公里内(包含3公里);当超出里程范围时，将在起步价的基础上根据里程费进行累加计费。里程费：1.5元/公里。远途费：超出8公里-15公里，加收远途费1元/公里；超出15公里后，加收远途费1.5元/公里。",
+                baseCode: "s=【1】(input(\"请输入里程数(公里):\"))\nmoney=0\nif s<=3:\n    money=5\n【2】 3<s<=8:\n    money=5+(s-3)*1.5\nelif 8<s<=【3】:\n    money=5+(s-3)*1.5+(s-8)*1\nelse:\n    money=5+(s-3)*1.5+(s-15)*1.5\nprint(\"此次行程产生的费用为(元):\",money)",
+                answerCode: "s=float(input(\"请输入里程数(公里):\"))\nmoney=0\nif s<=3:\n    money=5\nelif 3<s<=8:\n    money=5+(s-3)*1.5\nelif 8<s<=15:\n    money=5+(s-3)*1.5+(s-8)*1\nelse:\n    money=5+(s-3)*1.5+(s-15)*1.5\nprint(\"此次行程产生的费用为(元):\",money)",
+                analysis: "解析：\n1. 【1】处应该填写 float，因为里程数可能是小数（如3.5公里），需要转换为浮点数才能进行精确计算。\n2. 【2】处应该填写 elif，用于连接多个条件判断，当前面的if条件不满足时检查下一个条件。\n3. 【3】处应该填写 15，根据题目描述，8-15公里是一个区间，在这个区间内加收1元/公里的远途费。"
+            }
         ];
         
         // 更新状态指示器
@@ -959,7 +966,48 @@ for b in range(0,10):
             indicator.innerHTML = `<span class="status-indicator status-${status}"></span>${message}`;
         }
         
-        // 初始化Pyodide
+        // 检查本地文件是否存在
+        async function checkLocalFileExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (error) {
+                console.log(`本地文件检查失败: ${url}`, error);
+                return false;
+            }
+        }
+        
+        // 加载Pyodide脚本（混合方案）
+        async function loadPyodideScript() {
+            // 首先尝试加载本地版本
+            const localScriptUrl = `${PYODIDE_CONFIG.LOCAL_PATH}pyodide.js`;
+            const localExists = await checkLocalFileExists(localScriptUrl);
+            
+            if (localExists) {
+                console.log('✅ 检测到本地Pyodide，使用本地版本');
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = localScriptUrl;
+                    script.onload = () => resolve('local');
+                    script.onerror = () => {
+                        console.log('❌ 本地Pyodide加载失败，尝试CDN');
+                        reject(new Error('本地加载失败'));
+                    };
+                    document.head.appendChild(script);
+                });
+            } else {
+                console.log('⚠️ 未找到本地Pyodide，使用CDN版本');
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_CONFIG.VERSION}/full/pyodide.js`;
+                    script.onload = () => resolve('cdn');
+                    script.onerror = () => reject(new Error('CDN加载失败'));
+                    document.head.appendChild(script);
+                });
+            }
+        }
+        
+        // 初始化Pyodide（混合方案）
         async function initializePyodide() {
             const loadingElement = document.getElementById('loading');
             const outputElement = document.getElementById('output');
@@ -969,15 +1017,22 @@ for b in range(0,10):
             updateStatusIndicator('loading', '环境加载中...');
             
             try {
-                // 显示加载进度
-                outputElement.textContent = '正在下载Pyodide (约5MB)，请耐心等待...';
+                // 1. 先加载Pyodide脚本
+                const source = await loadPyodideScript();
+                outputElement.textContent = source === 'local' 
+                    ? '✅ 使用本地Pyodide核心版\n正在初始化...' 
+                    : '🌐 使用CDN Pyodide\n正在初始化...';
                 
-                // 加载Pyodide
+                // 2. 初始化Pyodide
+                const indexURL = source === 'local' 
+                    ? PYODIDE_CONFIG.LOCAL_PATH 
+                    : PYODIDE_CONFIG.CDN_PATH;
+                
                 pyodide = await loadPyodide({
-                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/"
+                    indexURL: indexURL
                 });
                 
-                // 设置标准输出重定向
+                // 3. 设置标准输出重定向
                 await pyodide.runPythonAsync(`
 import sys
 import js
@@ -993,7 +1048,9 @@ sys.stdout = JsOutput()
 sys.stderr = JsOutput()
 `);
                 
-                outputElement.textContent = '✅ Python环境已就绪！可以运行代码了。';
+                outputElement.textContent = source === 'local' 
+                    ? '✅ Python环境已就绪！(本地核心版)\n可以运行代码了。' 
+                    : '✅ Python环境已就绪！(CDN版)\n可以运行代码了。';
                 updateStatusIndicator('ready', '环境已就绪');
                 pyodideReady = true;
                 
@@ -1002,7 +1059,7 @@ sys.stderr = JsOutput()
                 
             } catch (error) {
                 console.error('Pyodide初始化失败:', error);
-                outputElement.textContent = `❌ 初始化失败: ${error.message}\n\n请检查网络连接并刷新页面重试。`;
+                outputElement.textContent = `❌ 初始化失败: ${error.message}\n\n请检查网络连接并刷新页面重试。\n如果持续失败，请确保pyodide文件夹在网站根目录下。`;
                 updateStatusIndicator('error', '环境加载失败');
             } finally {
                 loadingElement.style.display = 'none';
@@ -1294,7 +1351,7 @@ print(f"\\n1到5的平方: {squares}")`;
         window.addEventListener('load', function() {
             // 初始禁用运行按钮
             document.getElementById('run-btn').disabled = true;
-            // 初始化Pyodide
+            // 初始化Pyodide（混合方案）
             initializePyodide();
         });
         
