@@ -147,27 +147,89 @@
             background: linear-gradient(45deg, #2196F3, #03A9F4);
         }
         
-        /* 底部统计样式 */
+        /* ===== 底部统计样式（优化移动端） ===== */
         .footer-stats {
             width: 100%;
             text-align: center;
-            padding: 20px 0 10px 0;
+            padding: 20px 15px;
             margin-top: 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(6px);
+            border-radius: 12px;
             color: #555;
-            font-size: 0.95rem;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            backdrop-filter: blur(4px);
+            font-size: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px 20px;
+            transition: all 0.3s;
         }
         
-        .footer-stats span {
-            margin: 0 10px;
-            font-weight: bold;
+        .footer-stats .stat-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .footer-stats .stat-label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .footer-stats .stat-number {
+            font-weight: 700;
             color: #2196F3;
+            font-size: 1.1rem;
+            min-width: 30px;
+            display: inline-block;
+            transition: all 0.5s ease;
         }
         
-        /* 响应式设计 */
+        .footer-stats .divider {
+            color: #ccc;
+            font-weight: 300;
+            user-select: none;
+        }
+        
+        /* 移动端优化：小屏幕时改为上下排列，更清晰 */
+        @media (max-width: 600px) {
+            .footer-stats {
+                flex-direction: column;
+                gap: 8px;
+                padding: 18px 12px;
+                font-size: 1.05rem;
+                border-radius: 10px;
+            }
+            
+            .footer-stats .divider {
+                display: none;  /* 隐藏竖线分隔符，用上下间距代替 */
+            }
+            
+            .footer-stats .stat-number {
+                font-size: 1.2rem;
+                min-width: 40px;
+            }
+            
+            .footer-stats .stat-item {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* 极小屏（≤ 400px）进一步微调 */
+        @media (max-width: 400px) {
+            .footer-stats {
+                font-size: 0.95rem;
+                padding: 14px 8px;
+            }
+            .footer-stats .stat-number {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* 响应式设计（原有） */
         @media (max-width: 1200px) {
             .card {
                 flex: 0 0 calc(50% - 20px);
@@ -246,13 +308,17 @@
 
         <!-- 底部访问量统计（使用不蒜子） -->
         <div class="footer-stats">
-            <span>📊 总访问量：</span>
-            <span id="busuanzi_value_site_pv"></span>
-            <span> 次</span>
-            &nbsp;&nbsp;|&nbsp;&nbsp;
-            <span>👥 访客数：</span>
-            <span id="busuanzi_value_site_uv"></span>
-            <span> 人</span>
+            <span class="stat-item">
+                <span class="stat-label">📊 总访问量：</span>
+                <span class="stat-number" id="busuanzi_value_site_pv">0</span>
+                <span>次</span>
+            </span>
+            <span class="divider">|</span>
+            <span class="stat-item">
+                <span class="stat-label">👥 访客数：</span>
+                <span class="stat-number" id="busuanzi_value_site_uv">0</span>
+                <span>人</span>
+            </span>
         </div>
     </div>
 
@@ -268,6 +334,35 @@
                 document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
             };
             bgImage.src = './images/background.jpg';
+        });
+
+        // 可选：当不蒜子数据加载完成后，给数字增加淡入效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'characterData' || mutation.type === 'childList') {
+                        const pv = document.getElementById('busuanzi_value_site_pv');
+                        const uv = document.getElementById('busuanzi_value_site_uv');
+                        if (pv && pv.textContent && pv.textContent !== '0') {
+                            pv.style.opacity = '1';
+                        }
+                        if (uv && uv.textContent && uv.textContent !== '0') {
+                            uv.style.opacity = '1';
+                        }
+                    }
+                });
+            });
+            const pv = document.getElementById('busuanzi_value_site_pv');
+            const uv = document.getElementById('busuanzi_value_site_uv');
+            if (pv) observer.observe(pv, { characterData: true, childList: true, subtree: true });
+            if (uv) observer.observe(uv, { characterData: true, childList: true, subtree: true });
+            // 初始透明度为0，加载后自动变为1（由不蒜子更新）
+            if (pv) pv.style.opacity = '0';
+            if (uv) uv.style.opacity = '0';
+            // 添加过渡
+            const style = document.createElement('style');
+            style.textContent = '.stat-number { transition: opacity 0.6s ease; }';
+            document.head.appendChild(style);
         });
     </script>
 </body>
