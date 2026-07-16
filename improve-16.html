@@ -1,0 +1,855 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中信息技术 - Python 程序题闯关练习</title>
+    <style>
+        :root {
+            --bg-main: #091220;       /* 极深蓝黑背景 */
+            --bg-panel: #131e33;      /* 面板背景 */
+            --bg-code: #0a1423;       /* 代码区域背景 */
+            --text-main: #c8d6e5;     /* 主体文字 */
+            --text-accent: #00d4ff;   /* 霓虹青蓝色 */
+            --border-color: #1f3452;  /* 边框颜色 */
+            --highlight: #1b2e4a;     /* 悬浮/高亮底色 */
+            --glow-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: radial-gradient(circle at 50% 0%, #12203a 0%, var(--bg-main) 80%);
+            color: var(--text-main);
+            min-height: 100vh; /* 手机适配：改为最小高度 */
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            /* overflow: hidden; 手机适配：取消固定隐藏溢出 */
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        .header h1 {
+            font-size: 28px;
+            color: #ffffff;
+            letter-spacing: 4px;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+        }
+        .header p {
+            font-size: 14px;
+            color: #8697a8;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+            /* 手机适配：高度改为自适应 */
+            height: auto;
+            min-height: calc(100vh - 120px);
+        }
+
+        .panel {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        /* 面板顶部发光描边效果 */
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: 20%; right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--text-accent), transparent);
+            opacity: 0.6;
+        }
+        
+        .panel-title {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+            color: #ffffff;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+        .panel-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px; height: 16px;
+            background-color: var(--text-accent);
+            border-radius: 2px;
+            margin-right: 10px;
+        }
+
+        .sidebar-left {
+            flex: 0 0 220px;
+        }
+        .grid-nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .grid-nav button {
+            background-color: #0f1b2c;
+            border: 1px solid #1f3452;
+            color: #a0b5c8;
+            padding: 14px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .grid-nav button:hover {
+            background-color: var(--highlight);
+            border-color: var(--text-accent);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(0, 212, 255, 0.1);
+        }
+        .grid-nav button.active {
+            background-color: var(--text-accent);
+            color: #0a1423;
+            border-color: var(--text-accent);
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .flowchart-box {
+            margin-top: 20px;
+            flex: 1;
+            display: flex; /* 新增：用于居中 */
+            justify-content: center; /* 新增：居中 */
+            align-items: center; /* 新增：居中 */
+            background-color: #0c1828;
+            border-radius: 8px;
+            min-height: 220px;
+            position: relative;
+            font-size: 13px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden; /* 新增：防止溢出 */
+        }
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px; /* 缩小间距 */
+            transform: scale(0.75); /* 新增：整体缩放进框内 */
+            transform-origin: center center; /* 以正中心为缩放原点 */
+        }
+        .flow-box { 
+            border: 1px solid var(--text-accent); 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            background: rgba(0, 212, 255, 0.05); 
+            font-size: 13px; 
+            color: var(--text-accent);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
+        }
+        .flow-diamond { 
+            border: 1px solid var(--text-accent); 
+            padding: 2px; 
+            transform: rotate(45deg); 
+            width: 70px; height: 70px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            background: rgba(0, 212, 255, 0.05); 
+            margin: 6px 0;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
+        }
+        .flow-diamond span { transform: rotate(-45deg); font-size: 12px; color: var(--text-accent); line-height: 1.2; }
+        .arrow-down { width: 2px; height: 16px; background: var(--text-accent); box-shadow: 0 0 6px var(--text-accent); }
+
+        .content-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .problem-title {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        .problem-desc {
+            background: rgba(0, 212, 255, 0.04);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #d0dce8;
+        }
+        
+        .code-area {
+            background-color: var(--bg-code);
+            border-radius: 8px;
+            padding: 24px 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 2.4;
+            position: relative;
+            border: 1px solid var(--border-color);
+            flex: 1;
+            overflow-y: auto;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+        }
+        .code-line {
+            display: flex;
+            align-items: center;
+            white-space: pre-wrap;
+        }
+        .line-num {
+            color: #405e7a;
+            width: 30px;
+            text-align: right;
+            margin-right: 20px;
+            user-select: none;
+            font-size: 14px;
+        }
+        
+        /* 关键美化：输入框变成下划线填空模式 */
+        .code-input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px dashed var(--text-accent);
+            color: #ffffff;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 16px;
+            width: 140px;
+            padding: 0 4px;
+            outline: none;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0 4px;
+        }
+        .code-input:focus {
+            border-bottom: 2px solid #ffffff;
+            box-shadow: 0 8px 12px -8px rgba(0, 212, 255, 0.3);
+            width: 160px;
+        }
+        .code-input.correct {
+            border-bottom-color: #4caf50;
+            color: #4caf50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+        .code-input.wrong {
+            border-bottom-color: #f44336;
+            color: #f44336;
+            box-shadow: 0 0 10px rgba(244, 67, 54, 0.3);
+        }
+
+        .action-bar {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+        .btn {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.2s;
+            font-weight: bold;
+        }
+        .btn-prev, .btn-next {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: #a0b5c8;
+        }
+        .btn-prev:hover, .btn-next:hover {
+            background-color: var(--highlight);
+            border-color: var(--text-accent);
+            color: #fff;
+        }
+        .btn-submit {
+            background-color: var(--text-accent);
+            color: #0a1423;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            border: 1px solid transparent;
+        }
+        .btn-submit:hover {
+            background-color: #4ce1ff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+            transform: scale(1.02);
+        }
+.btn-back {
+    background: linear-gradient(135deg, #1f3a5f 0%, #2a5f7a 100%);
+    color: #ffffff;
+    border: 1px solid #3a7a9a;
+    padding: 8px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+    white-space: nowrap;
+}
+.btn-back:hover {
+    background: linear-gradient(135deg, #2a5f7a 0%, #3a8aaa 100%);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    transform: scale(1.02);
+}
+
+        .sidebar-right {
+            flex: 0 0 300px;
+        }
+        .result-status {
+            color: #ffffff;
+            margin-bottom: 16px;
+            font-size: 14px;
+            padding: 12px;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 6px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+        .correct-answer-box {
+            background-color: #0e1c2e;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+        .correct-answer-box h4 {
+            margin-bottom: 12px;
+            color: var(--text-accent);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        .correct-answer-list {
+            margin-left: 20px;
+            list-style-type: decimal;
+            color: #4caf50;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+        }
+        .correct-answer-list li {
+            margin-bottom: 6px;
+        }
+        .explanation-box {
+            background-color: #0e1c2e;
+            padding: 16px 18px;
+            border-radius: 8px;
+            color: #b0c4d8;
+            font-size: 14px;
+            line-height: 1.8;
+            border: 1px solid var(--border-color);
+        }
+        .explanation-box strong {
+            color: #ffffff;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3d5a78; }
+
+        /* 手机适配：屏幕宽度小于 900px 时 */
+        @media screen and (max-width: 900px) {
+            .main-container { 
+                flex-direction: column; 
+                overflow-y: visible; /* 取消内部滚动，让浏览器整体滚动 */
+                height: auto; 
+                gap: 15px;
+            }
+            .sidebar-left, .sidebar-right { 
+                flex: 1 1 auto; 
+                min-height: auto; 
+                margin-bottom: 0;
+            }
+            body { 
+                padding: 15px; 
+                overflow-y: auto; /* 让 body 整体滚动 */
+                height: auto;
+                min-height: 100vh;
+            }
+            .content-center { 
+                min-height: 50vh; 
+                padding-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <h1 style="flex: 1; text-align: center; margin: 0;">信息技术程序题闯关练习</h1>
+        <a href="programming-questions.html" class="btn-back">返回上页</a>
+    </div>
+    <p>通过完成16道编程填空题，提升Python编程能力和逻辑思维。每道题都有详细的解析，帮助你理解编程概念。</p>
+</div>
+
+    <div class="main-container">
+        <div class="panel sidebar-left">
+            <div class="panel-title">题目列表</div>
+            <div class="grid-nav" id="questionNav"></div>
+            <div class="panel-title" style="margin-top: 20px;">程序流程图</div>
+            <div class="flowchart-box" id="flowchartBox">
+                <!-- 由JS动态生成 -->
+            </div>
+        </div>
+
+        <div class="panel content-center">
+            <div class="problem-title" id="problemTitle">题目 1：海伦公式计算三角形面积</div>
+            <div class="problem-desc" id="problemDesc">在希腊数学家海伦的著作《测量仪》中，记载了著名的海伦公式，利用三角形的三边长求三角形面积。补全以下程序。</div>
+            
+            <div class="code-area" id="codeArea">
+                <!-- 由JS动态生成 -->
+            </div>
+
+            <div class="action-bar">
+                <button class="btn btn-prev" onclick="prevQuestion()">上一题</button>
+                <button class="btn btn-submit" onclick="checkAnswer()">提交答案</button>
+                <button class="btn btn-next" onclick="nextQuestion()">下一题</button>
+            </div>
+        </div>
+
+        <div class="panel sidebar-right">
+            <div class="panel-title">答案与解析</div>
+            <div class="result-status" id="resultStatus">请完成题目后查看答案和解析</div>
+            
+            <div class="correct-answer-box">
+                <h4>正确答案：</h4>
+                <ul class="correct-answer-list" id="correctAnswers">
+                    <li>等待提交...</li>
+                </ul>
+            </div>
+            
+            <div class="explanation-box" id="explanationBox">
+                <strong>知识点解析：</strong><br>
+                完成题目后显示详细解析。
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 完整题库数据 (16题全收录，已严格审查填空位置，逻辑未改动)
+        const questions = [
+            { // 题1
+                id: 1,
+                title: "题目 1：海伦公式计算三角形面积",
+                desc: "在希腊数学家海伦的著作《测地术》中，记载了著名的海伦公式，利用三角形的三边长求三角形面积，若三角形的三边长分别为a、b、c，则：p = (a+b+c)/2，面积= √[p(p-a)(p-b)(p-c)]。",
+                codeLines: [
+                    { text: "a = float({1}(\"请输入第一条边长：\"))", blanks: [{id: 1, pre: "a = float(", post: "(\"请输入第一条边长：\"))"}] },
+                    { text: "b = float(input(\"请输入第二条边长：\"))", blanks: [] },
+                    { text: "c = float(input(\"请输入第三条边长：\"))", blanks: [] },
+                    { text: "{2} a+b>c and b+c>a and c+a>b:", blanks: [{id: 2, pre: "", post: " a+b>c and b+c>a and c+a>b:"}] },
+                    { text: "    p = (a+b+c)/2", blanks: [] },
+                    { text: "    {3} = (p*(p-a)*(p-b)*(p-c))**0.5", blanks: [{id: 3, pre: "    ", post: " = (p*(p-a)*(p-b)*(p-c))**0.5"}] },
+                    { text: "    print(\"三角形面积为：\", round(s,2))", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    print(\"不构成三角形，请重新输入\")", blanks: [] }
+                ],
+                answers: { 1: "input", 2: "if", 3: "s" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入三边长</div><div class="arrow-down"></div><div class="flow-diamond"><span>判断三角形</span></div><div class="arrow-down"></div><div class="flow-box">计算面积</div><div class="arrow-down"></div><div class="flow-box">输出面积</div></div>`,
+                explanation: "本题考察 `input()` 获取输入并转为 `float` 浮点数；使用 `if` 条件判断三角形三边关系；通过公式计算面积并赋值给变量 `s`。"
+            },
+            { // 题2
+                id: 2,
+                title: "题目 2：计算阶乘",
+                desc: "正整数的阶乘是所有小于及等于该数的正整数的积。即：n!=1*2*3*4*...*n，举例说明：3的阶乘就是1*2*3，要求编写程序，计算正整数n的阶乘。",
+                codeLines: [
+                    { text: "{1} = int(input(\"请输入一个正整数：\"))", blanks: [{id: 1, pre: "", post: " = int(input(\"请输入一个正整数：\"))"}] },
+                    { text: "pd = 1", blanks: [] },
+                    { text: "for i in range(1, n+1):", blanks: [] },
+                    { text: "    pd = {2} * i", blanks: [{id: 2, pre: "    pd = ", post: " * i"}] },
+                    { text: "{3}(\"pd =\", pd)", blanks: [{id: 3, pre: "", post: "(\"pd =\", pd)"}] }
+                ],
+                answers: { 1: "n", 2: "pd", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入n</div><div class="arrow-down"></div><div class="flow-box">pd=1, i=1</div><div class="arrow-down"></div><div class="flow-diamond"><span>i<=n</span></div><div class="arrow-down"></div><div class="flow-box">pd=pd*i, i++</div><div class="arrow-down"></div><div class="flow-box">输出pd</div></div>`,
+                explanation: "本题考察 `for` 循环累乘。初始化乘积变量 `pd` 为1，循环遍历 1 到 n，每次将 `pd` 乘上循环变量 `i`，最后 `print` 输出结果。"
+            },
+            { // 题3
+                id: 3,
+                title: "题目 3：枚举法解决乘号问题",
+                desc: "有一张由5位数构成的车牌号，其千位和百位上的数字模糊看不清了，已知这个数能被57或67整除。万位数字 a 和十位、个位数字 d,e 由用户输入，空缺位为 b,c。请用枚举法补全程序。",
+                codeLines: [
+                    { text: "a = int(input(\"请输入万位数：\"))", blanks: [] },
+                    { text: "d = int({1}(\"请输入十位数：\"))", blanks: [{id: 1, pre: "d = int(", post: "(\"请输入十位数：\"))"}] },
+                    { text: "e = int(input(\"请输入个位数：\"))", blanks: [] },
+                    { text: "for b in range(0, 10, 1):", blanks: [] },
+                    { text: "    for c in range(0, {2}, 1):", blanks: [{id: 2, pre: "    for c in range(0, ", post: ", 1):"}] },
+                    { text: "        number = a*10000 + b*1000 + c*100 + d*10 + e", blanks: [] },
+                    { text: "        if number % 57 == 0 {3} number % 67 == 0:", blanks: [{id: 3, pre: "        if number % 57 == 0 ", post: " number % 67 == 0:"}] },
+                    { text: "            print(number)", blanks: [] }
+                ],
+                answers: { 1: "input", 2: "10", 3: "or" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入a,d,e</div><div class="arrow-down"></div><div class="flow-box">b = 0</div><div class="arrow-down"></div><div class="flow-diamond"><span>b<10</span></div><div class="arrow-down"></div><div class="flow-box">c循环</div><div class="arrow-down"></div><div class="flow-box">判断整除</div><div class="arrow-down"></div><div class="flow-box">输出结果</div></div>`,
+                explanation: "本题考察嵌套 `for` 循环（枚举法）以及逻辑运算符 `or` 的使用。range 函数默认不包含结束值，所以 `range(0, 10)` 循环 0-9 的数字。判断条件中 `or` 代表满足任一条件即可。"
+            },
+            { // 题4
+                id: 4,
+                title: "题目 4：计算 1 到 100 之间所有偶数的和",
+                desc: "实现功能：计算 1 到 100 之间所有偶数的和。请通过 for 循环和累加思想补全程序。",
+                codeLines: [
+                    { text: "s = 0 #用于存放结果", blanks: [] },
+                    { text: "for i in range(2, 101, {1}):", blanks: [{id: 1, pre: "for i in range(2, 101, ", post: "):"}] },
+                    { text: "    s = {2} + i", blanks: [{id: 2, pre: "    s = ", post: " + i"}] },
+                    { text: "print(\"结果为：\", {3})", blanks: [{id: 3, pre: "print(\"结果为：\", ", post: ")"}] }
+                ],
+                answers: { 1: "2", 2: "s", 3: "s" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">s=0, i=2</div><div class="arrow-down"></div><div class="flow-diamond"><span>i<=100</span></div><div class="arrow-down"></div><div class="flow-box">s=s+i, i=i+2</div><div class="arrow-down"></div><div class="flow-box">输出s</div></div>`,
+                explanation: "本题考察 `range` 函数的步长设置。`range(2,101,2)` 中的第三个参数 `2` 表示步长为 2，从而直接生成偶数序列。变量 `s` 作为累加器不断加上当前偶数。"
+            },
+            { // 题5
+                id: 5,
+                title: "题目 5：判断闰年",
+                desc: "编写程序判断任意年份是否为闰年，判断规则：(1) 能被4整除但不能被100整除；(2) 能被400整除，满足其中一个条件即为闰年。请补全程序。",
+                codeLines: [
+                    { text: "x = int(input(\"请随机输入一个年份：\"))", blanks: [] },
+                    { text: "if {1} x%400==0 or (x%100!=0 and x%4==0):", blanks: [{id: 1, pre: "if ", post: " x%400==0 or (x%100!=0 and x%4==0):"}] },
+                    { text: "    {2}(x, \"年是闰年\")", blanks: [{id: 2, pre: "    ", post: "(x, \"年是闰年\")"}] },
+                    { text: "else:", blanks: [] },
+                    { text: "    print(x, \"年不是闰年\")", blanks: [] }
+                ],
+                answers: { 1: "(x%4==0 and x%100!=0) or", 2: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入年份x</div><div class="arrow-down"></div><div class="flow-diamond"><span>判断闰年</span></div><div class="arrow-down"></div><div class="flow-box">输出闰年</div><div class="arrow-down"></div><div class="flow-box">结束</div></div>`,
+                explanation: "本题考察复合逻辑条件。答案 `(x%4==0 and x%100!=0) or` 补全了 `if` 条件的前半部分，组合上原有的 `x%400==0` 正好构成完整的闰年判断逻辑。"
+            },
+            { // 题6
+                id: 6,
+                title: "题目 6：图书采购折扣计算",
+                desc: "某图书超市举办读书节展销活动，图书采购满50本以上打五折，少于50本但满20本以上打七折，少于20本打九折。某班班主任计划采购一批课外阅读书籍奖励班上坚持阅读打卡的同学，因为书籍种类数量不同，于是为她设计一个采购程序，方便计算在该超市采购图书时实际应付款金额。",
+                codeLines: [
+                    { text: "n = int(input(\"请输入购买的图书数量：\"))", blanks: [] },
+                    { text: "price = float({1}(\"请输入图书单价：\"))", blanks: [{id: 1, pre: "price = float(", post: "(\"请输入图书单价：\"))"}] },
+                    { text: "if n >= 50:", blanks: [] },
+                    { text: "    j = 0.5", blanks: [] },
+                    { text: "if 50 > n >= 20:", blanks: [] },
+                    { text: "     {2}", blanks: [{id: 2, pre: "     ", post: ""}] },
+                    { text: "if 20 >= n >= 1:", blanks: [] },
+                    { text: "    j = 0.9", blanks: [] },
+                    { text: "total = price * j * n", blanks: [] },
+                    { text: "print(\"实际应付款金额为：\", {3}, \"元\")", blanks: [{id: 3, pre: "print(\"实际应付款金额为：\", ", post: ", \"元\")"}] }
+                ],
+                answers: { 1: "input", 2: "j=0.7", 3: "total" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入 n, price</div><div class="arrow-down"></div><div class="flow-diamond"><span>n >= 50</span></div><div class="arrow-down"></div><div class="flow-box">j = 0.5</div><div class="arrow-down"></div><div class="flow-box">计算 total</div><div class="arrow-down"></div><div class="flow-box">输出 total</div></div>`,
+                explanation: "本题考察条件判断和多分支逻辑。第一空调用内置函数 `input` 获取用户输入；第二空根据题意（50>n>=20）填入 0.7 表示七折；第三空调用计算好的 `total` 变量输出总价。"
+            },
+            { // 题7
+                id: 7,
+                title: "题目 7：输出因子",
+                desc: "输入一个正整数 x，输出不包括 x 本身的所有因子。（因子：一个数能够被整除的数，例如 6 的因子为 1, 2, 3，6），即通过 for 语句产生一个小于 1-x 的序列，并对其进行判断，如果能被其整除，则就将其输出。",
+                codeLines: [
+                    { text: "x = int(input(\"请输入一个正整数 x：\"))", blanks: [] },
+                    { text: "for i in range(1, {1}, 1):", blanks: [{id: 1, pre: "for i in range(1, ", post: ", 1):"}] },
+                    { text: "    if x % {2} == 0:", blanks: [{id: 2, pre: "    if x % ", post: " == 0:"}] },
+                    { text: "        {3}(i)", blanks: [{id: 3, pre: "        ", post: "(i)"}] }
+                ],
+                answers: { 1: "x", 2: "i", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入x</div><div class="arrow-down"></div><div class="flow-box">i = 1</div><div class="arrow-down"></div><div class="flow-diamond"><span>i < x</span></div><div class="arrow-down"></div><div class="flow-box">判断 x%i==0</div><div class="arrow-down"></div><div class="flow-box">输出 i</div><div class="arrow-down"></div><div class="flow-box">i = i+1</div></div>`,
+                explanation: "本题考察 `for` 循环、取余运算符 `%` 以及 `print` 输出。`range(1, x, 1)` 循环从 1 到 x-1（排除 x 本身）。如果 x 对当前循环变量 i 取余为 0（`x % i == 0`），则表示 i 是 x 的因子，通过 `print(i)` 输出该因子。"
+            },
+            { // 题8
+                id: 8,
+                title: "题目 8：骑车与步行比较",
+                desc: "方便又环保的共享单车作为中国新四大发明的存在，已经在很多城市投放使用。在使用过程要经历找车、开锁、停车、锁车等环节。请你用计算机编程来判断在不同的距离使用下，是骑车快还是走路快。假设找到自行车，开锁并骑上自行车的时间为27秒；停车锁车的时间为23秒；步行每秒行走1.2米，骑车每秒行走3.0米。",
+                codeLines: [
+                    { text: "L = int({1}(\"请输入距离：\"))", blanks: [{id: 1, pre: "L = int(", post: "(\"请输入距离：\"))"}] },
+                    { text: "if 23+27+L/3.0 < {2}:", blanks: [{id: 2, pre: "if 23+27+L/3.0 < ", post: ":"}] },
+                    { text: "    print(\"骑车快\")", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    {3}(\"步行快\")", blanks: [{id: 3, pre: "    ", post: "(\"步行快\")"}] }
+                ],
+                answers: { 1: "input", 2: "L/1.2", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入距离L</div><div class="arrow-down"></div><div class="flow-diamond"><span>骑车时间</span></div><div class="arrow-down"></div><div class="flow-box">输出快慢</div></div>`,
+                explanation: "本题考察数学逻辑与条件判断。`L/1.2` 是步行的耗时，`23+27+L/3.0` 是骑车的耗时。根据耗时的大小比较输出对应的结果。"
+            },
+            { // 题9
+                id: 9,
+                title: "题目 9：银行卡密码验证",
+                desc: "银行卡一般只有3次输入密码的机会，如果3次都输错，卡将会被冻结，这是银行系统采取的安全措施，现要求输入密码，输出对应的提示信息。",
+                codeLines: [
+                    { text: "for i in range(3):", blanks: [] },
+                    { text: "    password = {1}(\"请输入密码：\")", blanks: [{id: 1, pre: "    password = ", post: "(\"请输入密码：\")"}] },
+                    { text: "    if password == \"123456\":", blanks: [] },
+                    { text: "        print(\"请选择功能\")", blanks: [] },
+                    { text: "        break", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    if i == {2}:", blanks: [{id: 2, pre: "    if i == ", post: ":"}] },
+                    { text: "        print(\"密码三次输入错误，卡被冻结\")", blanks: [] },
+                    { text: "    else:", blanks: [] },
+                    { text: "        {3}(\"密码错误，请重新输入\")", blanks: [{id: 3, pre: "        ", post: "(\"密码错误，请重新输入\")"}] }
+                ],
+                answers: { 1: "input", 2: "2", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">i=0</div><div class="arrow-down"></div><div class="flow-diamond"><span>i<3</span></div><div class="arrow-down"></div><div class="flow-box">输入密码</div></div>`,
+                explanation: "本题考察 `for...else` 结构和 `break` 语句。当循环正常结束（没有 `break`）时，执行 `else` 块。循环变量 `i` 在最后一次循环时值为 `2`，由此判断是否因3次错误而退出。"
+            },
+            { // 题10
+                id: 10,
+                title: "题目 10：判断奇偶性",
+                desc: "该程序的功能是判断一个正整数的奇偶性，运行程序提示用户“请输入一个正整数”，偶数就输出x是偶数，奇数就输出x是奇数，如果输入的是0或负数则提示“您输入的值不是正整数”。",
+                codeLines: [
+                    { text: "x = {1}(input(\"请输入一个正整数：\"))", blanks: [{id: 1, pre: "x = ", post: "(input(\"请输入一个正整数：\"))"}] },
+                    { text: "if x % 2 {2} 0 and x > 0:", blanks: [{id: 2, pre: "if x % 2 ", post: " 0 and x > 0:"}] },
+                    { text: "    print(x, \"是偶数\")", blanks: [] },
+                    { text: "elif x <= 0:", blanks: [] },
+                    { text: "    print(\"您输入的值不是正整数\")", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    {3}(x, \"是奇数\")", blanks: [{id: 3, pre: "    ", post: "(x, \"是奇数\")"}] }
+                ],
+                answers: { 1: "int", 2: "==", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入x</div><div class="arrow-down"></div><div class="flow-diamond"><span>判断奇偶</span></div><div class="arrow-down"></div><div class="flow-box">输出结果</div></div>`,
+                explanation: "本题考察 `input()` 的类型转换、求余运算符 `%` 以及多分支 `if-elif-else` 逻辑。`x % 2 == 0` 判断能否被2整除，从而判定奇偶。"
+            },
+            { // 题11
+                id: 11,
+                title: "题目 11：酸雨等级判断",
+                desc: "当煤燃烧产生的二氧化硫酸性气体，或汽车排放出来的氮氧化物与水蒸气相遇，就会形成酸雨。酸雨会对环境造成严重危害。酸性情况是通过雨水的PH判断，如果雨水的PH<4.7，则为“重度酸雨”；如果雨水的4.7<=PH<=5.6，则为“轻度酸雨”；如果雨水的PH>5.6，则为“无酸雨”。请补全程序。",
+                codeLines: [
+                    { text: "PH = float(input(\"请输入雨水的 PH 值：\"))", blanks: [] },
+                    { text: "if PH < {1}:", blanks: [{id: 1, pre: "if PH < ", post: ":"}] },
+                    { text: "    print(\"重度酸雨\")", blanks: [] },
+                    { text: "elif PH >= 4.7 {2} PH <= 5.6:", blanks: [{id: 2, pre: "elif PH >= 4.7 ", post: " PH <= 5.6:"}] },
+                    { text: "    print(\"轻度酸雨\")", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    {3}(\"无酸雨\")", blanks: [{id: 3, pre: "    ", post: "(\"无酸雨\")"}] }
+                ],
+                answers: { 1: "4.7", 2: "and", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入PH</div><div class="arrow-down"></div><div class="flow-diamond"><span>判断等级</span></div><div class="arrow-down"></div><div class="flow-box">输出酸雨等级</div></div>`,
+                explanation: "本题考察逻辑运算符 `and` 的使用。范围判断 `PH >= 4.7 and PH <= 5.6` 需要两个条件同时满足。"
+            },
+            { // 题12
+                id: 12,
+                title: "题目 12：卡路里计算",
+                desc: "运动手环起到通过数据指导健康生活的作用。部分手环换算卡路里的公式是：卡路里(kcal)=体重(kg)×步行距离(km)*1.036。",
+                codeLines: [
+                    { text: "w = float(input(\"请输入你的体重(kg)：\"))", blanks: [] },
+                    { text: "dis = float({1}(\"请输入你的步行距离(km)：\"))", blanks: [{id: 1, pre: "dis = float(", post: "(\"请输入你的步行距离(km)：\"))"}] },
+                    { text: "kcal = {2}* dis * 1.036", blanks: [{id: 2, pre: "kcal = ", post: "* dis * 1.036"}] },
+                    { text: "print(\"你消耗的卡路里是：\", {3})", blanks: [{id: 3, pre: "print(\"你消耗的卡路里是：\", ", post: ")"}] }
+                ],
+                answers: { 1: "input", 2: "w", 3: "kcal" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入体重和距离</div><div class="arrow-down"></div><div class="flow-box">计算卡路里</div><div class="arrow-down"></div><div class="flow-box">输出卡路里</div><div class="arrow-down"></div><div class="flow-box">结束</div></div>`,
+                explanation: "本题考察变量的使用。将输入储存在变量 `w` 和 `dis` 中，然后利用公式 `w * dis * 1.036` 计算结果并赋值给变量 `kcal`。"
+            },
+            { // 题13
+                id: 13,
+                title: "题目 13：机器人竞赛计分",
+                desc: "学生参加机器人竞赛活动取得前六名成绩，并将名次列入班级积分。计分规则如下表所示：第1名7分，第2名5分，第3名4分，第4名3分，第5名2分，第6名1分，其他0分。",
+                codeLines: [
+                    { text: "m = int(input(\"输入名次为：\"))", blanks: [] },
+                    { text: "if {1} ==1:", blanks: [{id: 1, pre: "if ", post: " ==1:"}] },
+                    { text: "    print(\"所得计分为：7\")", blanks: [] },
+                    { text: "elif m == 2:", blanks: [] },
+                    { text: "    print(\"所得计分为：5\")", blanks: [] },
+                    { text: "elif m == 3:", blanks: [] },
+                    { text: "    print(\"所得计分为：4\")", blanks: [] },
+                    { text: "elif m == 4:", blanks: [] },
+                    { text: "    print(\"所得计分为：3\")", blanks: [] },
+                    { text: "elif m == 5:", blanks: [] },
+                    { text: "    print(\"所得计分为：2\")", blanks: [] },
+                    { text: "elif {2}:", blanks: [{id: 2, pre: "elif ", post: ":"}] },
+                    { text: "    print(\"所得计分为：1\")", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    {3}(\"所得计分为：0\")", blanks: [{id: 3, pre: "    ", post: "(\"所得计分为：0\")"}] }
+                ],
+                answers: { 1: "m", 2: "m == 6", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入名次m</div><div class="arrow-down"></div><div class="flow-diamond"><span>判断名次</span></div><div class="arrow-down"></div><div class="flow-box">输出对应分数</div></div>`,
+                explanation: "本题考察多分支结构 `if-elif-else`。根据不同名次的值分别执行对应分数的 `print` 输出。最后 `else` 分支处理前6名之外的所有情况。"
+            },
+            { // 题14
+                id: 14,
+                title: "题目 14：判断素数",
+                desc: "素数（质数）的定义一个大于1的正整数，只能被1和它本身整除，不能被其他正整数整除，这样的正整数叫素数（质数）；请根据素数的定义，完善下面程序，输入一个正整数，判断其是否为素数。",
+                codeLines: [
+                    { text: "n = {1}(input(\"请输入一个正整数：\"))", blanks: [{id: 1, pre: "n = ", post: "(input(\"请输入一个正整数：\"))"}] },
+                    { text: "for i in range(2, n):", blanks: [] },
+                    { text: "    if n % i {2}0:", blanks: [{id: 2, pre: "    if n % i ", post: ""}] },
+                    { text: "        print(n, \"不是素数\")", blanks: [] },
+                    { text: "        break", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    {3}(n, \"是素数\")", blanks: [{id: 3, pre: "    ", post: "(n, \"是素数\")"}] }
+                ],
+                answers: { 1: "int", 2: "==", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入n</div><div class="arrow-down"></div><div class="flow-box">i=2</div><div class="arrow-down"></div><div class="flow-diamond"><span>i<n</span></div><div class="arrow-down"></div><div class="flow-box">判断取模</div><div class="arrow-down"></div><div class="flow-box">输出结果</div></div>`,
+                explanation: "本题考察 `for...else` 结构和素数判断算法。如果在 2 到 n-1 之间发现能被整除的数（`n % i == 0`），则不是素数并 `break`。如果循环正常结束，说明没有因子，在 `else` 中输出是素数。"
+            },
+            { // 题15
+                id: 15,
+                title: "题目 15：商场优惠计算",
+                desc: "某商场店庆活动，赠送20元现金券，凡是在商场消费满200元即可使用。以下为商场编制的程序，请完善以下程序，计算出实际支付的金额。",
+                codeLines: [
+                    { text: "i = int(input(\"请输入金额：\"))", blanks: [] },
+                    { text: "{1} i >= 200:", blanks: [{id: 1, pre: "", post: " i >= 200:"}] },
+                    { text: "    i = {2} -20", blanks: [{id: 2, pre: "    i = ", post: " -20"}] },
+                    { text: "    print(\"你实际支付\", i)", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    {3}(\"对不起，你不能享受优惠\")", blanks: [{id: 3, pre: "    ", post: "(\"对不起，你不能享受优惠\")"}] }
+                ],
+                answers: { 1: "if", 2: "i - 20", 3: "print" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入金额i</div><div class="arrow-down"></div><div class="flow-diamond"><span>i>=200</span></div><div class="arrow-down"></div><div class="flow-box">计算i-20</div><div class="arrow-down"></div><div class="flow-box">输出实际支付</div></div>`,
+                explanation: "本题考察基础的 `if-else` 条件判断。当金额大于等于200时，实际支付为当前金额减去优惠券金额 `i - 20`；否则，无法享受优惠。"
+            },
+            { // 题16
+                id: 16,
+                title: "题目 16：成绩分级",
+                desc: "利用计算机编程对学生的成绩进行分级，其划分标准为：小于60分为努力加油；60-70分为及格；70-80分为良好；80-90分为优秀，90-100分为非常棒。输入你的成绩，最终输出分级信息。",
+                codeLines: [
+                    { text: "{1} = int(input(\"请输入你的成绩：\"))", blanks: [{id: 1, pre: "", post: " = int(input(\"请输入你的成绩：\"))"}] },
+                    { text: "if score >= 90 and score <= 100:", blanks: [] },
+                    { text: "    {2}(\"非常棒！\")", blanks: [{id: 2, pre: "    ", post: "(\"非常棒！\")"}] },
+                    { text: "elif score >= 80 and score < 90:", blanks: [] },
+                    { text: "    print(\"优秀！\")", blanks: [] },
+                    { text: "elif score >= 70 and score < 80:", blanks: [] },
+                    { text: "    print(\"良好！\")", blanks: [] },
+                    { text: "{3} score >= 60 and score < 70:", blanks: [{id: 3, pre: "", post: " score >= 60 and score < 70:"}] },
+                    { text: "    print(\"及格！\")", blanks: [] },
+                    { text: "else:", blanks: [] },
+                    { text: "    print(\"要努力加油！\")", blanks: [] }
+                ],
+                answers: { 1: "score", 2: "print", 3: "elif" },
+                flowchart: `<div class="flow-container"><div class="flow-box">开始</div><div class="arrow-down"></div><div class="flow-box">输入成绩score</div><div class="arrow-down"></div><div class="flow-diamond"><span>判断成绩等级</span></div><div class="arrow-down"></div><div class="flow-box">输出分级信息</div><div class="arrow-down"></div><div class="flow-box">结束</div></div>`,
+                explanation: "本题考察 `if-elif-else` 阶梯式条件判断。根据 `score` 的值在多个不同的区间执行不同的打印语句，特别要注意 `elif` 的用法以及区间的准确划分。"
+            }
+        ];
+
+        let currentIndex = 0;
+
+        // 渲染左侧 16 格题目导航
+        function renderNav() {
+            const nav = document.getElementById('questionNav');
+            nav.innerHTML = '';
+            for (let i = 1; i <= 16; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.onclick = () => switchQuestion(i - 1);
+                if (i - 1 === currentIndex) btn.classList.add('active');
+                nav.appendChild(btn);
+            }
+        }
+
+        // 切换题目
+        function switchQuestion(index) {
+            currentIndex = index;
+            renderNav();
+            renderQuestion();
+            document.getElementById('resultStatus').textContent = "请完成题目后查看答案和解析";
+            document.getElementById('correctAnswers').innerHTML = "<li>等待提交...</li>";
+            document.getElementById('explanationBox').innerHTML = "<strong>知识点解析：</strong><br>完成题目后显示详细解析。";
+        }
+
+        // 渲染中央区域的具体题目和代码
+        function renderQuestion() {
+            const q = questions[currentIndex];
+            document.getElementById('problemTitle').textContent = q.title;
+            document.getElementById('problemDesc').textContent = q.desc;
+            document.getElementById('flowchartBox').innerHTML = q.flowchart || "暂无流程图";
+
+            const codeArea = document.getElementById('codeArea');
+            codeArea.innerHTML = '';
+
+            q.codeLines.forEach((line, index) => {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'code-line';
+                
+                const numSpan = document.createElement('span');
+                numSpan.className = 'line-num';
+                numSpan.textContent = index + 1;
+                lineDiv.appendChild(numSpan);
+
+                let htmlContent = line.text;
+                
+                // 严格匹配 {id} 位置的方法，保证绝不越界或替换错误
+                if (line.blanks.length > 0) {
+                    line.blanks.sort((a,b) => a.id - b.id).forEach(blank => {
+                        const exactPlaceholder = blank.pre + '{' + blank.id + '}' + blank.post;
+                        const replacement = blank.pre + `<input type="text" class="code-input" data-id="${blank.id}" data-answer="${q.answers[blank.id] || ''}" style="width: 160px;">` + blank.post;
+                        htmlContent = htmlContent.replace(exactPlaceholder, replacement);
+                    });
+                }
+                
+                lineDiv.innerHTML += `<span style="color: #d4d4d4;">${htmlContent}</span>`;
+                codeArea.appendChild(lineDiv);
+            });
+        }
+
+        // 提交答案并评测
+        function checkAnswer() {
+            const q = questions[currentIndex];
+            const inputs = document.querySelectorAll('.code-input');
+            let correctCount = 0;
+            let totalBlanks = inputs.length;
+            if(totalBlanks === 0) { 
+                document.getElementById('resultStatus').textContent = "无填空项，请检查题目设置。"; 
+                return; 
+            }
+
+            inputs.forEach(inp => {
+                const userVal = inp.value.trim();
+                const correctVal = inp.dataset.answer;
+                if (userVal === correctVal) {
+                    inp.classList.add('correct');
+                    inp.classList.remove('wrong');
+                    correctCount++;
+                } else {
+                    inp.classList.add('wrong');
+                    inp.classList.remove('correct');
+                }
+            });
+
+            document.getElementById('resultStatus').textContent = `答对了 ${correctCount}/${totalBlanks} 个空`;
+            
+            const correctList = document.getElementById('correctAnswers');
+            correctList.innerHTML = '';
+            let idx = 1;
+            for (const [key, val] of Object.entries(q.answers)) {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>[${idx}]</strong> <span style="color:#4caf50;">${val}</span>`;
+                correctList.appendChild(li);
+                idx++;
+            }
+
+            document.getElementById('explanationBox').innerHTML = `<strong>知识点解析：</strong><br>${q.explanation}`;
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) switchQuestion(currentIndex - 1);
+            else alert("已经是第一题了！");
+        }
+
+        function nextQuestion() {
+            if (currentIndex < questions.length - 1) switchQuestion(currentIndex + 1);
+            else alert("已完成所有题目闯关！");
+        }
+
+        // 初始化运行
+        renderNav();
+        renderQuestion();
+    </script>
+</body>
+</html>
