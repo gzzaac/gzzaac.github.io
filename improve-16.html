@@ -2,17 +2,17 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>高中信息技术 - Python 程序题闯关练习</title>
     <style>
         :root {
-            --bg-main: #091220;       /* 极深蓝黑背景 */
-            --bg-panel: #131e33;      /* 面板背景 */
-            --bg-code: #0a1423;       /* 代码区域背景 */
-            --text-main: #c8d6e5;     /* 主体文字 */
-            --text-accent: #00d4ff;   /* 霓虹青蓝色 */
-            --border-color: #1f3452;  /* 边框颜色 */
-            --highlight: #1b2e4a;     /* 悬浮/高亮底色 */
+            --bg-main: #091220;
+            --bg-panel: #131e33;
+            --bg-code: #0a1423;
+            --text-main: #c8d6e5;
+            --text-accent: #00d4ff;
+            --border-color: #1f3452;
+            --highlight: #1b2e4a;
             --glow-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
         }
 
@@ -27,53 +27,86 @@
             background-color: var(--bg-main);
             background-image: radial-gradient(circle at 50% 0%, #12203a 0%, var(--bg-main) 80%);
             color: var(--text-main);
-            min-height: 100vh; /* 手机适配：改为最小高度 */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 20px;
-            /* overflow: hidden; 手机适配：取消固定隐藏溢出 */
+            padding: 12px;
+            overflow-x: hidden;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             flex-shrink: 0;
+            width: 100%;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         .header h1 {
-            font-size: 28px;
+            font-size: clamp(20px, 5vw, 28px);
             color: #ffffff;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             font-weight: bold;
             text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+            flex: 1;
+            text-align: center;
+            margin: 0;
         }
         .header p {
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
             color: #8697a8;
             margin-top: 8px;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            padding: 0 10px;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #1f3a5f 0%, #2a5f7a 100%);
+            color: #ffffff;
+            border: 1px solid #3a7a9a;
+            padding: 6px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(12px, 2vw, 14px);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+            white-space: nowrap;
+        }
+        .btn-back:hover {
+            background: linear-gradient(135deg, #2a5f7a 0%, #3a8aaa 100%);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            transform: scale(1.02);
         }
 
         .main-container {
             display: flex;
             flex: 1;
-            gap: 20px;
-            /* 手机适配：高度改为自适应 */
+            gap: 16px;
             height: auto;
-            min-height: calc(100vh - 120px);
+            min-height: calc(100vh - 140px);
+            flex-wrap: wrap;
         }
 
         .panel {
             background-color: var(--bg-panel);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 24px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
             position: relative;
+            flex: 1 1 0;
+            min-width: 200px;
         }
-        /* 面板顶部发光描边效果 */
         .panel::before {
             content: '';
             position: absolute;
@@ -84,11 +117,11 @@
         }
         
         .panel-title {
-            font-size: 16px;
+            font-size: clamp(14px, 2.5vw, 16px);
             font-weight: bold;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 14px;
-            margin-bottom: 18px;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
             color: #ffffff;
             letter-spacing: 1px;
             display: flex;
@@ -103,23 +136,25 @@
             margin-right: 10px;
         }
 
+        /* 左侧面板 - 导航网格 */
         .sidebar-left {
             flex: 0 0 220px;
+            min-width: 160px;
         }
         .grid-nav {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            gap: 10px;
         }
         .grid-nav button {
             background-color: #0f1b2c;
             border: 1px solid #1f3452;
             color: #a0b5c8;
-            padding: 14px 0;
+            padding: 12px 0;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 15px;
+            font-size: clamp(14px, 2.2vw, 16px);
             font-weight: 500;
         }
         .grid-nav button:hover {
@@ -137,35 +172,39 @@
         }
 
         .flowchart-box {
-            margin-top: 20px;
+            margin-top: 16px;
             flex: 1;
-            display: flex; /* 新增：用于居中 */
-            justify-content: center; /* 新增：居中 */
-            align-items: center; /* 新增：居中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background-color: #0c1828;
             border-radius: 8px;
-            min-height: 220px;
+            min-height: 160px;
+            padding: 8px;
             position: relative;
             font-size: 13px;
             text-align: center;
             border: 1px solid var(--border-color);
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-            overflow: hidden; /* 新增：防止溢出 */
+            overflow: hidden;
         }
         .flow-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px; /* 缩小间距 */
-            transform: scale(0.75); /* 新增：整体缩放进框内 */
-            transform-origin: center center; /* 以正中心为缩放原点 */
+            gap: 4px;
+            transform: scale(0.7);
+            transform-origin: center center;
+        }
+        @media (max-width: 600px) {
+            .flow-container { transform: scale(0.55); }
         }
         .flow-box { 
             border: 1px solid var(--text-accent); 
-            padding: 6px 12px; 
+            padding: 4px 10px; 
             border-radius: 6px; 
             background: rgba(0, 212, 255, 0.05); 
-            font-size: 13px; 
+            font-size: 12px; 
             color: var(--text-accent);
             box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
         }
@@ -173,87 +212,90 @@
             border: 1px solid var(--text-accent); 
             padding: 2px; 
             transform: rotate(45deg); 
-            width: 70px; height: 70px; 
+            width: 60px; height: 60px; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             background: rgba(0, 212, 255, 0.05); 
-            margin: 6px 0;
+            margin: 4px 0;
             box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
         }
-        .flow-diamond span { transform: rotate(-45deg); font-size: 12px; color: var(--text-accent); line-height: 1.2; }
-        .arrow-down { width: 2px; height: 16px; background: var(--text-accent); box-shadow: 0 0 6px var(--text-accent); }
+        .flow-diamond span { transform: rotate(-45deg); font-size: 11px; color: var(--text-accent); line-height: 1.2; }
+        .arrow-down { width: 2px; height: 14px; background: var(--text-accent); box-shadow: 0 0 6px var(--text-accent); }
 
+        /* 中间内容 */
         .content-center {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            flex: 1 1 0;
+            min-width: 280px;
         }
         .problem-title {
-            font-size: 20px;
-            margin-bottom: 12px;
+            font-size: clamp(18px, 3.5vw, 22px);
+            margin-bottom: 10px;
             color: #fff;
             font-weight: bold;
+            word-break: break-word;
         }
-        
         .problem-desc {
             background: rgba(0, 212, 255, 0.04);
             border: 1px solid rgba(0, 212, 255, 0.2);
             border-radius: 8px;
-            padding: 16px 18px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            line-height: 1.8;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            font-size: clamp(13px, 2vw, 15px);
+            line-height: 1.7;
             color: #d0dce8;
         }
-        
         .code-area {
             background-color: var(--bg-code);
             border-radius: 8px;
-            padding: 24px 20px;
+            padding: 16px 12px;
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 16px;
-            line-height: 2.4;
+            font-size: clamp(14px, 2.2vw, 16px);
+            line-height: 2.2;
             position: relative;
             border: 1px solid var(--border-color);
             flex: 1;
             overflow-y: auto;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            min-height: 300px;
         }
         .code-line {
             display: flex;
-            align-items: center;
+            align-items: baseline;
             white-space: pre-wrap;
+            word-break: break-word;
+            padding: 2px 0;
         }
         .line-num {
             color: #405e7a;
-            width: 30px;
+            width: 26px;
             text-align: right;
-            margin-right: 20px;
+            margin-right: 12px;
             user-select: none;
-            font-size: 14px;
+            font-size: clamp(12px, 1.8vw, 14px);
+            flex-shrink: 0;
         }
-        
-        /* 关键美化：输入框变成下划线填空模式 */
         .code-input {
             background: transparent;
             border: none;
             border-bottom: 2px dashed var(--text-accent);
             color: #ffffff;
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 16px;
-            width: 140px;
+            font-size: clamp(14px, 2.2vw, 16px);
+            min-width: 80px;
+            max-width: 160px;
+            width: auto;
             padding: 0 4px;
             outline: none;
             text-align: center;
             font-weight: bold;
             transition: all 0.3s ease;
-            margin: 0 4px;
+            margin: 0 2px;
         }
         .code-input:focus {
             border-bottom: 2px solid #ffffff;
             box-shadow: 0 8px 12px -8px rgba(0, 212, 255, 0.3);
-            width: 160px;
+            min-width: 100px;
         }
         .code-input.correct {
             border-bottom-color: #4caf50;
@@ -267,22 +309,27 @@
         }
 
         .action-bar {
-            margin-top: 20px;
+            margin-top: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-shrink: 0;
-            padding-top: 15px;
+            padding-top: 12px;
             border-top: 1px solid var(--border-color);
+            gap: 8px;
+            flex-wrap: wrap;
         }
         .btn {
-            padding: 10px 28px;
+            padding: 8px 16px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: clamp(13px, 2vw, 15px);
             transition: all 0.2s;
             font-weight: bold;
+            flex: 1 1 auto;
+            min-width: 60px;
+            text-align: center;
         }
         .btn-prev, .btn-next {
             background-color: transparent;
@@ -299,106 +346,209 @@
             color: #0a1423;
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
             border: 1px solid transparent;
+            flex: 2 1 auto;
         }
         .btn-submit:hover {
             background-color: #4ce1ff;
             box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
             transform: scale(1.02);
         }
-.btn-back {
-    background: linear-gradient(135deg, #1f3a5f 0%, #2a5f7a 100%);
-    color: #ffffff;
-    border: 1px solid #3a7a9a;
-    padding: 8px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
-    white-space: nowrap;
-}
-.btn-back:hover {
-    background: linear-gradient(135deg, #2a5f7a 0%, #3a8aaa 100%);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-    transform: scale(1.02);
-}
 
+        /* 右侧面板 */
         .sidebar-right {
             flex: 0 0 300px;
+            min-width: 220px;
         }
         .result-status {
             color: #ffffff;
-            margin-bottom: 16px;
-            font-size: 14px;
-            padding: 12px;
+            margin-bottom: 14px;
+            font-size: clamp(13px, 2vw, 14px);
+            padding: 10px 12px;
             background: rgba(0, 212, 255, 0.05);
             border-radius: 6px;
             border: 1px solid rgba(0, 212, 255, 0.1);
         }
         .correct-answer-box {
             background-color: #0e1c2e;
-            padding: 16px 20px;
+            padding: 14px 16px;
             border-radius: 8px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             border: 1px solid var(--border-color);
         }
         .correct-answer-box h4 {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: var(--text-accent);
-            font-size: 14px;
+            font-size: clamp(13px, 2vw, 14px);
             letter-spacing: 0.5px;
         }
         .correct-answer-list {
-            margin-left: 20px;
+            margin-left: 16px;
             list-style-type: decimal;
             color: #4caf50;
             font-family: 'Consolas', monospace;
-            font-size: 14px;
+            font-size: clamp(13px, 2vw, 14px);
         }
         .correct-answer-list li {
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         .explanation-box {
             background-color: #0e1c2e;
-            padding: 16px 18px;
+            padding: 14px 16px;
             border-radius: 8px;
             color: #b0c4d8;
-            font-size: 14px;
-            line-height: 1.8;
+            font-size: clamp(13px, 2vw, 14px);
+            line-height: 1.7;
             border: 1px solid var(--border-color);
         }
         .explanation-box strong {
             color: #ffffff;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #3d5a78; }
 
-        /* 手机适配：屏幕宽度小于 900px 时 */
-        @media screen and (max-width: 900px) {
-            .main-container { 
-                flex-direction: column; 
-                overflow-y: visible; /* 取消内部滚动，让浏览器整体滚动 */
-                height: auto; 
-                gap: 15px;
+        /* 响应式适配 */
+        @media screen and (max-width: 1024px) {
+            .sidebar-left { flex: 1 1 180px; min-width: 140px; }
+            .sidebar-right { flex: 1 1 260px; min-width: 180px; }
+            .main-container { gap: 12px; }
+        }
+
+        @media screen and (max-width: 768px) {
+            body { padding: 8px; }
+            .header { margin-bottom: 12px; }
+            .header-top { justify-content: center; }
+            .header h1 { font-size: clamp(18px, 4.5vw, 24px); }
+            .btn-back { padding: 5px 14px; font-size: 12px; }
+            .main-container {
+                flex-direction: column;
+                gap: 12px;
+                min-height: auto;
             }
-            .sidebar-left, .sidebar-right { 
-                flex: 1 1 auto; 
-                min-height: auto; 
-                margin-bottom: 0;
+            .panel {
+                padding: 14px;
+                flex: 1 1 auto;
+                min-height: auto;
             }
-            body { 
-                padding: 15px; 
-                overflow-y: auto; /* 让 body 整体滚动 */
-                height: auto;
-                min-height: 100vh;
+            .sidebar-left {
+                flex: 1 1 auto;
+                min-width: 0;
+                order: 1;
             }
-            .content-center { 
-                min-height: 50vh; 
-                padding-bottom: 20px;
+            .content-center {
+                flex: 1 1 auto;
+                min-width: 0;
+                order: 2;
+            }
+            .sidebar-right {
+                flex: 1 1 auto;
+                min-width: 0;
+                order: 3;
+            }
+            .grid-nav {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            .grid-nav button {
+                padding: 10px 0;
+                font-size: 14px;
+            }
+            .flowchart-box {
+                min-height: 120px;
+            }
+            .code-area {
+                min-height: 220px;
+                padding: 12px 8px;
+                font-size: 14px;
+                line-height: 2;
+            }
+            .code-input {
+                min-width: 60px;
+                max-width: 120px;
+                font-size: 14px;
+            }
+            .code-input:focus {
+                min-width: 80px;
+            }
+            .line-num {
+                width: 20px;
+                margin-right: 8px;
+                font-size: 12px;
+            }
+            .action-bar {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .btn {
+                padding: 6px 12px;
+                font-size: 13px;
+                flex: 1 1 auto;
+                min-width: 50px;
+            }
+            .btn-submit {
+                flex: 2 1 auto;
+            }
+            .correct-answer-list {
+                margin-left: 12px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .header h1 { font-size: 18px; letter-spacing: 1px; }
+            .btn-back { font-size: 11px; padding: 4px 12px; }
+            .grid-nav {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            .grid-nav button {
+                padding: 8px 0;
+                font-size: 13px;
+                border-radius: 6px;
+            }
+            .code-area {
+                font-size: 13px;
+                line-height: 1.8;
+                min-height: 180px;
+                padding: 10px 6px;
+            }
+            .code-input {
+                font-size: 13px;
+                min-width: 50px;
+                max-width: 100px;
+            }
+            .code-input:focus {
+                min-width: 70px;
+            }
+            .line-num {
+                width: 16px;
+                margin-right: 6px;
+                font-size: 11px;
+            }
+            .panel {
+                padding: 10px;
+            }
+            .problem-title {
+                font-size: 17px;
+            }
+            .problem-desc {
+                font-size: 13px;
+                padding: 10px 12px;
+            }
+            .btn {
+                font-size: 12px;
+                padding: 5px 10px;
+                min-width: 40px;
+            }
+            .sidebar-right {
+                padding: 10px;
+            }
+            .correct-answer-box, .explanation-box {
+                padding: 10px 12px;
+            }
+            .flow-container {
+                transform: scale(0.45);
             }
         }
     </style>
@@ -406,18 +556,18 @@
 <body>
 
     <div class="header">
-         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-        <h1 style="flex: 1; text-align: center; margin: 0;">信息技术程序题闯关练习</h1>
-        <a href="programming-questions.html" class="btn-back">返回上页</a>
+        <div class="header-top">
+            <h1>信息技术程序题闯关练习</h1>
+            <a href="programming-questions.html" class="btn-back">返回上页</a>
+        </div>
+        <p>通过完成16道编程填空题，提升Python编程能力和逻辑思维。每道题都有详细的解析，帮助你理解编程概念。</p>
     </div>
-    <p>通过完成16道编程填空题，提升Python编程能力和逻辑思维。每道题都有详细的解析，帮助你理解编程概念。</p>
-</div>
 
     <div class="main-container">
         <div class="panel sidebar-left">
             <div class="panel-title">题目列表</div>
             <div class="grid-nav" id="questionNav"></div>
-            <div class="panel-title" style="margin-top: 20px;">程序流程图</div>
+            <div class="panel-title" style="margin-top: 16px;">程序流程图</div>
             <div class="flowchart-box" id="flowchartBox">
                 <!-- 由JS动态生成 -->
             </div>
@@ -457,7 +607,7 @@
     </div>
 
     <script>
-        // 完整题库数据 (16题全收录，已严格审查填空位置，逻辑未改动)
+        // 完整题库数据 (16题全收录)
         const questions = [
             { // 题1
                 id: 1,
@@ -784,11 +934,10 @@
 
                 let htmlContent = line.text;
                 
-                // 严格匹配 {id} 位置的方法，保证绝不越界或替换错误
                 if (line.blanks.length > 0) {
                     line.blanks.sort((a,b) => a.id - b.id).forEach(blank => {
                         const exactPlaceholder = blank.pre + '{' + blank.id + '}' + blank.post;
-                        const replacement = blank.pre + `<input type="text" class="code-input" data-id="${blank.id}" data-answer="${q.answers[blank.id] || ''}" style="width: 160px;">` + blank.post;
+                        const replacement = blank.pre + `<input type="text" class="code-input" data-id="${blank.id}" data-answer="${q.answers[blank.id] || ''}" style="width: 120px;">` + blank.post;
                         htmlContent = htmlContent.replace(exactPlaceholder, replacement);
                     });
                 }
