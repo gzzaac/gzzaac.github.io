@@ -147,11 +147,11 @@
             background: linear-gradient(45deg, #2196F3, #03A9F4);
         }
         
-        /* ===== 底部统计样式（优化移动端） ===== */
+        /* ===== 底部统计样式（始终横向排列，移动端紧凑） ===== */
         .footer-stats {
             width: 100%;
             text-align: center;
-            padding: 20px 15px;
+            padding: 16px 12px;
             margin-top: 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.35);
@@ -163,14 +163,15 @@
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 8px 20px;
+            gap: 4px 16px;
             transition: all 0.3s;
         }
         
         .footer-stats .stat-item {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
+            white-space: nowrap;  /* 防止内部文字折行 */
         }
         
         .footer-stats .stat-label {
@@ -182,9 +183,9 @@
             font-weight: 700;
             color: #2196F3;
             font-size: 1.1rem;
-            min-width: 30px;
+            min-width: 20px;
             display: inline-block;
-            transition: all 0.5s ease;
+            transition: opacity 0.6s ease;
         }
         
         .footer-stats .divider {
@@ -193,43 +194,42 @@
             user-select: none;
         }
         
-        /* 移动端优化：小屏幕时改为上下排列，更清晰 */
+        /* 移动端优化：缩小字体和间距，保证一行显示 */
         @media (max-width: 600px) {
             .footer-stats {
-                flex-direction: column;
-                gap: 8px;
-                padding: 18px 12px;
-                font-size: 1.05rem;
+                font-size: 0.85rem;
+                padding: 12px 8px;
+                gap: 2px 10px;
                 border-radius: 10px;
             }
-            
-            .footer-stats .divider {
-                display: none;  /* 隐藏竖线分隔符，用上下间距代替 */
-            }
-            
             .footer-stats .stat-number {
-                font-size: 1.2rem;
-                min-width: 40px;
-            }
-            
-            .footer-stats .stat-item {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-        
-        /* 极小屏（≤ 400px）进一步微调 */
-        @media (max-width: 400px) {
-            .footer-stats {
                 font-size: 0.95rem;
-                padding: 14px 8px;
+                min-width: 16px;
             }
-            .footer-stats .stat-number {
-                font-size: 1.1rem;
+            .footer-stats .stat-label {
+                font-size: 0.85rem;
+            }
+            .footer-stats .divider {
+                margin: 0 2px;
             }
         }
         
-        /* 响应式设计（原有） */
+        /* 极窄屏（≤ 380px）再压缩 */
+        @media (max-width: 380px) {
+            .footer-stats {
+                font-size: 0.75rem;
+                padding: 10px 6px;
+                gap: 2px 6px;
+            }
+            .footer-stats .stat-number {
+                font-size: 0.85rem;
+            }
+            .footer-stats .stat-label {
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* 原有响应式（卡片等） */
         @media (max-width: 1200px) {
             .card {
                 flex: 0 0 calc(50% - 20px);
@@ -336,33 +336,29 @@
             bgImage.src = './images/background.jpg';
         });
 
-        // 可选：当不蒜子数据加载完成后，给数字增加淡入效果
+        // 为统计数字添加淡入效果（当不蒜子更新时）
         document.addEventListener('DOMContentLoaded', function() {
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'characterData' || mutation.type === 'childList') {
-                        const pv = document.getElementById('busuanzi_value_site_pv');
-                        const uv = document.getElementById('busuanzi_value_site_uv');
-                        if (pv && pv.textContent && pv.textContent !== '0') {
-                            pv.style.opacity = '1';
-                        }
-                        if (uv && uv.textContent && uv.textContent !== '0') {
-                            uv.style.opacity = '1';
-                        }
-                    }
-                });
-            });
             const pv = document.getElementById('busuanzi_value_site_pv');
             const uv = document.getElementById('busuanzi_value_site_uv');
-            if (pv) observer.observe(pv, { characterData: true, childList: true, subtree: true });
-            if (uv) observer.observe(uv, { characterData: true, childList: true, subtree: true });
-            // 初始透明度为0，加载后自动变为1（由不蒜子更新）
-            if (pv) pv.style.opacity = '0';
-            if (uv) uv.style.opacity = '0';
-            // 添加过渡
-            const style = document.createElement('style');
-            style.textContent = '.stat-number { transition: opacity 0.6s ease; }';
-            document.head.appendChild(style);
+            if (pv) {
+                pv.style.opacity = '0';
+                // 监听变化（不蒜子会修改文本）
+                const observer = new MutationObserver(function() {
+                    if (pv.textContent && pv.textContent !== '0') {
+                        pv.style.opacity = '1';
+                    }
+                });
+                observer.observe(pv, { childList: true, characterData: true, subtree: true });
+            }
+            if (uv) {
+                uv.style.opacity = '0';
+                const observer = new MutationObserver(function() {
+                    if (uv.textContent && uv.textContent !== '0') {
+                        uv.style.opacity = '1';
+                    }
+                });
+                observer.observe(uv, { childList: true, characterData: true, subtree: true });
+            }
         });
     </script>
 </body>
