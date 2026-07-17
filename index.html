@@ -78,7 +78,7 @@
             justify-content: space-between;
             gap: 20px;
             margin-top: 20px;
-            flex: 1;
+            flex: 0 0 auto;
         }
         
         .card {
@@ -171,7 +171,7 @@
             display: inline-flex;
             align-items: center;
             gap: 3px;
-            white-space: nowrap;  /* 防止内部文字折行 */
+            white-space: nowrap;
         }
         
         .footer-stats .stat-label {
@@ -277,7 +277,7 @@
         </header>
         
         <div class="notification-bar">
-            📢 Python程序设计题中新增16道提升填空题；增加魔法打字工坊（设置里支持导入任意英语单词自动生成新关卡，仅支持电脑端）。本站题库持续开放更新，助力大家深化理解、夯实基础。学无止境，气有浩然！
+            📢 Python程序设计题中新增16道提升填空题。本站题库持续开放更新，助力大家深化理解、夯实基础。学无止境，气有浩然！
         </div>
         
         <div class="nav-cards">
@@ -313,16 +313,17 @@
                 <span class="stat-number" id="busuanzi_value_site_pv">0</span>
                 <span>次</span>
             </span>
-            <span class="divider">|</span>
-            <span class="stat-item">
+            <!-- 注释掉访客数显示，但后台依然统计 -->
+            <!-- <span class="divider">|</span> -->
+            <!-- <span class="stat-item">
                 <span class="stat-label">👥 访客数：</span>
                 <span class="stat-number" id="busuanzi_value_site_uv">0</span>
                 <span>人</span>
-            </span>
+            </span> -->
         </div>
     </div>
 
-    <!-- 不蒜子统计脚本（异步加载） -->
+    <!-- 不蒜子统计脚本（异步加载）—— 保留，确保后台统计 -->
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
     <script>
@@ -336,13 +337,11 @@
             bgImage.src = './images/background.jpg';
         });
 
-        // 为统计数字添加淡入效果（当不蒜子更新时）
+        // 为总访问量数字添加淡入效果（访客数监听已注释）
         document.addEventListener('DOMContentLoaded', function() {
             const pv = document.getElementById('busuanzi_value_site_pv');
-            const uv = document.getElementById('busuanzi_value_site_uv');
             if (pv) {
                 pv.style.opacity = '0';
-                // 监听变化（不蒜子会修改文本）
                 const observer = new MutationObserver(function() {
                     if (pv.textContent && pv.textContent !== '0') {
                         pv.style.opacity = '1';
@@ -350,6 +349,10 @@
                 });
                 observer.observe(pv, { childList: true, characterData: true, subtree: true });
             }
+            
+            // 访客数监听已注释，不影响后台统计
+            /*
+            const uv = document.getElementById('busuanzi_value_site_uv');
             if (uv) {
                 uv.style.opacity = '0';
                 const observer = new MutationObserver(function() {
@@ -359,6 +362,7 @@
                 });
                 observer.observe(uv, { childList: true, characterData: true, subtree: true });
             }
+            */
         });
     </script>
 </body>
