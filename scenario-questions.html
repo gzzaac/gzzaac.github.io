@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正安二中信息技术学业水平测试 - 情景应用题</title>
+    <title>高中信息技术学业水平测试 - 情景应用题</title>
     <style>
         /* 复用单选题页面的样式 */
         body {
+            background: linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)), url('./images/paper-texture.jpg') center/cover fixed;
+
             font-family: 'Microsoft YaHei', sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+
         }
         .header {
             text-align: center;
@@ -83,15 +85,15 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .navigation #prev-btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #b97a3e 0%, #8a5a28 100%);
             color: white;
         }
         .navigation #next-btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #c9a86a 0%, #6b4a2a 100%);
             color: white;
         }
         .navigation #submit-btn {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: linear-gradient(135deg, #e0c9a0 0%, #a7581a 100%);
             color: white;
         }
         .navigation button:hover:not(:disabled) {
@@ -130,18 +132,18 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         .quick-nav button:hover:not(.answered):not(:disabled) {
-            border-color: #2196F3;
+            border-color: #a7581a;
             transform: scale(1.1);
         }
         .quick-nav button.answered {
-            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            background: linear-gradient(135deg, #b97a3e 0%, #6b4a2a 100%);
             color: white;
             border-color: transparent;
         }
         .quick-nav button.current {
-            border: 3px solid #2196F3;
-            background-color: #e3f2fd;
-            color: #1976d2;
+            border: 3px solid #a7581a;
+            background-color: #f2ead9;
+            color: #7c4312;
             font-weight: bold;
         }
         .result-container {
@@ -169,10 +171,10 @@
             margin-top: 5px;
         }
         .correct {
-            color: #4CAF50;
+            color: #6b8a3d;
         }
         .incorrect {
-            color: #F44336;
+            color: #a33d2e;
         }
         .return-home {
             text-align: center;
@@ -184,7 +186,7 @@
             cursor: pointer;
             border: none;
             border-radius: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #a7581a 0%, #7c4312 100%);
             color: white;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -200,7 +202,7 @@
         .review-outline-btn {
             display: inline-block;
             padding: 10px 20px;
-            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            background: linear-gradient(135deg, #c9a86a 0%, #4a2a0e 100%);
             color: white;
             text-decoration: none;
             border-radius: 25px;
@@ -219,7 +221,7 @@
         .start-test-btn {
             display: inline-block;
             padding: 12px 30px;
-            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            background: linear-gradient(135deg, #c9a86a 0%, #6b4a2a 100%);
             color: white;
             text-decoration: none;
             border-radius: 25px;
@@ -237,7 +239,7 @@
         }
         
         .scenario-info {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #b97a3e 0%, #8a5a28 100%);
             color: white;
             padding: 10px 15px;
             border-radius: 8px;
@@ -385,8 +387,8 @@
 </head>
 <body>
     <div class="header">
-        <h1>正安县第二中学信息技术情景应用题测试闯关</h1>
-        <a href="index.html" class="review-outline-btn">返回首页</a>
+        <h1>高中信息技术情景应用题测试闯关</h1>
+        <a href="index.html" class="review-outline-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:4px;"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>返回首页</a>
         <button id="start-test-btn" class="start-test-btn">随机出题</button>
     </div>
     
@@ -421,7 +423,7 @@
         <div class="statistics" id="statistics"></div>
         <div class="wrong-questions" id="wrong-questions"></div>
         <div class="return-home">
-            <button id="return-home-btn">结束本次考试返回首页</button>
+            <button id="return-home-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:4px;"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>结束本次考试返回首页</button>
         </div>
     </div>
 
@@ -2189,7 +2191,8 @@
             
             // 更新当前题目索引
             currentQuestionIndex = index;
-            
+            updateQuickNav();
+
             // 保存进度
             saveProgress();
         }
@@ -2421,6 +2424,19 @@
 
         // 页面加载时初始化
         window.addEventListener('load', init);
+    </script>
+    <script>
+    // 源码保护：禁止右键查看/查看源代码/开发者工具（不影响正常使用）
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'U' || e.key === 'S')) {
+            e.preventDefault();
+        }
+        if (e.key === 'F12') { e.preventDefault(); }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+        }
+    });
     </script>
 </body>
 </html>

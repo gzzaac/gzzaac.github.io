@@ -6,14 +6,14 @@
     <title>高中信息技术 - Python 程序题闯关练习</title>
     <style>
         :root {
-            --bg-main: #091220;
-            --bg-panel: #131e33;
-            --bg-code: #0a1423;
-            --text-main: #c8d6e5;
-            --text-accent: #00d4ff;
-            --border-color: #1f3452;
-            --highlight: #1b2e4a;
-            --glow-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+            --bg-main: #f5eee0;
+            --bg-panel: #faf6ec;
+            --bg-code: #efe5d1;
+            --text-main: #2a1e13;
+            --text-accent: #a7581a;
+            --border-color: #6b5a42;
+            --highlight: #eadfc6;
+            --glow-shadow: 0 0 20px rgba(167, 88, 26, 0.15);
         }
 
         * {
@@ -24,8 +24,10 @@
         }
 
         body {
-            background-color: var(--bg-main);
-            background-image: radial-gradient(circle at 50% 0%, #12203a 0%, var(--bg-main) 80%);
+            background: linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)), url('./images/paper-texture.jpg') center/cover fixed;
+
+
+
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -53,35 +55,35 @@
             color: #ffffff;
             letter-spacing: 2px;
             font-weight: bold;
-            text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+            text-shadow: 0 0 15px rgba(167, 88, 26, 0.4);
             flex: 1;
             text-align: center;
             margin: 0;
         }
         .header p {
             font-size: clamp(12px, 2.5vw, 14px);
-            color: #8697a8;
+            color: #6b5a42;
             margin-top: 8px;
             letter-spacing: 0.5px;
             padding: 0 10px;
         }
 
         .btn-back {
-            background: linear-gradient(135deg, #1f3a5f 0%, #2a5f7a 100%);
+            background: linear-gradient(135deg, #a7581a 0%, #7c4312 100%);
             color: #ffffff;
-            border: 1px solid #3a7a9a;
+            border: 1px solid #c9a86a;
             padding: 6px 16px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
             font-size: clamp(12px, 2vw, 14px);
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 10px rgba(167, 88, 26, 0.1);
             white-space: nowrap;
         }
         .btn-back:hover {
-            background: linear-gradient(135deg, #2a5f7a 0%, #3a8aaa 100%);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            background: linear-gradient(135deg, #7c4312 0%, #4a2a0e 100%);
+            box-shadow: 0 0 20px rgba(167, 88, 26, 0.3);
             transform: scale(1.02);
         }
 
@@ -117,12 +119,12 @@
         }
         
         .panel-title {
-            font-size: clamp(14px, 2.5vw, 16px);
+            font-size: clamp(15px, 2.6vw, 17px);
             font-weight: bold;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 12px;
             margin-bottom: 14px;
-            color: #ffffff;
+            color: #2a1e13;
             letter-spacing: 1px;
             display: flex;
             align-items: center;
@@ -147,28 +149,28 @@
             gap: 10px;
         }
         .grid-nav button {
-            background-color: #0f1b2c;
-            border: 1px solid #1f3452;
-            color: #a0b5c8;
+            background-color: #f2ead9;
+            border: 1px solid #7c4312;
+            color: #2a1e13;
             padding: 12px 0;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: clamp(14px, 2.2vw, 16px);
-            font-weight: 500;
+            font-weight: 600;
         }
         .grid-nav button:hover {
             background-color: var(--highlight);
             border-color: var(--text-accent);
-            color: #fff;
-            box-shadow: 0 0 12px rgba(0, 212, 255, 0.1);
+            color: #2a1e13;
+            box-shadow: 0 0 12px rgba(167, 88, 26, 0.15);
         }
         .grid-nav button.active {
             background-color: var(--text-accent);
-            color: #0a1423;
+            color: #ffffff;
             border-color: var(--text-accent);
             font-weight: bold;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 20px rgba(167, 88, 26, 0.3);
         }
 
         .flowchart-box {
@@ -177,15 +179,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #0c1828;
+            background-color: #f5eee0;
             border-radius: 8px;
             min-height: 160px;
             padding: 8px;
             position: relative;
             font-size: 13px;
             text-align: center;
-            border: 1px solid var(--border-color);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            border: 1px solid #ddd0b4;
             overflow: hidden;
         }
         .flow-container {
@@ -193,35 +194,34 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            transform: scale(0.7);
+            transform: scale(0.85);
             transform-origin: center center;
         }
         @media (max-width: 600px) {
-            .flow-container { transform: scale(0.55); }
+            .flow-container { transform: scale(0.7); }
         }
-        .flow-box { 
-            border: 1px solid var(--text-accent); 
-            padding: 4px 10px; 
-            border-radius: 6px; 
-            background: rgba(0, 212, 255, 0.05); 
-            font-size: 12px; 
-            color: var(--text-accent);
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
+        .flow-box {
+            border: 2px solid #7c4312;
+            padding: 6px 14px;
+            border-radius: 6px;
+            background: #ffffff;
+            font-size: 15px;
+            color: #1a1208;
+            font-weight: 600;
         }
-        .flow-diamond { 
-            border: 1px solid var(--text-accent); 
-            padding: 2px; 
-            transform: rotate(45deg); 
-            width: 60px; height: 60px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            background: rgba(0, 212, 255, 0.05); 
+        .flow-diamond {
+            border: 2px solid #7c4312;
+            padding: 2px;
+            transform: rotate(45deg);
+            width: 70px; height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
             margin: 4px 0;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.05);
         }
-        .flow-diamond span { transform: rotate(-45deg); font-size: 11px; color: var(--text-accent); line-height: 1.2; }
-        .arrow-down { width: 2px; height: 14px; background: var(--text-accent); box-shadow: 0 0 6px var(--text-accent); }
+        .flow-diamond span { transform: rotate(-45deg); font-size: 13px; color: #1a1208; line-height: 1.2; font-weight: 600; }
+        .arrow-down { width: 2px; height: 14px; background: #7c4312; }
 
         /* 中间内容 */
         .content-center {
@@ -231,26 +231,26 @@
         .problem-title {
             font-size: clamp(18px, 3.5vw, 22px);
             margin-bottom: 10px;
-            color: #fff;
+            color: #2a1e13;
             font-weight: bold;
             word-break: break-word;
         }
         .problem-desc {
-            background: rgba(0, 212, 255, 0.04);
-            border: 1px solid rgba(0, 212, 255, 0.2);
+            background: rgba(167, 88, 26, 0.04);
+            border: 1px solid rgba(167, 88, 26, 0.2);
             border-radius: 8px;
             padding: 14px 16px;
             margin-bottom: 16px;
             font-size: clamp(13px, 2vw, 15px);
             line-height: 1.7;
-            color: #d0dce8;
+            color: #6b5a42;
         }
         .code-area {
-            background-color: var(--bg-code);
+            background-color: #3a2a1d;
             border-radius: 8px;
             padding: 16px 12px;
             font-family: 'Consolas', 'Courier New', monospace;
-            font-size: clamp(14px, 2.2vw, 16px);
+            font-size: clamp(15px, 2.4vw, 17px);
             line-height: 2.2;
             position: relative;
             border: 1px solid var(--border-color);
@@ -258,6 +258,7 @@
             overflow-y: auto;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
             min-height: 300px;
+            color: #f5eee0;
         }
         .code-line {
             display: flex;
@@ -267,7 +268,7 @@
             padding: 2px 0;
         }
         .line-num {
-            color: #405e7a;
+            color: #c9a86a;
             width: 26px;
             text-align: right;
             margin-right: 12px;
@@ -278,8 +279,8 @@
         .code-input {
             background: transparent;
             border: none;
-            border-bottom: 2px dashed var(--text-accent);
-            color: #ffffff;
+            border-bottom: 2px dashed #c9a86a;
+            color: #f5eee0;
             font-family: 'Consolas', 'Courier New', monospace;
             font-size: clamp(14px, 2.2vw, 16px);
             min-width: 80px;
@@ -294,8 +295,9 @@
         }
         .code-input:focus {
             border-bottom: 2px solid #ffffff;
-            box-shadow: 0 8px 12px -8px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 8px 12px -8px rgba(167, 88, 26, 0.3);
             min-width: 100px;
+            color: #ffffff;
         }
         .code-input.correct {
             border-bottom-color: #4caf50;
@@ -334,7 +336,7 @@
         .btn-prev, .btn-next {
             background-color: transparent;
             border: 1px solid var(--border-color);
-            color: #a0b5c8;
+            color: #6b5a42;
         }
         .btn-prev:hover, .btn-next:hover {
             background-color: var(--highlight);
@@ -343,14 +345,14 @@
         }
         .btn-submit {
             background-color: var(--text-accent);
-            color: #0a1423;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(167, 88, 26, 0.2);
             border: 1px solid transparent;
             flex: 2 1 auto;
         }
         .btn-submit:hover {
-            background-color: #4ce1ff;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+            background-color: #b97a3e;
+            box-shadow: 0 0 30px rgba(167, 88, 26, 0.4);
             transform: scale(1.02);
         }
 
@@ -360,16 +362,17 @@
             min-width: 220px;
         }
         .result-status {
-            color: #ffffff;
+            color: #2a1e13;
             margin-bottom: 14px;
-            font-size: clamp(13px, 2vw, 14px);
+            font-size: clamp(14px, 2.2vw, 15px);
             padding: 10px 12px;
-            background: rgba(0, 212, 255, 0.05);
+            background: #faf6ec;
             border-radius: 6px;
-            border: 1px solid rgba(0, 212, 255, 0.1);
+            border: 1px solid #ddd0b4;
+            font-weight: 500;
         }
         .correct-answer-box {
-            background-color: #0e1c2e;
+            background-color: #f6f0e3;
             padding: 14px 16px;
             border-radius: 8px;
             margin-bottom: 14px;
@@ -392,22 +395,23 @@
             margin-bottom: 4px;
         }
         .explanation-box {
-            background-color: #0e1c2e;
+            background-color: #f6f0e3;
             padding: 14px 16px;
             border-radius: 8px;
-            color: #b0c4d8;
+            color: #2a1e13;
             font-size: clamp(13px, 2vw, 14px);
             line-height: 1.7;
             border: 1px solid var(--border-color);
         }
         .explanation-box strong {
-            color: #ffffff;
+            color: #7c4312;
+            font-size: 1.05em;
         }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3d5a78; }
+        ::-webkit-scrollbar-thumb:hover { background: #c9a86a; }
 
         /* 响应式适配 */
         @media screen and (max-width: 1024px) {
@@ -999,6 +1003,19 @@
         // 初始化运行
         renderNav();
         renderQuestion();
+    </script>
+    <script>
+    // 源码保护：禁止右键查看/查看源代码/开发者工具（不影响正常使用）
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'U' || e.key === 'S')) {
+            e.preventDefault();
+        }
+        if (e.key === 'F12') { e.preventDefault(); }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+        }
+    });
     </script>
 </body>
 </html>

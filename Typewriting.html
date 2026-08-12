@@ -13,8 +13,10 @@
             user-select: none;
         }
         body {
+            background: linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)), url('./images/paper-texture.jpg') center/cover fixed;
+
             min-height: 100vh;
-            background: linear-gradient(145deg, #2b2d42 0%, #1e1f2c 100%);
+
             font-family: 'Comic Neue', 'Comic Sans MS', 'Poppins', cursive, sans-serif;
             display: flex;
             justify-content: center;
@@ -24,7 +26,7 @@
         .game-container {
             max-width: 1300px;
             width: 100%;
-            background: rgba(255, 248, 225, 0.9);
+            background: rgba(250, 246, 236, 0.95);
             border-radius: 72px;
             box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4), inset 0 1px 4px rgba(255, 255, 200, 0.8);
             overflow: hidden;
@@ -41,51 +43,51 @@
             flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 20px;
-            background: #ffd966;
+            background: #c9a86a;
             padding: 12px 25px;
             border-radius: 60px;
-            box-shadow: 0 8px 0 #b45f2b;
+            box-shadow: 0 8px 0 #6b4a2a;
         }
         .title {
             font-size: 2.2rem;
             font-weight: bold;
-            color: #3b2a1f;
-            text-shadow: 3px 3px 0 #ffb347;
+            color: #2a1e13;
+            text-shadow: 3px 3px 0 #c9a86a;
         }
         .rank-badge {
-            background: #6a4e2e;
+            background: #7c4312;
             padding: 8px 20px;
             border-radius: 40px;
-            color: #ffecb3;
+            color: #f2ead9;
             font-weight: bold;
             font-size: 1.2rem;
         }
         .header-actions { display: flex; gap: 10px; align-items: center; }
         .icon-btn {
-            background: #fff7e8;
+            background: #f6f0e3;
             border: none;
             font-size: 1.8rem;
             border-radius: 60px;
             width: 52px;
             height: 52px;
-            box-shadow: 0 6px 0 #b48b4a;
+            box-shadow: 0 6px 0 #c9a86a;
             cursor: pointer;
             transition: 0.08s linear;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .icon-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #b48b4a; }
+        .icon-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #c9a86a; }
 
         .btn-back-home {
-    background: #6aa84f;           /* 柔和的绿色，与金色背景互补 */
+    background: #a7581a;           /* 柔和的绿色，与金色背景互补 */
     color: #ffffff;
     border: none;
     border-radius: 60px;
     padding: 10px 24px;
     font-weight: bold;
     font-size: 1.1rem;
-    box-shadow: 0 6px 0 #2b5e1e;    /* 深绿色阴影 */
+    box-shadow: 0 6px 0 #6b4a2a;    /* 深绿色阴影 */
     text-decoration: none;
     cursor: pointer;
     transition: 0.08s linear;
@@ -93,10 +95,10 @@
 }
 .btn-back-home:active {
     transform: translateY(4px);
-    box-shadow: 0 2px 0 #2b5e1e;
+    box-shadow: 0 2px 0 #6b4a2a;
 }
 .btn-back-home:hover {
-    background: #7cb85c;
+    background: #b97a3e;
 }
 		
         .map-grid {
@@ -106,32 +108,32 @@
             margin: 25px 0 10px;
         }
         .level-card {
-            background: #fff7e8;
+            background: #f6f0e3;
             border-radius: 48px;
             padding: 18px 8px;
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 12px 0 #c29b4a;
-            border: 2px solid #ffcd94;
+            box-shadow: 0 12px 0 #c9a86a;
+            border: 2px solid #e0c9a0;
             position: relative;
         }
-        .level-card:hover { transform: translateY(-5px); box-shadow: 0 16px 0 #b47c2e; }
+        .level-card:hover { transform: translateY(-5px); box-shadow: 0 16px 0 #c9a86a; }
         .level-emoji { font-size: 3rem; }
         .level-name {
             font-size: 1.1rem;
             font-weight: bold;
-            background: #ffd966;
+            background: #c9a86a;
             display: inline-block;
             padding: 0 15px;
             border-radius: 30px;
             margin: 10px 0;
         }
-        .level-desc { font-size: 0.75rem; color: #8b6b3d; }
+        .level-desc { font-size: 0.75rem; color: #7c4312; }
         .completed-stamp {
             margin-top: 10px;
             font-size: 1.3rem;
-            background: #6aa84f;
+            background: #a7581a;
             color: white;
             border-radius: 20px;
             display: inline-block;
@@ -142,7 +144,7 @@
             top: 6px;
             right: 10px;
             font-size: 0.7rem;
-            background: #b48b4a;
+            background: #c9a86a;
             color: white;
             padding: 2px 10px;
             border-radius: 30px;
@@ -160,7 +162,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            background: #ffe1aa;
+            background: #eadfc6;
             border-radius: 50px;
             padding: 12px 20px;
             font-weight: bold;
@@ -168,20 +170,20 @@
         .game-info .stats { display: flex; gap: 18px; align-items: center; }
 
         .current-word-panel {
-            background: #ffb347cc;
+            background: #c9a86acc;
             border-radius: 48px;
             padding: 12px 18px;
             text-align: center;
             backdrop-filter: blur(4px);
         }
-        .current-word-label { font-size: 0.9rem; color: #3e2a1a; margin-bottom: 6px; }
+        .current-word-label { font-size: 0.9rem; color: #2a1e13; margin-bottom: 6px; }
         .current-word {
             font-size: 2.2rem;
             font-weight: bold;
             font-family: monospace;
             letter-spacing: 4px;
-            color: #2d3e2b;
-            text-shadow: 2px 2px 0 #ffeaac;
+            color: #6b4a2a;
+            text-shadow: 2px 2px 0 #e0c9a0;
             margin-bottom: 8px;
         }
         .word-letters {
@@ -190,35 +192,35 @@
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 6px;
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-family: monospace;
             font-weight: bold;
         }
         .word-letter {
             display: inline-block;
             padding: 0 4px;
-            background: #fffaec;
+            background: #faf6ec;
             border-radius: 20px;
             min-width: 48px;
             text-align: center;
             box-shadow: inset 0 1px 3px #0001, 0 2px 4px #0001;
-            color: #8b7b5c;
+            color: #2a1e13;
         }
-        .word-letter.correct { color: #2277ff; background: #e0f0ff; text-shadow: 0 0 2px #aaf; }
-        .word-letter.current { background: #ffd966; color: #8b7b5c; box-shadow: 0 0 0 2px #ffaa33; }
+        .word-letter.correct { color: #7c4312; background: #faf6ec; text-shadow: 0 0 1px #c9a86a; }
+        .word-letter.current { background: #c9a86a; color: #2a1e13; box-shadow: 0 0 0 3px #7c4312; }
         .word-letter.error { color: #ff3333; background: #ffe0e0; text-shadow: none; box-shadow: 0 0 0 2px #ff7777; }
 
         .canvas-wrapper {
-            background: #1e272e;
+            background: #f2ead9;
             border-radius: 48px;
             padding: 8px;
-            box-shadow: inset 0 0 0 3px #f9e0a0, 0 12px 28px black;
+            box-shadow: inset 0 0 0 3px #c9a86a, 0 12px 28px black;
             cursor: pointer;
         }
         canvas {
             display: block;
             width: 100%;
-            background: radial-gradient(circle at 20% 30%, #2c3e44, #17212b);
+            background: radial-gradient(circle at 20% 30%, #f5eee0, #e8dcc4);
             border-radius: 40px;
             cursor: pointer;
         }
@@ -238,9 +240,9 @@
             background: #ead5a8;
             border-radius: 40px;
             padding: 10px 15px;
-            box-shadow: inset 0 1px 4px #fff3cf, 0 6px 0 #b48b4a;
+            box-shadow: inset 0 1px 4px #fff3cf, 0 6px 0 #c9a86a;
         }
-        .completed-title { font-weight: bold; font-size: 1rem; color: #543a1a; display: flex; gap: 8px; }
+        .completed-title { font-weight: bold; font-size: 1rem; color: #6b4a2a; display: flex; gap: 8px; }
         .words-collection {
             display: flex;
             flex-wrap: wrap;
@@ -260,7 +262,7 @@
         }
 
         .voice-selector {
-            background: #ffe1aa;
+            background: #eadfc6;
             border-radius: 60px;
             padding: 5px 15px;
             display: flex;
@@ -269,10 +271,10 @@
             gap: 15px;
             margin-top: 5px;
         }
-        .voice-selector label { font-weight: bold; color: #5e3a1c; }
+        .voice-selector label { font-weight: bold; color: #6b4a2a; }
         .voice-selector select {
-            background: #fff7e8;
-            border: 2px solid #ffb347;
+            background: #f6f0e3;
+            border: 2px solid #c9a86a;
             border-radius: 40px;
             padding: 5px 12px;
             font-family: inherit;
@@ -284,45 +286,45 @@
         .action-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
 
         .cute-btn {
-            background: linear-gradient(135deg, #ffb347, #ff8c1a);
+            background: linear-gradient(135deg, #c9a86a, #8a5a28);
             border: none;
             font-family: inherit;
             font-size: 1.3rem;
             font-weight: bold;
             padding: 12px 28px;
             border-radius: 60px;
-            box-shadow: 0 8px 0 #b45f2b, 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 0 #6b4a2a, 0 4px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.15s ease;
             color: #fff7e0;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             letter-spacing: 1px;
         }
-        .cute-btn:active { transform: translateY(4px); box-shadow: 0 4px 0 #b45f2b; }
+        .cute-btn:active { transform: translateY(4px); box-shadow: 0 4px 0 #6b4a2a; }
         .cute-btn:hover {
             background: linear-gradient(135deg, #ffaa3a, #ff7700);
             transform: translateY(-2px);
             box-shadow: 0 10px 0 #9b4a1a, 0 6px 20px rgba(0, 0, 0, 0.25);
         }
         .cute-btn.secondary {
-            background: linear-gradient(135deg, #7b8c9e, #4a5a6e);
-            box-shadow: 0 8px 0 #2d3a47;
+            background: linear-gradient(135deg, #c9a86a, #b97a3e);
+            box-shadow: 0 8px 0 #7c4312;
         }
         .cute-btn.secondary:hover {
-            background: linear-gradient(135deg, #8fa0b0, #3a4a5a);
-            box-shadow: 0 10px 0 #1f2a33;
+            background: linear-gradient(135deg, #a8d4f9, #c9a86a);
+            box-shadow: 0 10px 0 #6b4a2a;
         }
 
         .error-msg { text-align: center; min-height: 24px; color: #c5221f; font-weight: bold; }
         .hint-container { text-align: center; margin-top: 5px; }
         .space-hint {
-            background: #ffd966aa;
+            background: #c9a86aaa;
             border-radius: 40px;
             padding: 6px 20px;
             font-size: 1.1rem;
             display: inline-block;
             font-weight: bold;
-            color: #3e2a1a;
+            color: #2a1e13;
         }
 
         /* ===== 模态框 ===== */
@@ -353,7 +355,7 @@
             max-height: 90vh;
             overflow-y: auto;
         }
-        .modal-card h2 { margin-bottom: 20px; color: #3b2a1f; }
+        .modal-card h2 { margin-bottom: 20px; color: #2a1e13; }
         .modal-card .setting-group { margin: 18px 0; text-align: left; }
         .modal-card .setting-group label {
             font-weight: bold;
@@ -361,11 +363,11 @@
             margin-bottom: 6px;
             color: #4d3518;
         }
-        .modal-card .setting-group input[type="range"] { width: 100%; accent-color: #ff8c1a; }
-        .modal-card .setting-group .value-display { font-weight: bold; color: #a7581a; }
+        .modal-card .setting-group input[type="range"] { width: 100%; accent-color: #a7581a; }
+        .modal-card .setting-group .value-display { font-weight: bold; color: #2a1e13; }
         .file-upload-area {
-            background: #fff7e8;
-            border: 2px dashed #c29b4a;
+            background: #f6f0e3;
+            border: 2px dashed #c9a86a;
             border-radius: 40px;
             padding: 14px;
             text-align: center;
@@ -376,32 +378,32 @@
         .file-upload-area input[type="file"] { display: none; }
         .modal-card .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
         .modal-card .mini-btn {
-            background: #ffb347;
+            background: #c9a86a;
             border: none;
             padding: 8px 18px;
             border-radius: 40px;
             font-weight: bold;
-            box-shadow: 0 4px 0 #9b6a2a;
+            box-shadow: 0 4px 0 #7c4312;
             cursor: pointer;
             transition: 0.08s linear;
-            color: #2d1f0d;
+            color: #2a1e13;
         }
-        .modal-card .mini-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #9b6a2a; }
+        .modal-card .mini-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #7c4312; }
         .modal-card .mini-btn.danger { background: #e06b6b; box-shadow: 0 4px 0 #944444; color: white; }
         .modal-card .close-settings-btn {
             margin-top: 18px;
-            background: #6aa84f;
+            background: #a7581a;
             border: none;
             padding: 10px 30px;
             border-radius: 60px;
             font-weight: bold;
             font-size: 1.2rem;
             color: white;
-            box-shadow: 0 6px 0 #2b5e1e;
+            box-shadow: 0 6px 0 #6b4a2a;
             cursor: pointer;
             transition: 0.08s linear;
         }
-        .modal-card .close-settings-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #2b5e1e; }
+        .modal-card .close-settings-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #6b4a2a; }
 
         /* 导入关卡列表（删除用） */
         .imported-list {
@@ -433,7 +435,7 @@
             transition: 0.08s linear;
         }
         .imported-item .del-btn:active { transform: translateY(2px); box-shadow: 0 0px 0 #944444; }
-        .no-imported { color: #7f6139; font-style: italic; }
+        .no-imported { color: #6b4a2a; font-style: italic; }
 
         /* ===== 庆祝动画 ===== */
         .big-word-celebrate {
@@ -442,7 +444,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.85);
-            color: #ffd966;
+            color: #c9a86a;
             font-size: 4rem;
             font-weight: bold;
             padding: 24px 48px;
@@ -457,8 +459,8 @@
         }
         .big-word-celebrate .translation {
             font-size: 1.6rem;
-            color: #b5e6b5;
-            text-shadow: 2px 2px 0 #2a5a2a;
+            color: #e0c9a0;
+            text-shadow: 2px 2px 0 #6b4a2a;
             margin-top: 4px;
             font-family: 'Comic Neue', sans-serif;
         }
@@ -481,7 +483,7 @@
             font-weight: bold;
             padding: 12px 24px;
             border-radius: 60px;
-            border: 2px solid #ffb347;
+            border: 2px solid #c9a86a;
             z-index: 150;
             pointer-events: none;
             white-space: nowrap;
@@ -551,7 +553,7 @@
                 <div class="completed-words-panel">
                     <div class="completed-title">📖 符文收集册 (已完成单词) 📖</div>
                     <div class="words-collection" id="completedWordsList">
-                        <span style="color:#7f6139;">暂无</span>
+                        <span style="color:#6b4a2a;">暂无</span>
                     </div>
                 </div>
 
@@ -577,14 +579,14 @@
             <div class="setting-group">
                 <label>🐢 下落速度倍率 <span class="value-display" id="speedValueDisplay">1.0x</span></label>
                 <input type="range" id="speedSlider" min="0.2" max="3.0" step="0.1" value="1.0">
-                <div style="font-size:0.8rem;color:#7f6139;display:flex;justify-content:space-between;"><span>0.2x 慢速</span><span>3.0x 极速</span></div>
-                <div style="font-size:0.75rem;color:#a7581a;margin-top:4px;">⚡ 拖动滑块立即生效（当前下落的字符也会变速）</div>
+                <div style="font-size:0.8rem;color:#6b4a2a;display:flex;justify-content:space-between;"><span>0.2x 慢速</span><span>3.0x 极速</span></div>
+                <div style="font-size:0.75rem;color:#2a1e13;margin-top:4px;">⚡ 拖动滑块立即生效（当前下落的字符也会变速）</div>
             </div>
 
             <div class="setting-group">
                 <label>🔄 重置当前关卡</label>
                 <button class="mini-btn danger" id="resetLevelBtn">🗑️ 重置为默认单词列表</button>
-                <div style="font-size:0.75rem;color:#7f6139;margin-top:4px;">仅重置当前关卡的单词，不影响通关记录</div>
+                <div style="font-size:0.75rem;color:#6b4a2a;margin-top:4px;">仅重置当前关卡的单词，不影响通关记录</div>
             </div>
 
             <div class="setting-group">
@@ -593,7 +595,7 @@
                     <span>📤 点击选择 .txt 文件 (每行一个单词)</span>
                     <input type="file" id="fileInput" multiple accept=".txt">
                 </div>
-                <div style="font-size:0.75rem;color:#7f6139;margin-top:6px;">
+                <div style="font-size:0.75rem;color:#6b4a2a;margin-top:6px;">
                     格式：<strong>单词</strong> 或 <strong>单词, 释义</strong> (用逗号或Tab分隔)
                 </div>
             </div>
@@ -603,7 +605,7 @@
                 <div id="importedListContainer" class="imported-list">
                     <div class="no-imported">暂无导入的关卡</div>
                 </div>
-                <div style="font-size:0.75rem;color:#7f6139;margin-top:6px;">* 内置关卡（第1~15组）不可删除，仅可删除导入的</div>
+                <div style="font-size:0.75rem;color:#6b4a2a;margin-top:6px;">* 内置关卡（第1~15组）不可删除，仅可删除导入的</div>
             </div>
 
             <button class="close-settings-btn" id="closeSettingsBtn">✨ 关闭设置 ✨</button>
@@ -615,7 +617,7 @@
         <div class="modal-card">
             <h2>📜 关卡总结 📜</h2>
             <div id="summaryContent"></div>
-            <button id="closeSummaryBtn" style="margin-top:20px;background:#6aa84f;border:none;padding:10px 30px;border-radius:60px;font-weight:bold;font-size:1.2rem;color:white;box-shadow:0 6px 0 #2b5e1e;cursor:pointer;">继续冒险 🚀</button>
+            <button id="closeSummaryBtn" style="margin-top:20px;background:#a7581a;border:none;padding:10px 30px;border-radius:60px;font-weight:bold;font-size:1.2rem;color:white;box-shadow:0 6px 0 #6b4a2a;cursor:pointer;">继续冒险 🚀</button>
         </div>
     </div>
 
@@ -944,7 +946,7 @@
             const container = document.getElementById("completedWordsList");
             if (!container) return;
             if (completedWordsArray.length === 0) {
-                container.innerHTML = '<span style="color:#7f6139;">暂无</span>';
+                container.innerHTML = '<span style="color:#6b4a2a;">暂无</span>';
                 return;
             }
             container.innerHTML = completedWordsArray.map(w => `<span class="word-badge">📜 ${w}</span>`).join('');
@@ -1136,7 +1138,7 @@
 
         function drawCanvasStatic() {
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-            ctx.fillStyle = "#ffd98c";
+            ctx.fillStyle = "#7c4312";
             ctx.font = `bold 32px "Comic Neue"`;
             ctx.fillText("✨ 按空格开始 ✨", canvasWidth / 2 - 130, canvasHeight / 2 - 20);
         }
@@ -1144,10 +1146,11 @@
         function drawGame() {
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
             if (activeChar) {
-                let color = activeChar.isRed ? "#ff5e5e" : "#f9f3d9";
+                let color = activeChar.isRed ? "#ff5e5e" : "#2a1e13";
                 if (activeChar.isStopped && activeChar.isRed) color = "#ff3333";
-                else if (!activeChar.isStopped) color = "#b5f0ff";
+                else if (!activeChar.isStopped) color = "#5a3a1a";
                 ctx.shadowBlur = 8;
+                ctx.shadowColor = "rgba(0,0,0,0.25)";
                 ctx.fillStyle = color;
                 ctx.font = `bold 44px "Comic Neue", monospace`;
                 ctx.fillText(activeChar.text, activeChar.x, activeChar.y);
@@ -1581,6 +1584,19 @@
 
             window.addEventListener("keydown", onKeyDown);
         });
+    </script>
+    <script>
+    // 源码保护：禁止右键查看/查看源代码/开发者工具（不影响正常使用）
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'U' || e.key === 'S')) {
+            e.preventDefault();
+        }
+        if (e.key === 'F12') { e.preventDefault(); }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+        }
+    });
     </script>
 </body>
 </html>

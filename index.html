@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正安二中信息技术测试平台</title>
+    <title>高中信息技术学考训练营</title>
     <style>
         * {
             margin: 0;
@@ -49,7 +49,7 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            color: #2196F3;
+            color: #a7581a;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
@@ -101,13 +101,13 @@
         }
         
         .card h2 {
-            color: #2196F3;
+            color: #a7581a;
             margin-bottom: 15px;
             font-size: 1.7rem;
         }
         
         .card p {
-            color: #555;
+            color: #4a3a28;
             margin-bottom: 20px;
             line-height: 1.6;
             font-size: 0.95rem;
@@ -115,7 +115,7 @@
         
         .btn {
             display: inline-block;
-            background: #0288d1;
+            background: #7c4312;
             color: white;
             padding: 12px 25px;
             border-radius: 50px;
@@ -132,19 +132,19 @@
         }
         
         .card-1 .btn {
-            background: linear-gradient(45deg, #2196F3, #03A9F4);
+            background: linear-gradient(45deg, #a7581a, #b97a3e);
         }
         
         .card-2 .btn {
-            background: linear-gradient(45deg, #2196F3, #03A9F4);
+            background: linear-gradient(45deg, #a7581a, #b97a3e);
         }
         
         .card-3 .btn {
-            background: linear-gradient(45deg, #2196F3, #03A9F4);
+            background: linear-gradient(45deg, #a7581a, #b97a3e);
         }
         
         .card-4 .btn {
-            background: linear-gradient(45deg, #2196F3, #03A9F4);
+            background: linear-gradient(45deg, #a7581a, #b97a3e);
         }
         
         /* ===== 底部统计样式（始终横向排列，移动端紧凑） ===== */
@@ -157,7 +157,7 @@
             background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(6px);
             border-radius: 12px;
-            color: #555;
+            color: #4a3a28;
             font-size: 1rem;
             display: flex;
             flex-wrap: wrap;
@@ -176,12 +176,12 @@
         
         .footer-stats .stat-label {
             font-weight: 500;
-            color: #555;
+            color: #4a3a28;
         }
         
         .footer-stats .stat-number {
             font-weight: 700;
-            color: #2196F3;
+            color: #a7581a;
             font-size: 1.1rem;
             min-width: 20px;
             display: inline-block;
@@ -272,7 +272,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>正安县第二中学信息技术平台</h1>
+            <h1>高中信息技术学考训练营</h1>
             <p class="subtitle">信息技术学业水平测试大闯关</p>
         </header>
         
@@ -331,8 +331,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             const bgImage = new Image();
             bgImage.onerror = function() {
-                console.log('背景图片加载失败，使用备用背景');
-                document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                console.log('背景图片加载失败，使用牛皮纸纹理背景');
+                document.body.style.background = 'linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)), url(\'./images/paper-texture.jpg\')';
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
             };
             bgImage.src = './images/background.jpg';
         });
@@ -364,6 +366,19 @@
             }
             */
         });
+    </script>
+    <script>
+    // 源码保护：禁止右键查看/查看源代码/开发者工具（不影响正常使用）
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'U' || e.key === 'S')) {
+            e.preventDefault();
+        }
+        if (e.key === 'F12') { e.preventDefault(); }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+        }
+    });
     </script>
 </body>
 </html>

@@ -8,16 +8,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
         :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #5cb85c;
-            --dark-color: #2c3e50;
-            --light-bg: #f8f9fa;
+            --primary-color: #a7581a;
+            --secondary-color: #6b4a2a;
+            --dark-color: #2a1e13;
+            --light-bg: #f5eee0;
             --sidebar-width: 280px;
         }
 
         body {
+            background: linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)), url('./images/paper-texture.jpg') center/cover fixed;
+
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--light-bg);
+
             color: #333;
         }
 
@@ -28,7 +30,7 @@
             left: 0;
             height: 100vh;
             width: var(--sidebar-width);
-            background: linear-gradient(135deg, var(--primary-color) 0%, #357abd 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #7c4312 100%);
             color: white;
             overflow-y: auto;
             transition: transform 0.3s ease;
@@ -135,7 +137,7 @@
 
         /* 章节标题样式 */
         .section-title {
-            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            background: linear-gradient(135deg, var(--primary-color), #7c4312);
             color: white;
             padding: 20px 30px;
             border-radius: 10px;
@@ -173,7 +175,7 @@
             color: var(--primary-color);
             margin-bottom: 15px;
             font-size: 1.3rem;
-            border-bottom: 2px solid #e9ecef;
+            border-bottom: 2px solid #e8dec8;
             padding-bottom: 10px;
         }
 
@@ -218,7 +220,7 @@
 
         .custom-table td {
             padding: 12px 15px;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid #e8dec8;
         }
 
         .custom-table tr:last-child td {
@@ -232,7 +234,7 @@
         /* 代码块样式 */
         .code-block {
             background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
+            border: 1px solid #e8dec8;
             border-radius: 5px;
             padding: 15px;
             margin: 15px 0;
@@ -282,13 +284,13 @@
         }
 
         .back-to-top:hover {
-            background-color: #357abd;
+            background-color: #7c4312;
             transform: translateY(-3px);
         }
 
         /* 高亮样式 */
         .highlight {
-            background-color: #fff3cd;
+            background-color: #f5e6c4;
             padding: 2px 4px;
             border-radius: 3px;
         }
@@ -296,7 +298,7 @@
         /* 标签样式 */
         .tag {
             display: inline-block;
-            background-color: #e3f2fd;
+            background-color: #f2ead9;
             color: var(--primary-color);
             padding: 4px 8px;
             border-radius: 4px;
@@ -308,7 +310,7 @@
         .review-outline-btn {
             display: inline-block;
             padding: 10px 20px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #c9a86a 0%, #b97a3e 100%);
             color: white;
             text-decoration: none;
             border-radius: 25px;
@@ -483,8 +485,8 @@
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h2><i class="bi bi-book"></i> 信息技术复习</h2>
-            <p>正安二中学业水平考试专用</p>
-            <a href="index.html" class="review-outline-btn">返回首页</a>
+            <p>信息技术学业水平考试专用</p>
+            <a href="index.html" class="review-outline-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:4px;"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>返回首页</a>
         </div>
         <div class="nav-menu">
             <div class="nav-item">
@@ -1355,23 +1357,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><div style="width: 60px; height: 40px; border-radius: 20%; background: #4a90e2; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto;">◇</div></td>
+                            <td><div style="width: 56px; height: 36px; border-radius: 18px; background: #ffffff; border: 2.5px solid #7c4312; margin: 2px auto; box-sizing: border-box;"></div></td>
                             <td>起止框</td>
                             <td>表示算法的开始和结束</td>
                         </tr>
                         <tr>
-                            <td><div style="width: 50px; height: 30px; background: #4a90e2; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto;">□</div></td>
+                            <td><div style="width: 46px; height: 28px; background: #ffffff; border: 2.5px solid #7c4312; margin: 4px auto; box-sizing: border-box;"></div></td>
                             <td>处理框</td>
                             <td>表示执行一个步骤</td>
                         </tr>
                         <tr>
-                            <td><div style="width: 40px; height: 40px; background: #4a90e2; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">◇</div></td>
+                            <td><div style="width: 32px; height: 32px; background: #ffffff; border: 2.5px solid #7c4312; transform: rotate(45deg); margin: 6px auto; box-sizing: border-box;"></div></td>
                             <td>判断框</td>
                             <td>表示要根据条件执行线路</td>
                         </tr>
                         <tr>
-                            <td> <div style="width: 40px; height: 30px; background: #4a90e2; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto; transform: skewX(-20deg);">
-    ▢</div></td>
+                            <td><div style="width: 52px; height: 30px; background: #ffffff; border: 2.5px solid #7c4312; transform: skewX(-20deg); margin: 4px auto; box-sizing: border-box;"></div></td>
                             <td>输入输出框</td>
                             <td>表示用户输入或由计算机自动输出的信息</td>
                         </tr>
@@ -1379,7 +1380,7 @@
                             <td><div style="
       width: 40px; 
       height: 2px; 
-      background: #4a90e2; 
+      background: #a7581a; 
       position: relative;
       margin: 0 auto;
   ">
@@ -1392,7 +1393,7 @@
         height: 0;
         border-top: 6px solid transparent;
         border-bottom: 6px solid transparent;
-        border-left: 8px solid #4a90e2;
+        border-left: 8px solid #a7581a;
     "></div>
   </div></td>
                             <td>流程线</td>
@@ -1402,7 +1403,7 @@
                             <td><div style="
       width: 10px; 
       height: 10px; 
-      border: 2px solid #4a90e2; 
+      border: 2px solid #a7581a; 
       border-radius: 50%; 
       display: flex; 
       align-items: center; 
@@ -1953,9 +1954,17 @@ while 表达式:
         });
     </script>
     <script>
-    // 压缩混淆的代码保护
-    !function(){function e(e){e.preventDefault(),e.stopPropagation(),!1}document.addEventListener("contextmenu",e),document.addEventListener("selectstart",e),document.onkeydown=function(e){return!(e.ctrlKey&&(e.keyCode==83||e.keyCode==85)||e.keyCode==123)},
-    setInterval(function(){var e=window.outerWidth-window.innerWidth>100,n=window.outerHeight-window.innerHeight>100;(e||n)&&(document.body.innerHTML='<h1 style="text-align:center;color:red">禁止调试</h1>')},1e3)}();
+    // 源码保护：禁止右键查看/查看源代码/开发者工具（不影响正常使用）
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'U' || e.key === 'S')) {
+            e.preventDefault();
+        }
+        if (e.key === 'F12') { e.preventDefault(); }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+        }
+    });
     </script>
 </body>
 </html>
