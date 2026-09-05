@@ -1,12 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>高中信息技术 · Excel月考成绩统计分析操作题</title>
-    <!-- Font Awesome 图标库，让步骤更直观 -->
+    <!-- Font Awesome 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ===== 全局重置 & 基础 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -14,781 +15,1460 @@
         }
 
         body {
-            font-family: 'Segoe UI', '微软雅黑', system-ui, sans-serif;
+            font-family: 'Segoe UI', '微软雅黑', system-ui, -apple-system, sans-serif;
             background: #f5f0e2;
             color: #3a2410;
-            padding: 24px 16px;
+            padding: 16px 10px;
             line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 40px rgba(74, 42, 14, 0.08);
-            padding: 28px 32px 40px;
-            transition: all 0.2s;
+            border-radius: 28px;
+            box-shadow: 0 16px 40px rgba(74, 42, 14, 0.07);
+            padding: 24px 20px 32px;
+            transition: padding 0.2s;
         }
 
-        /* 头部区域 */
+        /* ===== 头部 ===== */
         .header {
             border-bottom: 2px solid #e6edf5;
-            padding-bottom: 20px;
-            margin-bottom: 24px;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
+            gap: 12px;
         }
 
         .title-section h1 {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: #3a2410;
             letter-spacing: -0.01em;
+            line-height: 1.3;
         }
 
         .title-section .sub {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #6b5a45;
-            margin-top: 6px;
+            margin-top: 4px;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 12px;
+            gap: 8px 12px;
         }
 
         .exam-badge {
             background: #d4e2f0;
-            padding: 6px 16px;
+            padding: 4px 14px;
             border-radius: 40px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
             color: #3a2410;
+            white-space: nowrap;
         }
 
         .excel-version {
             background: #1e6f3c;
             color: white;
-            padding: 6px 16px;
+            padding: 4px 14px;
             border-radius: 30px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
+            white-space: nowrap;
         }
 
-        /* 题目要求卡片 */
+        .header-right {
+            color: #6b4a2e;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        /* ===== 返回首页按钮 ===== */
+        .review-outline-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            background: linear-gradient(135deg, #c9a86a 0%, #4a2a0e 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 14px rgba(122, 82, 38, 0.25);
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .review-outline-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(122, 82, 38, 0.35);
+        }
+        .review-outline-btn:active {
+            transform: scale(0.96);
+        }
+        .review-outline-btn svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        /* ===== 题目要求卡片 ===== */
         .task-card {
             background: #f7f2e6;
             border-left: 8px solid #a7581a;
             border-radius: 20px;
-            padding: 22px 26px;
-            margin-bottom: 32px;
+            padding: 18px 20px;
+            margin-bottom: 28px;
         }
-
         .task-card h2 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             color: #402a12;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .task-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 12px 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px 16px;
         }
-
         .task-item {
             display: flex;
             align-items: baseline;
             gap: 10px;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
         }
-
         .task-item i {
             color: #a7581a;
             width: 20px;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            flex-shrink: 0;
+            text-align: center;
         }
 
-        /* 示例数据表格 (模拟Excel) */
+        /* ===== 示例数据表 ===== */
         .demo-section {
-            margin-bottom: 36px;
+            margin-bottom: 32px;
         }
-
         .demo-header {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 12px;
+            gap: 10px 14px;
             margin-bottom: 12px;
         }
-
         .demo-header h3 {
             font-weight: 600;
             color: #4a2a0e;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+        .demo-header .badge-region {
+            background: #f3efe4;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #5b3a1a;
+            white-space: nowrap;
         }
 
         .table-wrapper {
             overflow-x: auto;
-            border-radius: 18px;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 16px;
             border: 1px solid #d0ddee;
             background: #fafcff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+            margin-bottom: 6px;
         }
 
         .excel-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.95rem;
-            min-width: 900px;
+            font-size: 0.85rem;
+            min-width: 720px;
             white-space: nowrap;
         }
-
-        .excel-table th, .excel-table td {
+        .excel-table th,
+        .excel-table td {
             border: 1px solid #bcc9db;
-            padding: 10px 12px;
+            padding: 8px 10px;
             text-align: center;
             vertical-align: middle;
         }
-
         .excel-table thead tr:first-child th {
             background: #a7581a;
             color: white;
             font-weight: 700;
-            font-size: 1.1rem;
-            text-align: center;
+            font-size: 1rem;
             border-color: #4a2a0e;
         }
-
         .excel-table tbody tr:nth-child(even) {
             background-color: #f4f8fe;
         }
-
         .excel-table tbody tr:hover {
             background: #e3ecf9;
         }
-
         .col-header {
             background: #ecdfc8;
             font-weight: 600;
             color: #402a12;
         }
-
         .total-col {
             background: #fef7e0;
             font-weight: 500;
         }
 
         .footnote {
-            margin-top: 8px;
+            margin-top: 6px;
             color: #8b7355;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             display: flex;
-            gap: 20px;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+        }
+        .footnote span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        /* 步骤导航 —— 动态步骤卡片 */
+        /* ===== 下载按钮 ===== */
+        .download-link {
+            background: #1e6f3c;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 40, 20, 0.12);
+            transition: 0.2s;
+            border: 1px solid #3c9b5e;
+            touch-action: manipulation;
+            flex-shrink: 0;
+        }
+        .download-link:hover {
+            background: #145c2e;
+            box-shadow: 0 6px 16px rgba(0, 60, 30, 0.18);
+        }
+        .download-link:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== 步骤标题 ===== */
         .steps-title {
             display: flex;
+            flex-wrap: wrap;
             align-items: baseline;
-            margin: 32px 0 20px;
+            margin: 28px 0 18px;
+            gap: 8px 14px;
         }
-
         .steps-title h2 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 650;
             color: #3a2410;
         }
-
         .steps-title span {
-            margin-left: 16px;
             background: #e0e9f3;
             padding: 4px 14px;
             border-radius: 30px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            color: #3a2410;
         }
 
+        /* ===== 步骤卡片 ===== */
         .step-grid {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
-
         .step-card {
             background: white;
-            border-radius: 28px;
+            border-radius: 24px;
             border: 1px solid #dfe8f2;
-            box-shadow: 0 6px 14px rgba(74, 42, 14, 0.03);
+            box-shadow: 0 4px 12px rgba(74, 42, 14, 0.03);
             overflow: hidden;
-            transition: transform 0.1s, box-shadow 0.2s;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-
         .step-card:hover {
-            box-shadow: 0 14px 26px rgba(122, 82, 38, 0.08);
+            box-shadow: 0 10px 24px rgba(122, 82, 38, 0.07);
             border-color: #d8c5a4;
         }
 
         .step-header {
             background: #f9fcff;
-            padding: 18px 26px;
+            padding: 14px 18px;
             border-bottom: 1px dashed #e2d3b6;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
         }
-
         .step-number {
             background: #4a2a0e;
             color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 44px;
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.6rem;
-            box-shadow: 0 6px 10px rgba(74,42,14,0.1);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(74, 42, 14, 0.12);
         }
-
         .step-header h3 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #402a12;
+            line-height: 1.3;
         }
 
         .step-body {
-            padding: 22px 30px 28px;
+            padding: 18px 18px 22px;
             background: #ffffff;
         }
 
         .instruction-list {
             list-style: none;
         }
-
         .instruction-list li {
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             display: flex;
-            gap: 16px;
+            gap: 14px;
             align-items: flex-start;
         }
-
         .ins-icon {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             background: #eef3fc;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #8a5a28;
-            font-size: 1.2rem;
+            font-size: 1rem;
             flex-shrink: 0;
-            margin-top: 2px;
+            margin-top: 1px;
         }
-
         .ins-content {
             flex: 1;
+            font-size: 0.95rem;
         }
-
         .ins-content strong {
             color: #402a12;
             font-weight: 650;
         }
-
         .code-badge {
             background: #f3efe4;
-            padding: 4px 12px;
-            border-radius: 24px;
+            padding: 2px 10px;
+            border-radius: 20px;
             font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             border: 1px solid #cad6e3;
             display: inline-block;
-            margin: 6px 4px 0 0;
+            margin: 2px 2px 0 0;
         }
-
         .highlight {
             background: #fdefd4;
-            padding: 2px 8px;
-            border-radius: 16px;
+            padding: 1px 8px;
+            border-radius: 14px;
             font-weight: 500;
             color: #92400e;
         }
 
         .tip-box {
             background: #e7f0fa;
-            border-radius: 18px;
-            padding: 14px 20px;
-            margin-top: 18px;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-top: 14px;
             display: flex;
             gap: 12px;
             border-left: 5px solid #a7581a;
+            font-size: 0.92rem;
         }
-
         .tip-box i {
             color: #8a5a28;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .action-hint {
             margin-top: 10px;
             color: #7a5f42;
             font-style: italic;
+            font-size: 0.9rem;
         }
 
         .btn-simulate {
             background: white;
             border: 1.5px solid #a7581a;
             color: #a7581a;
-            padding: 8px 22px;
+            padding: 6px 20px;
             border-radius: 40px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: default;
-            transition: 0.1s;
             display: inline-block;
             margin-top: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
         }
 
-        .footer-note {
-            margin-top: 40px;
-            text-align: right;
-            color: #8b7355;
-            border-top: 1px solid #d7e2ee;
-            padding-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* 动态步骤标记 (已完成/可点击效果——纯粹视觉引导) */
-        .step-progress {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        /* ========== 下载链接样式 ========== */
-        .download-link {
-            background: #1e6f3c;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 8px rgba(0,40,20,0.1);
-            transition: 0.15s;
-            border: 1px solid #3c9b5e;
-            margin-left: auto;
-            white-space: nowrap;
-        }
-        .download-link:hover {
-            background: #145c2e;
-            box-shadow: 0 6px 12px rgba(0,60,30,0.15);
-        }
-        .download-link i {
-            font-size: 1rem;
-        }
-
-        /* ========== GIF 动图样式（新增） ========== */
+        /* ===== GIF 样式 ===== */
         .step-gif {
-            margin-top: 20px;
+            margin-top: 16px;
             text-align: center;
             background: #f8fafd;
-            padding: 16px 12px;
-            border-radius: 20px;
+            padding: 12px 8px;
+            border-radius: 18px;
             border: 1px solid #ecdfc8;
+            cursor: pointer;
+            transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .step-gif:active {
+            background: #eef3fa;
         }
         .step-gif img {
             max-width: 100%;
             height: auto;
-            border-radius: 12px;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2d3b6;
+            display: block;
+            margin: 0 auto;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
-        .gif-placeholder {
-            margin-top: 20px;
-            background: #f0f4fa;
-            padding: 20px 16px;
-            border-radius: 20px;
-            text-align: center;
+        .step-gif .gif-tap-hint {
+            display: block;
+            font-size: 0.7rem;
             color: #8b7355;
-            border: 1px dashed #a89274;
-            font-size: 0.95rem;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
         }
-        .gif-placeholder i {
-            margin-right: 8px;
-            color: #a7581a;
-        }
-        /* ================================== */
 
-        @media (max-width: 640px) {
-            .container {
-                padding: 20px 16px;
-            }
-            .step-header {
-                flex-wrap: wrap;
-            }
-            .excel-table {
-                font-size: 0.8rem;
-            }
-            .download-link {
-                margin-left: 0;
-            }
+        /* ===== 页脚 ===== */
+        .footer-note {
+            margin-top: 36px;
+            border-top: 1px solid #d7e2ee;
+            padding-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            color: #8b7355;
+            font-size: 0.85rem;
         }
-    
-        /* 返回首页按钮（与情景应用题页统一） */
-        .review-outline-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #c9a86a 0%, #4a2a0e 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 16px;
-            box-shadow: 0 4px 15px rgba(122, 82, 38, 0.3);
-            transition: all 0.3s ease;
-            margin-top: 12px;
+        .footer-note div {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .review-outline-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(122, 82, 38, 0.4); }
-    
-        /* ===== 移动端适配补充 ===== */
-        @media (max-width: 640px) {
-            .title-section h1, h1 { font-size: 1.45rem !important; line-height: 1.35; }
-            .header { flex-direction: column; align-items: flex-start; gap: 12px; }
-            /* 参考数据区：标题与下载按钮改为上下堆叠，避免标题被挤成竖排 */
-            .demo-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .demo-header h3 { font-size: 1.05rem; line-height: 1.5; }
-            .download-link { margin-left: 0; white-space: normal; }
-            .sub { flex-wrap: wrap; gap: 8px; }
-            .gif-box img, .step-gif img { max-width: 100%; height: auto; }
-            /* 页脚两段文字手机端上下排列 */
-            .footer-note { flex-direction: column; gap: 8px; text-align: center; }
 
-        }
-    
-        /* ===== GIF 灯箱：点击全屏弹出，竖屏自动横屏显示 ===== */
+        /* ===== GIF 灯箱 ===== */
         #gif-lightbox {
             display: none;
-            position: fixed; inset: 0;
-            background: rgba(20, 14, 8, 0.94);
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 10, 6, 0.94);
             z-index: 99999;
             overflow: hidden;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            touch-action: none;
         }
-        #gif-lightbox.show { display: flex; align-items: center; justify-content: center; }
+        #gif-lightbox.show {
+            display: flex;
+        }
         #gif-lightbox img {
-            max-width: 96vw; max-height: 96vh;
-            width: auto; height: auto;
+            max-width: 94vw;
+            max-height: 94vh;
+            width: auto;
+            height: auto;
             border-radius: 8px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+            object-fit: contain;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         #gif-lightbox .lb-hint {
-            position: absolute; bottom: 18px; left: 0; right: 0;
-            text-align: center; color: rgba(255,255,255,0.75);
-            font-size: 13px; letter-spacing: 1px;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            padding: 0 16px;
         }
-        /* 手机竖屏：GIF 旋转 90 度，横屏构图铺满整屏 */
-        @media (orientation: portrait) {
+        /* 手机竖屏：GIF 旋转 90 度，充分利用屏幕 */
+        @media (orientation: portrait) and (max-width: 768px) {
             #gif-lightbox img {
-                height: 96vw; width: auto;
-                max-width: none; max-height: none;
+                height: 92vw;
+                width: auto;
+                max-width: none;
+                max-height: none;
                 transform: rotate(90deg);
+            }
+        }
+        @media (orientation: portrait) and (max-width: 480px) {
+            #gif-lightbox img {
+                height: 96vw;
+            }
+        }
+
+        /* ============================================================== */
+        /* ===== 响应式设计 — 多断点精细适配 ===== */
+        /* ============================================================== */
+
+        /* --- 平板及以下 (≤ 1024px) --- */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 20px 18px 28px;
+            }
+            .excel-table {
+                font-size: 0.82rem;
+                min-width: 680px;
+            }
+            .excel-table th,
+            .excel-table td {
+                padding: 7px 9px;
+            }
+        }
+
+        /* --- 小平板 / 大手机 (≤ 768px) --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 8px;
+            }
+            .container {
+                padding: 16px 14px 24px;
+                border-radius: 22px;
+            }
+            .header {
+                padding-bottom: 14px;
+                margin-bottom: 16px;
+                gap: 10px;
+            }
+            .title-section h1 {
+                font-size: 1.35rem;
+            }
+            .title-section .sub {
+                font-size: 0.8rem;
+                gap: 6px 10px;
+            }
+            .exam-badge,
+            .excel-version {
+                font-size: 0.7rem;
+                padding: 3px 12px;
+            }
+            .header-right {
+                font-size: 0.8rem;
+            }
+            .review-outline-btn {
+                font-size: 0.78rem;
+                padding: 6px 14px;
+            }
+            .review-outline-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .task-card {
+                padding: 14px 16px;
+                border-left-width: 6px;
+            }
+            .task-card h2 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+            .task-item {
+                font-size: 0.88rem;
+                gap: 8px;
+            }
+            .task-item i {
+                width: 18px;
+                font-size: 0.9rem;
+            }
+
+            .demo-header h3 {
+                font-size: 0.95rem;
+            }
+            .demo-header .badge-region {
+                font-size: 0.7rem;
+                padding: 2px 12px;
+            }
+            .download-link {
+                font-size: 0.78rem;
+                padding: 6px 14px;
+                gap: 6px;
+            }
+
+            .excel-table {
+                font-size: 0.75rem;
+                min-width: 600px;
+            }
+            .excel-table th,
+            .excel-table td {
+                padding: 6px 8px;
+            }
+            .excel-table thead tr:first-child th {
+                font-size: 0.85rem;
+            }
+
+            .steps-title {
+                margin: 22px 0 14px;
+                gap: 6px 12px;
+            }
+            .steps-title h2 {
+                font-size: 1.25rem;
+            }
+            .steps-title span {
+                font-size: 0.7rem;
+                padding: 3px 12px;
+            }
+
+            .step-card {
+                border-radius: 20px;
+            }
+            .step-header {
+                padding: 12px 14px;
+                gap: 12px;
+            }
+            .step-number {
+                width: 34px;
+                height: 34px;
+                font-size: 1.2rem;
+            }
+            .step-header h3 {
+                font-size: 1.05rem;
+            }
+            .step-body {
+                padding: 14px 14px 18px;
+            }
+            .instruction-list li {
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+            .ins-icon {
+                width: 26px;
+                height: 26px;
+                font-size: 0.85rem;
+                border-radius: 10px;
+            }
+            .ins-content {
+                font-size: 0.88rem;
+            }
+            .code-badge {
+                font-size: 0.75rem;
+                padding: 1px 8px;
+            }
+            .tip-box {
+                font-size: 0.85rem;
+                padding: 10px 14px;
+                gap: 10px;
+            }
+            .tip-box i {
+                font-size: 1rem;
+            }
+            .action-hint {
+                font-size: 0.82rem;
+            }
+
+            .step-gif {
+                padding: 10px 6px;
+                margin-top: 14px;
+            }
+            .step-gif .gif-tap-hint {
+                font-size: 0.65rem;
+            }
+
+            .footer-note {
+                font-size: 0.78rem;
+                padding-top: 16px;
+                margin-top: 28px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 6px;
+            }
+        }
+
+        /* --- 手机 (≤ 480px) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 8px 4px;
+            }
+            .container {
+                padding: 12px 10px 18px;
+                border-radius: 18px;
+            }
+
+            .title-section h1 {
+                font-size: 1.15rem;
+            }
+            .title-section .sub {
+                font-size: 0.7rem;
+                gap: 4px 8px;
+            }
+            .exam-badge,
+            .excel-version {
+                font-size: 0.6rem;
+                padding: 2px 10px;
+            }
+            .header-right {
+                font-size: 0.7rem;
+            }
+            .review-outline-btn {
+                font-size: 0.7rem;
+                padding: 5px 12px;
+                border-radius: 24px;
+            }
+            .review-outline-btn svg {
+                width: 12px;
+                height: 12px;
+            }
+
+            .task-card {
+                padding: 12px 12px;
+                border-left-width: 5px;
+                border-radius: 14px;
+                margin-bottom: 20px;
+            }
+            .task-card h2 {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+                gap: 6px;
+            }
+            .task-list {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .task-item {
+                font-size: 0.82rem;
+                gap: 6px;
+            }
+            .task-item i {
+                width: 16px;
+                font-size: 0.8rem;
+            }
+
+            .demo-header {
+                gap: 6px 10px;
+            }
+            .demo-header h3 {
+                font-size: 0.85rem;
+            }
+            .demo-header .badge-region {
+                font-size: 0.6rem;
+                padding: 2px 10px;
+            }
+            .download-link {
+                font-size: 0.7rem;
+                padding: 5px 12px;
+                gap: 5px;
+                border-radius: 30px;
+            }
+            .download-link i {
+                font-size: 0.8rem;
+            }
+
+            .table-wrapper {
+                border-radius: 12px;
+            }
+            .excel-table {
+                font-size: 0.65rem;
+                min-width: 480px;
+            }
+            .excel-table th,
+            .excel-table td {
+                padding: 5px 6px;
+            }
+            .excel-table thead tr:first-child th {
+                font-size: 0.75rem;
+            }
+
+            .footnote {
+                font-size: 0.7rem;
+                gap: 6px 12px;
+            }
+
+            .steps-title {
+                margin: 18px 0 10px;
+                gap: 4px 8px;
+            }
+            .steps-title h2 {
+                font-size: 1.05rem;
+            }
+            .steps-title span {
+                font-size: 0.6rem;
+                padding: 2px 10px;
+            }
+
+            .step-card {
+                border-radius: 16px;
+            }
+            .step-header {
+                padding: 10px 12px;
+                gap: 10px;
+            }
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 1rem;
+                border-radius: 28px;
+            }
+            .step-header h3 {
+                font-size: 0.92rem;
+            }
+            .step-body {
+                padding: 10px 12px 14px;
+            }
+            .instruction-list li {
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+            .ins-icon {
+                width: 22px;
+                height: 22px;
+                font-size: 0.75rem;
+                border-radius: 8px;
+                min-width: 22px;
+            }
+            .ins-content {
+                font-size: 0.8rem;
+            }
+            .code-badge {
+                font-size: 0.68rem;
+                padding: 1px 6px;
+                border-radius: 14px;
+            }
+            .highlight {
+                padding: 1px 6px;
+                border-radius: 10px;
+                font-size: 0.8rem;
+            }
+            .tip-box {
+                font-size: 0.78rem;
+                padding: 8px 12px;
+                gap: 8px;
+                border-left-width: 4px;
+                border-radius: 12px;
+                margin-top: 10px;
+            }
+            .tip-box i {
+                font-size: 0.9rem;
+            }
+            .action-hint {
+                font-size: 0.75rem;
+                margin-top: 6px;
+            }
+
+            .step-gif {
+                padding: 8px 4px;
+                margin-top: 12px;
+                border-radius: 12px;
+            }
+            .step-gif .gif-tap-hint {
+                font-size: 0.6rem;
+                margin-top: 4px;
+            }
+
+            .footer-note {
+                font-size: 0.7rem;
+                padding-top: 12px;
+                margin-top: 20px;
+                gap: 4px;
+            }
+        }
+
+        /* --- 超小屏 (≤ 360px) --- */
+        @media (max-width: 360px) {
+            .container {
+                padding: 8px 6px 14px;
+                border-radius: 14px;
+            }
+            .title-section h1 {
+                font-size: 1rem;
+            }
+            .task-card h2 {
+                font-size: 0.85rem;
+            }
+            .task-item {
+                font-size: 0.75rem;
+            }
+            .demo-header h3 {
+                font-size: 0.78rem;
+            }
+            .excel-table {
+                font-size: 0.58rem;
+                min-width: 400px;
+            }
+            .excel-table th,
+            .excel-table td {
+                padding: 4px 5px;
+            }
+            .step-header h3 {
+                font-size: 0.82rem;
+            }
+            .step-number {
+                width: 24px;
+                height: 24px;
+                font-size: 0.85rem;
+            }
+            .ins-content {
+                font-size: 0.73rem;
+            }
+            .code-badge {
+                font-size: 0.62rem;
+            }
+            .tip-box {
+                font-size: 0.72rem;
+                padding: 6px 10px;
+            }
+            .download-link {
+                font-size: 0.65rem;
+                padding: 4px 10px;
+            }
+            .review-outline-btn {
+                font-size: 0.65rem;
+                padding: 4px 10px;
+            }
+        }
+
+        /* --- 表格滚动提示（仅移动端显示） --- */
+        @media (max-width: 768px) {
+            .table-wrapper::after {
+                content: '← 左右滑动查看 →';
+                display: block;
+                text-align: center;
+                font-size: 0.65rem;
+                color: #a89274;
+                padding: 4px 0 2px;
+                letter-spacing: 1px;
+            }
+        }
+        @media (max-width: 480px) {
+            .table-wrapper::after {
+                font-size: 0.55rem;
+                padding: 3px 0 1px;
+            }
+        }
+
+        /* --- 触摸优化：增大点击区域 --- */
+        .step-card,
+        .download-link,
+        .review-outline-btn,
+        .step-gif {
+            touch-action: manipulation;
+        }
+        .step-gif {
+            cursor: pointer;
+        }
+
+        /* --- 暗色模式下的轻量适配 (保持可读) --- */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1c1610;
+                color: #e8ddd0;
+            }
+            .container {
+                background: #2a221a;
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+            }
+            .header {
+                border-bottom-color: #3d342a;
+            }
+            .title-section h1 {
+                color: #efe6d8;
+            }
+            .title-section .sub {
+                color: #b8a692;
+            }
+            .exam-badge {
+                background: #3d3a34;
+                color: #e8ddd0;
+            }
+            .excel-version {
+                background: #1e6f3c;
+                color: #fff;
+            }
+            .task-card {
+                background: #332b22;
+                border-left-color: #c47a3a;
+            }
+            .task-card h2 {
+                color: #efe6d8;
+            }
+            .task-item {
+                color: #e0d4c6;
+            }
+            .task-item i {
+                color: #c47a3a;
+            }
+            .demo-header h3 {
+                color: #e8ddd0;
+            }
+            .table-wrapper {
+                background: #1f1a14;
+                border-color: #3d342a;
+            }
+            .excel-table th,
+            .excel-table td {
+                border-color: #3d342a;
+            }
+            .excel-table thead tr:first-child th {
+                background: #7a4a1e;
+                border-color: #5a3a1a;
+                color: #fff;
+            }
+            .excel-table tbody tr:nth-child(even) {
+                background-color: #241e18;
+            }
+            .excel-table tbody tr:hover {
+                background: #332b22;
+            }
+            .col-header {
+                background: #3d342a;
+                color: #e8ddd0;
+            }
+            .total-col {
+                background: #3d3224;
+                color: #f0e0c8;
+            }
+            .footnote {
+                color: #b8a692;
+            }
+            .steps-title h2 {
+                color: #efe6d8;
+            }
+            .steps-title span {
+                background: #3d342a;
+                color: #e8ddd0;
+            }
+            .step-card {
+                background: #221c16;
+                border-color: #3d342a;
+            }
+            .step-card:hover {
+                border-color: #6a5a48;
+            }
+            .step-header {
+                background: #1f1a14;
+                border-bottom-color: #3d342a;
+            }
+            .step-number {
+                background: #6a4a2a;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+            .step-header h3 {
+                color: #efe6d8;
+            }
+            .step-body {
+                background: #221c16;
+            }
+            .ins-icon {
+                background: #2d261e;
+                color: #c47a3a;
+            }
+            .ins-content {
+                color: #e0d4c6;
+            }
+            .ins-content strong {
+                color: #efe6d8;
+            }
+            .code-badge {
+                background: #2d261e;
+                border-color: #4a3d2e;
+                color: #d4c8b8;
+            }
+            .highlight {
+                background: #3d3224;
+                color: #f0d8a8;
+            }
+            .tip-box {
+                background: #1f1a14;
+                border-left-color: #c47a3a;
+                color: #e0d4c6;
+            }
+            .tip-box i {
+                color: #c47a3a;
+            }
+            .action-hint {
+                color: #b8a692;
+            }
+            .step-gif {
+                background: #1f1a14;
+                border-color: #3d342a;
+            }
+            .step-gif img {
+                border-color: #3d342a;
+            }
+            .step-gif .gif-tap-hint {
+                color: #b8a692;
+            }
+            .footer-note {
+                border-top-color: #3d342a;
+                color: #b8a692;
+            }
+            .download-link {
+                background: #1e6f3c;
+                border-color: #3c9b5e;
+                color: #fff;
+            }
+            .download-link:hover {
+                background: #145c2e;
+            }
+            .review-outline-btn {
+                background: linear-gradient(135deg, #b8944a 0%, #3d2a12 100%);
+                color: #fff;
+            }
+            #gif-lightbox {
+                background: rgba(10, 6, 4, 0.96);
+            }
+            #gif-lightbox .lb-hint {
+                color: rgba(255, 255, 255, 0.6);
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- 头部：考试信息 -->
-    <div class="header">
-        <div class="title-section">
-            <h1>📊 月考成绩统计分析</h1>
-            <a href="../index.html" class="review-outline-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:4px;"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>返回首页</a>
-            <div class="sub">
-                <span class="exam-badge"><i class="far fa-file-excel"></i> 高中信息技术·学业水平考试</span>
-                <span class="excel-version"><i class="fab fa-microsoft"></i> Excel 2010</span>
+    <div class="container">
+        <!-- ===== 头部 ===== -->
+        <div class="header">
+            <div class="title-section">
+                <h1>📊 月考成绩统计分析</h1>
+                <a href="../index.html" class="review-outline-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/>
+                    </svg>
+                    返回首页
+                </a>
+                <div class="sub">
+                    <span class="exam-badge"><i class="far fa-file-excel"></i> 高中信息技术·学业水平考试</span>
+                    <span class="excel-version"><i class="fab fa-microsoft"></i> Excel 2010</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <i class="far fa-clock"></i> 操作题 · 分步跟练
             </div>
         </div>
-        <div style="color:#6b4a2e;">
-            <i class="far fa-clock"></i> 操作题 · 分步跟练
+
+        <!-- ===== 题目要求 ===== -->
+        <div class="task-card">
+            <h2><i class="fas fa-list-check" style="font-size:1.2rem;"></i> 题目操作描述</h2>
+            <div class="task-list">
+                <div class="task-item"><i class="fas fa-merge"></i> (1) 合并居中 A1:I1，黑体、加粗、20号</div>
+                <div class="task-item"><i class="fas fa-calculator"></i> (2) 函数计算总分 → I3:I14，数值型，2位小数</div>
+                <div class="task-item"><i class="fas fa-arrow-down-wide-short"></i> (3) 按“总分”降序排列（从高到低）</div>
+                <div class="task-item"><i class="fas fa-chart-column"></i> (4) 簇状柱形图：数据源 B2:B14 和 E2:E14，标题“第一小组英语成绩”</div>
+            </div>
+            <div style="margin-top: 12px; color: #5b3a1a; font-size:0.9rem;">
+                <i class="fas fa-mouse-pointer"></i> 根据下方步骤卡片，跟随指引在 Excel 中操作
+            </div>
         </div>
+
+        <!-- ===== 参考数据表 ===== -->
+        <div class="demo-section">
+            <div class="demo-header">
+                <h3><i class="fas fa-table"></i> 参考数据 · 高三（1）班第1小组成绩统计</h3>
+                <a href="操作题图.xlsx" download class="download-link">
+                    <i class="fas fa-download"></i> 下载练习文件
+                </a>
+                <span class="badge-region">A1:I14 区域</span>
+            </div>
+            <div class="table-wrapper">
+                <table class="excel-table">
+                    <thead>
+                        <tr><th colspan="9" style="text-align:center; background:#4a2a0e; font-size:1.1rem;">高三（1）班第1小组成绩统计</th></tr>
+                        <tr class="col-header">
+                            <th>学号</th><th>姓名</th><th>语文</th><th>数学</th><th>英语</th><th>物理</th><th>化学</th><th>生物</th><th>总分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2009330037</td><td>学生1</td><td>79</td><td>88</td><td>91</td><td>84</td><td>79</td><td>85</td><td class="total-col">506.00</td></tr>
+                        <tr><td>2009330038</td><td>学生2</td><td>91</td><td>95</td><td>78</td><td>82</td><td>88</td><td>92</td><td class="total-col">526.00</td></tr>
+                        <tr><td>2009330039</td><td>学生3</td><td>74</td><td>81</td><td>88</td><td>76</td><td>84</td><td>79</td><td class="total-col">482.00</td></tr>
+                        <tr><td>2009330040</td><td>学生4</td><td>83</td><td>77</td><td>92</td><td>89</td><td>91</td><td>86</td><td class="total-col">518.00</td></tr>
+                        <tr><td>2009330041</td><td>学生5</td><td>90</td><td>88</td><td>74</td><td>93</td><td>77</td><td>81</td><td class="total-col">503.00</td></tr>
+                        <tr><td>2009330042</td><td>学生6</td><td>67</td><td>73</td><td>81</td><td>70</td><td>75</td><td>72</td><td class="total-col">438.00</td></tr>
+                        <tr><td>2009330043</td><td>学生7</td><td>94</td><td>89</td><td>95</td><td>88</td><td>86</td><td>91</td><td class="total-col">543.00</td></tr>
+                        <tr><td>2009330044</td><td>学生8</td><td>76</td><td>84</td><td>79</td><td>82</td><td>80</td><td>85</td><td class="total-col">486.00</td></tr>
+                        <tr><td>2009330045</td><td>学生9</td><td>85</td><td>91</td><td>82</td><td>79</td><td>88</td><td>83</td><td class="total-col">508.00</td></tr>
+                        <tr><td>2009330046</td><td>学生10</td><td>78</td><td>76</td><td>89</td><td>85</td><td>82</td><td>78</td><td class="total-col">488.00</td></tr>
+                        <tr><td>2009330047</td><td>学生11</td><td>92</td><td>86</td><td>93</td><td>91</td><td>89</td><td>94</td><td class="total-col">545.00</td></tr>
+                        <tr><td>2009330048</td><td>学生12</td><td>95</td><td>52</td><td>91.5</td><td>40</td><td>42</td><td>43</td><td class="total-col">363.50</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footnote">
+                <span><i class="far fa-hand-pointer"></i> B列姓名 (B2:B14) ， E列英语 (E2:E14) ，总分在I列</span>
+                <span><i class="far fa-lightbulb"></i> 示例中总分已用函数计算并保留两位小数，实际需自行操作</span>
+            </div>
+        </div>
+
+        <!-- ===== 步骤标题 ===== -->
+        <div class="steps-title">
+            <h2>📋 分步操作 · 跟我做</h2>
+            <span>Excel 2010 实操</span>
+        </div>
+
+        <!-- ===== 步骤网格 ===== -->
+        <div class="step-grid">
+
+            <!-- 步骤1 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h3>合并居中 &amp; 字体设置</h3>
+                </div>
+                <div class="step-body">
+                    <ul class="instruction-list">
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-mouse"></i></div>
+                            <div class="ins-content"><strong>选中区域：</strong> 鼠标拖动选择单元格 <span class="code-badge">A1:I1</span> (第一行从A列到I列)。</div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-merge"></i></div>
+                            <div class="ins-content"><strong>合并后居中：</strong> “开始”选项卡 → “对齐方式”组 → 单击 <i class="fas fa-merge" style="color:#8a5a28;"></i> <strong>“合并后居中”</strong> 按钮。</div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-font"></i></div>
+                            <div class="ins-content">
+                                <strong>设置字体：</strong> 保持选中，在“开始” → “字体”组：<br>
+                                ▪ 字体选择 <span class="highlight">黑体</span><br>
+                                ▪ 单击 <strong>B</strong> (加粗) 或按 Ctrl+B<br>
+                                ▪ 字号改为 <span class="highlight">20</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <i class="fas fa-check-circle"></i>
+                        <div>合并后 A1:I1 变为一个单元格，效果见上方模拟表头。</div>
+                    </div>
+                    <div class="step-gif" data-gif="gif/1.合并居中.gif">
+                        <img src="gif/1.合并居中.gif" alt="合并居中操作演示" loading="lazy">
+                        <span class="gif-tap-hint"><i class="fas fa-expand"></i> 点击放大观看</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤2 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h3>函数计算总分 · 数值格式</h3>
+                </div>
+                <div class="step-body">
+                    <ul class="instruction-list">
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-equals"></i></div>
+                            <div class="ins-content"><strong>输入SUM函数：</strong> 单击 <span class="code-badge">I3</span>，输入 <code>=SUM(C3:H3)</code>，按 Enter。或点击“公式” → “自动求和”。</div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-arrow-down"></i></div>
+                            <div class="ins-content"><strong>填充至其他同学：</strong> 选中 I3，鼠标移至右下角出现黑色十字（填充柄），双击或拖动至 <span class="code-badge">I14</span>。</div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-sliders"></i></div>
+                            <div class="ins-content">
+                                <strong>设置数值格式（保留2位小数）：</strong> 选中 <span class="code-badge">I3:I14</span> → 右键 → “设置单元格格式” (或 Ctrl+1) → “数字” → 分类“数值” → 小数位数 <strong>2</strong> → 确定。
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>💡 若成绩列不同，请根据实际调整 SUM 范围。使用“自动求和”可快速插入 =SUM(上方或左侧区域)。</div>
+                    </div>
+                    <div class="action-hint">
+                        <i class="far fa-keyboard"></i> 快捷键：Alt + = 可快速插入自动求和。
+                    </div>
+                    <div class="step-gif" data-gif="gif/2.求和函数.gif">
+                        <img src="gif/2.求和函数.gif" alt="求和函数操作演示" loading="lazy">
+                        <span class="gif-tap-hint"><i class="fas fa-expand"></i> 点击放大观看</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤3 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h3>按总分降序排序</h3>
+                </div>
+                <div class="step-body">
+                    <ul class="instruction-list">
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-arrow-pointer"></i></div>
+                            <div class="ins-content"><strong>定位数据区：</strong> 选择 <span class="code-badge">A2:I12</span> (从列标题到最后一个总分记录)。</div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-sort-amount-down"></i></div>
+                            <div class="ins-content">
+                                <strong>排序操作：</strong> “数据”或“开始”选项卡 → “排序和筛选” → “自定义排序”。<br>
+                                ▪ 主要关键字：<span class="highlight">“总分”</span> (或列I)<br>
+                                ▪ 排序依据：数值<br>
+                                ▪ 次序：<strong>降序</strong> (从高到低)<br>
+                                ▪ ⚠️ 勾选“数据包含标题” → 确定。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-check-double"></i></div>
+                            <div class="ins-content">完成后，总分最高的同学排在最前面，所有相关数据一同移动。</div>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>务必扩展选定区域！若弹出“排序提醒”，选择“扩展选定区域”，保证姓名和各科成绩一起排序。</div>
+                    </div>
+                    <div class="step-gif" data-gif="gif/3.排序操作.gif">
+                        <img src="gif/3.排序操作.gif" alt="排序操作演示" loading="lazy">
+                        <span class="gif-tap-hint"><i class="fas fa-expand"></i> 点击放大观看</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤4 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h3>创建簇状柱形图 · 英语成绩可视化</h3>
+                </div>
+                <div class="step-body">
+                    <ul class="instruction-list">
+                        <li>
+                            <div class="ins-icon"><i class="far fa-hand-back-index"></i></div>
+                            <div class="ins-content"><strong>选择不连续区域：</strong> 先选中 <span class="code-badge">B2:B14</span> (姓名列，含标题“姓名”)，按住 <kbd>Ctrl</kbd>，再选中 <span class="code-badge">E2:E14</span> (英语成绩列，含标题“英语”)。</div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-chart-bar"></i></div>
+                            <div class="ins-content"><strong>插入图表：</strong> “插入”选项卡 → “图表”组 → “柱形图” → 选择第一个“簇状柱形图”。</div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-heading"></i></div>
+                            <div class="ins-content">
+                                <strong>设置图表标题：</strong> 单击图表标题占位符，输入 <span class="highlight">“第一小组英语成绩”</span>。<br>
+                                也可通过“图表工具-布局” → “图表标题” → “图表上方”设置。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-paint-brush"></i></div>
+                            <div class="ins-content">(可选) 调整图表大小和位置，使其不遮挡数据。</div>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <i class="fas fa-chart-line"></i>
+                        <div>✨ 图表以姓名为水平轴，英语分数为柱高度。如果选错，右键“选择数据”可修改。</div>
+                    </div>
+                    <div style="margin-top: 14px; background: #fcf9f0; padding: 6px 16px; border-radius: 30px; display: inline-block; font-size:0.9rem;">
+                        <i class="fas fa-save" style="margin-right: 6px;"></i>最后记得 <strong>保存</strong> 并关闭。
+                    </div>
+                    <div class="step-gif" data-gif="gif/4.图表创建.gif">
+                        <img src="gif/4.图表创建.gif" alt="图表创建操作演示" loading="lazy">
+                        <span class="gif-tap-hint"><i class="fas fa-expand"></i> 点击放大观看</span>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /step-grid -->
+
+        <!-- ===== 页脚 ===== -->
+        <div class="footer-note">
+            <div><i class="far fa-copy"></i> 高中信息技术 · 学业水平考试  Excel 2010 操作题教学</div>
+            <div><i class="fas fa-undo-alt"></i> 完成操作后请保存并返回</div>
+        </div>
+    </div><!-- /container -->
+
+    <!-- ===== GIF 灯箱 ===== -->
+    <div id="gif-lightbox">
+        <img alt="操作演示GIF（横屏放大）" id="lightbox-img">
+        <div class="lb-hint">点击任意位置关闭 · 手机竖屏时自动横屏显示</div>
     </div>
 
-    <!-- 原题要求再现 -->
-    <div class="task-card">
-        <h2><i class="fas fa-list-check" style="font-size:1.4rem;"></i> 题目操作描述</h2>
-        <div class="task-list">
-            <div class="task-item"><i class="fas fa-merge"></i> (1) 合并居中 A1:I1，黑体、加粗、20号</div>
-            <div class="task-item"><i class="fas fa-calculator"></i> (2) 函数计算总分 → I3:I14，数值型，2位小数</div>
-            <div class="task-item"><i class="fas fa-arrow-down-wide-short"></i> (3) 按“总分”降序排列（从高到低）</div>
-            <div class="task-item"><i class="fas fa-chart-column"></i> (4) 簇状柱形图：数据源 B2:B14 和 E2:E14，标题“第一小组英语成绩”</div>
-        </div>
-        <div style="margin-top: 16px; color: #5b3a1a;"><i class="fas fa-mouse-pointer"></i> 根据下方步骤卡片，跟随指引在Excel中操作</div>
-    </div>
+    <script>
+        (function() {
+            'use strict';
 
-    <!-- 示例数据表：帮助学生理解区域 -->
-    <div class="demo-section">
-        <div class="demo-header">
-            <h3><i class="fas fa-table"></i> 参考数据 · 高三（1）班第1小组成绩统计（示例）</h3>
-            <a href="操作题图.xlsx" download class="download-link">
-                <i class="fas fa-download"></i> 下载练习文件
-            </a>
-            <span style="background:#f3efe4; padding:4px 12px; border-radius:30px; font-size:0.9rem;">A1:I14 区域</span>
-        </div>
-        <div class="table-wrapper">
-            <table class="excel-table">
-                <thead>
-                    <tr><th colspan="9" style="text-align:center; background:#4a2a0e; font-size:1.2rem;">高三（1）班第1小组成绩统计</th></tr>
-                    <tr class="col-header">
-                        <th>学号</th><th>姓名</th><th>语文</th><th>数学</th><th>英语</th><th>物理</th><th>化学</th><th>生物</th><th>总分</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>2009330037</td><td>学生1</td><td>79</td><td>88</td><td>91</td><td>84</td><td>79</td><td>85</td><td class="total-col">506.00</td></tr>
-                    <tr><td>2009330038</td><td>学生2</td><td>91</td><td>95</td><td>78</td><td>82</td><td>88</td><td>92</td><td class="total-col">526.00</td></tr>
-                    <tr><td>2009330039</td><td>学生3</td><td>74</td><td>81</td><td>88</td><td>76</td><td>84</td><td>79</td><td class="total-col">482.00</td></tr>
-                    <tr><td>2009330040</td><td>学生4</td><td>83</td><td>77</td><td>92</td><td>89</td><td>91</td><td>86</td><td class="total-col">518.00</td></tr>
-                    <tr><td>2009330041</td><td>学生5</td><td>90</td><td>88</td><td>74</td><td>93</td><td>77</td><td>81</td><td class="total-col">503.00</td></tr>
-                    <tr><td>2009330042</td><td>学生6</td><td>67</td><td>73</td><td>81</td><td>70</td><td>75</td><td>72</td><td class="total-col">438.00</td></tr>
-                    <tr><td>2009330043</td><td>学生7</td><td>94</td><td>89</td><td>95</td><td>88</td><td>86</td><td>91</td><td class="total-col">543.00</td></tr>
-                    <tr><td>2009330044</td><td>学生8</td><td>76</td><td>84</td><td>79</td><td>82</td><td>80</td><td>85</td><td class="total-col">486.00</td></tr>
-                    <tr><td>2009330045</td><td>学生9</td><td>85</td><td>91</td><td>82</td><td>79</td><td>88</td><td>83</td><td class="total-col">508.00</td></tr>
-                    <tr><td>2009330046</td><td>学生10</td><td>78</td><td>76</td><td>89</td><td>85</td><td>82</td><td>78</td><td class="total-col">488.00</td></tr>
-                    <tr><td>2009330047</td><td>学生11</td><td>92</td><td>86</td><td>93</td><td>91</td><td>89</td><td>94</td><td class="total-col">545.00</td></tr>
-                    <tr><td>2009330048</td><td>学生12</td><td>95</td><td>52</td><td>91.5</td><td>40</td><td>42</td><td>43</td><td class="total-col">363.50</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="footnote">
-            <span><i class="far fa-hand-pointer"></i> B列姓名 (B2:B14) ， E列英语 (E2:E14) ，总分在I列。</span>
-            <span><i class="far fa-lightbulb"></i> 示例中总分已用函数计算并保留两位小数，实际需自行操作。</span>
-        </div>
-    </div>
-
-    <!-- 动态步骤区域：详细操作指南 -->
-    <div class="steps-title">
-        <h2>📋 分步操作 · 跟我做</h2>
-        <span>Excel 2010 实操</span>
-    </div>
-
-    <div class="step-grid">
-        <!-- 步骤1 -->
-        <div class="step-card">
-            <div class="step-header">
-                <div class="step-number">1</div>
-                <h3>合并居中 & 字体设置</h3>
-            </div>
-            <div class="step-body">
-                <ul class="instruction-list">
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-mouse"></i></div>
-                        <div class="ins-content"><strong>选中区域：</strong> 鼠标拖动选择单元格 <span class="code-badge">A1:I1</span> (即第一行从A列到I列)。</div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-merge"></i></div>
-                        <div class="ins-content"><strong>合并后居中：</strong> 点击“开始”选项卡 → “对齐方式”组 → 单击 <i class="fas fa-merge" style="color:#8a5a28;"></i> <strong>“合并后居中”</strong> 按钮。</div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-font"></i></div>
-                        <div class="ins-content">
-                            <strong>设置字体：</strong> 保持选中状态，在“开始”选项卡 → “字体”组：<br>
-                            ▪ 字体选择 <span class="highlight">黑体</span> <br>
-                            ▪ 单击 <strong>B</strong> (加粗) 或按 Ctrl+B <br>
-                            ▪ 字号改为 <span class="highlight">20</span>
-                        </div>
-                    </li>
-                </ul>
-                <div class="tip-box">
-                    <i class="fas fa-check-circle"></i>
-                    <div>合并后A1:I1变为一个单元格，已完成效果见上方模拟表头。</div>
-                </div>
-                <!-- ========== 步骤1 GIF 动图 ========== -->
-                <div class="step-gif">
-                    <img src="gif/1.合并居中.gif" alt="合并居中操作演示">
-                </div>
-                <!-- ================================= -->
-            </div>
-        </div>
-
-        <!-- 步骤2 -->
-        <div class="step-card">
-            <div class="step-header">
-                <div class="step-number">2</div>
-                <h3>函数计算总分 · 数值格式</h3>
-            </div>
-            <div class="step-body">
-                <ul class="instruction-list">
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-equals"></i></div>
-                        <div class="ins-content"><strong>输入SUM函数：</strong> 单击 <span class="code-badge">I3</span> 单元格，输入公式 <code>=SUM(C3:H3)</code> （假设成绩在C到H列），按 Enter。或者点击“公式”选项卡 → “自动求和”。</div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-arrow-down"></i></div>
-                        <div class="ins-content"><strong>填充至其他同学：</strong> 选中I3，鼠标移至右下角出现黑色十字（填充柄），双击或拖动至 <span class="code-badge">I14</span> 。</div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-sliders"></i></div>
-                        <div class="ins-content">
-                            <strong>设置数值格式（保留2位小数）：</strong> 选中区域 <span class="code-badge">I3:I14</span> → 右键 → “设置单元格格式” (或Ctrl+1) → “数字”选项卡 → 分类选择“数值” → 小数位数设为 <strong>2</strong> → 确定。
-                        </div>
-                    </li>
-                </ul>
-                <div class="tip-box">
-                    <i class="fas fa-info-circle"></i>
-                    <div>💡 若成绩列不同，请根据实际调整SUM范围。使用“自动求和”按钮可快速插入=SUM(上方或左侧区域)。</div>
-                </div>
-                <div class="action-hint">
-                    <i class="far fa-keyboard"></i> 快捷键：Alt + = 可快速插入自动求和。
-                </div>
-                <!-- ========== 步骤2 GIF 动图 ========== -->
-                <div class="step-gif">
-                    <img src="gif/2.求和函数.gif" alt="求和函数操作演示">
-                </div>
-                <!-- ================================= -->
-            </div>
-        </div>
-
-        <!-- 步骤3 -->
-        <div class="step-card">
-            <div class="step-header">
-                <div class="step-number">3</div>
-                <h3>按总分降序排序</h3>
-            </div>
-            <div class="step-body">
-                <ul class="instruction-list">
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-arrow-pointer"></i></div>
-                        <div class="ins-content"><strong>定位数据区：</strong> 鼠标拖动选择 <span class="code-badge">A2:I12</span> (从列标题到最后一个总分记录)。</div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-sort-amount-down"></i></div>
-                        <div class="ins-content">
-                            <strong>排序操作：</strong> “数据”选项卡或“开始”选项卡 → “排序和筛选”组 → 单击“排序”选择下方“自定义排序”按钮。<br>
-                            ▪ 主要关键字：选择 <span class="highlight">“总分”</span> (或列I) <br>
-                            ▪ 排序依据：数值 <br>
-                            ▪ 次序：<strong>降序</strong> (从高到低) <br>
-                            ▪ ⚠️ 勾选“数据包含标题” (因为第一行是标题行) → 确定。
-                        </div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-check-double"></i></div>
-                        <div class="ins-content">完成后，总分最高的同学将排在最前面，所有相关数据一同移动。</div>
-                    </li>
-                </ul>
-                <div class="tip-box">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <div>务必扩展选定区域！若弹出“排序提醒”，选择“扩展选定区域”，保证姓名和各科成绩一起排序。</div>
-                </div>
-                <!-- ========== 步骤3 GIF 占位（预留） ========== -->
-                <div class="step-gif">
-                    <img src="gif/3.排序操作.gif" alt="排序操作演示">
-                </div>
-                <!-- ===================================== -->
-            </div>
-        </div>
-
-        <!-- 步骤4 -->
-        <div class="step-card">
-            <div class="step-header">
-                <div class="step-number">4</div>
-                <h3>创建簇状柱形图 · 英语成绩可视化</h3>
-            </div>
-            <div class="step-body">
-                <ul class="instruction-list">
-                    <li>
-                        <div class="ins-icon"><i class="far fa-hand-back-index"></i></div>
-                        <div class="ins-content"><strong>选择不连续区域：</strong> 先选中 <span class="code-badge">B2:B14</span> (姓名列，包含标题“姓名”)，按住 <kbd>Ctrl</kbd> 键，再选中 <span class="code-badge">E2:E14</span> (英语成绩列，含标题“英语”)。</div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-chart-bar"></i></div>
-                        <div class="ins-content"><strong>插入图表：</strong> 点击“插入”选项卡 → “图表”组 → “柱形图” → 选择第一个“簇状柱形图”。</div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-heading"></i></div>
-                        <div class="ins-content">
-                            <strong>设置图表标题：</strong> 单击图表标题占位符，输入 <span class="highlight">“第一小组英语成绩”</span> (不含引号)。<br>
-                            也可通过“图表工具-布局” → “图表标题” → “图表上方”进行设置。
-                        </div>
-                    </li>
-                    <li>
-                        <div class="ins-icon"><i class="fas fa-paint-brush"></i></div>
-                        <div class="ins-content">(可选) 调整图表大小和位置，使其不遮挡数据。</div>
-                    </li>
-                </ul>
-                <div class="tip-box">
-                    <i class="fas fa-chart-line"></i>
-                    <div>✨ 图表会以姓名为水平轴，英语分数为柱高度。如果选错，右键“选择数据”可修改。</div>
-                </div>
-                <div style="margin-top: 16px; background: #fcf9f0; padding: 8px 18px; border-radius: 30px; display: inline-block;">
-                    <i class="fas fa-save" style="margin-right: 8px;"></i>最后记得 <strong>保存</strong> 并关闭，返回考试界面。
-                </div>
-                <!-- ========== 步骤4 GIF 占位（预留） ========== -->
-				<div class="step-gif">
-                    <img src="gif/4.图表创建.gif" alt="图表创建操作演示">
-                </div>
-                <!-- ===================================== -->
-            </div>
-        </div>
-    </div>
-
-    <!-- 动态操作小提示 / 模拟 “开始作答” 感 -->
-    <div style="margin: 36px 0 16px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
-    </div>
-
-    <!-- 页脚：返回提示与版本 -->
-    <div class="footer-note">
-        <div><i class="far fa-copy"></i> 高中信息技术 · 学业水平考试  Excel 2010 操作题教学</div>
-        <div><i class="fas fa-undo-alt"></i> 完成操作后请保存并返回</div>
-    </div>
-</div>
-
-<script>
-    (function() {
-        // 让步骤卡片可以记录“已读”风格？只是装饰，提供一点动态反馈。
-        const cards = document.querySelectorAll('.step-card');
-        cards.forEach((card, index) => {
-            card.addEventListener('click', () => {
-                // 只是轻微的视觉反馈，表示正在关注这一步
-                card.style.transition = 'box-shadow 0.15s';
-                card.style.boxShadow = '0 12px 28px rgba(43, 87, 151, 0.15)';
-                setTimeout(() => card.style.boxShadow = '', 200);
+            // 1. 步骤卡片点击反馈（轻触高亮）
+            var cards = document.querySelectorAll('.step-card');
+            cards.forEach(function(card) {
+                card.addEventListener('click', function(e) {
+                    // 避免点击内部链接或按钮时触发
+                    var t = e.target;
+                    if (t.closest('a') || t.closest('.download-link') || t.closest('.review-outline-btn')) return;
+                    this.style.transition = 'box-shadow 0.15s';
+                    this.style.boxShadow = '0 12px 28px rgba(43, 87, 151, 0.15)';
+                    setTimeout(function() { card.style.boxShadow = ''; }, 220);
+                });
             });
-        });
 
-        // 在控制台输出欢迎 (教学用)
-        console.log('📘 高中信息技术Excel操作题 · 跟着步骤一步步完成：合并居中、SUM函数、排序、簇状柱形图。');
-    })();
-</script>
+            // 2. GIF 灯箱：点击 .step-gif 全屏查看
+            var lb = document.getElementById('gif-lightbox');
+            var lbImg = document.getElementById('lightbox-img');
 
-<script>
-// GIF 灯箱：点击步骤演示图全屏查看，点击任意处关闭
-(function() {
-    var lb = document.createElement('div');
-    lb.id = 'gif-lightbox';
-    lb.innerHTML = '<img alt="操作演示GIF（横屏放大）">' +
-                   '<div class="lb-hint">点击任意位置关闭 · 手机竖屏时自动横屏显示</div>';
-    document.body.appendChild(lb);
-    document.addEventListener('click', function(e) {
-        if (lb.classList.contains('show')) { lb.classList.remove('show'); return; }
-        var t = e.target;
-        if (t && t.tagName === 'IMG' && /gif\//i.test(t.getAttribute('src') || '')) {
-            lb.querySelector('img').src = t.getAttribute('src');
-            lb.classList.add('show');
-            e.stopPropagation();
-        }
-    }, true);
-})();
-</script>
+            document.addEventListener('click', function(e) {
+                // 如果灯箱已显示，点击任意处关闭
+                if (lb.classList.contains('show')) {
+                    lb.classList.remove('show');
+                    return;
+                }
+
+                // 检查点击的元素是否在 .step-gif 内
+                var gifContainer = e.target.closest('.step-gif');
+                if (gifContainer) {
+                    var img = gifContainer.querySelector('img');
+                    if (img) {
+                        var src = img.getAttribute('src');
+                        if (src && /gif\//i.test(src)) {
+                            lbImg.src = src;
+                            lb.classList.add('show');
+                            e.stopPropagation();
+                            // 阻止页面滚动
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+                }
+            }, true);
+
+            // 关闭灯箱时恢复滚动
+            var observer = new MutationObserver(function() {
+                if (!lb.classList.contains('show')) {
+                    document.body.style.overflow = '';
+                }
+            });
+            observer.observe(lb, { attributes: true, attributeFilter: ['class'] });
+
+            // 3. 控制台欢迎
+            console.log('📘 高中信息技术Excel操作题 · 分步跟练：合并居中、SUM函数、排序、簇状柱形图。');
+            console.log('📱 已适配移动设备，点击GIF可全屏查看。');
+
+        })();
+    </script>
+
 </body>
 </html>
