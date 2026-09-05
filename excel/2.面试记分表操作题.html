@@ -1,0 +1,723 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>高中信息技术 · Excel面试记分表操作题</title>
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', '微软雅黑', system-ui, sans-serif;
+            background: #f5f0e2;
+            color: #1e2f4e;
+            padding: 24px 16px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(74, 42, 14, 0.08);
+            padding: 28px 32px 40px;
+            transition: all 0.2s;
+        }
+
+        .header {
+            border-bottom: 2px solid #e6edf5;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .title-section h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #3a2410;
+            letter-spacing: -0.01em;
+        }
+
+        .title-section .sub {
+            font-size: 1rem;
+            color: #4a627a;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .exam-badge {
+            background: #d4e2f0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #3a2410;
+        }
+
+        .excel-version {
+            background: #1e6f3c;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .task-card {
+            background: #f7f2e6;
+            border-left: 8px solid #a7581a;
+            border-radius: 20px;
+            padding: 22px 26px;
+            margin-bottom: 32px;
+        }
+
+        .task-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #402a12;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px 20px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            font-size: 1.05rem;
+        }
+
+        .task-item i {
+            color: #a7581a;
+            width: 20px;
+            font-size: 1.1rem;
+        }
+
+        .demo-section {
+            margin-bottom: 36px;
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .demo-header h3 {
+            font-weight: 600;
+            color: #4a2a0e;
+            font-size: 1.3rem;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 18px;
+            border: 1px solid #d0ddee;
+            background: #fafcff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+        }
+
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 1100px;
+            white-space: nowrap;
+        }
+
+        .excel-table th, .excel-table td {
+            border: 1px solid #bcc9db;
+            padding: 10px 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .excel-table thead tr:first-child th {
+            background: #a7581a;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            border-color: #1e4270;
+        }
+
+        .excel-table tbody tr:nth-child(even) {
+            background-color: #f4f8fe;
+        }
+
+        .excel-table tbody tr:hover {
+            background: #e3ecf9;
+        }
+
+        .col-header {
+            background: #ecdfc8;
+            font-weight: 600;
+            color: #402a12;
+        }
+
+        .score-col {
+            background: #fef9e3;
+        }
+
+        .footnote {
+            margin-top: 8px;
+            color: #8b7355;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .steps-title {
+            display: flex;
+            align-items: baseline;
+            margin: 32px 0 20px;
+        }
+
+        .steps-title h2 {
+            font-size: 1.8rem;
+            font-weight: 650;
+            color: #3a2410;
+        }
+
+        .steps-title span {
+            margin-left: 16px;
+            background: #e0e9f3;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+
+        .step-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 28px;
+            border: 1px solid #dfe8f2;
+            box-shadow: 0 6px 14px rgba(74, 42, 14, 0.03);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .step-card:hover {
+            box-shadow: 0 14px 26px rgba(122, 82, 38, 0.08);
+            border-color: #b7cee8;
+        }
+
+        .step-header {
+            background: #f9fcff;
+            padding: 18px 26px;
+            border-bottom: 1px dashed #e2d3b6;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .step-number {
+            background: #4a2a0e;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.6rem;
+            box-shadow: 0 6px 10px rgba(74,42,14,0.1);
+        }
+
+        .step-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #103450;
+        }
+
+        .step-body {
+            padding: 22px 30px 28px;
+            background: #ffffff;
+        }
+
+        .instruction-list {
+            list-style: none;
+        }
+
+        .instruction-list li {
+            margin-bottom: 18px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .ins-icon {
+            width: 32px;
+            height: 32px;
+            background: #eef3fc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a5a28;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .ins-content {
+            flex: 1;
+        }
+
+        .ins-content strong {
+            color: #402a12;
+            font-weight: 650;
+        }
+
+        .code-badge {
+            background: #f3efe4;
+            padding: 4px 12px;
+            border-radius: 24px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #cad6e3;
+            display: inline-block;
+            margin: 6px 4px 0 0;
+        }
+
+        .highlight {
+            background: #fdefd4;
+            padding: 2px 8px;
+            border-radius: 16px;
+            font-weight: 500;
+            color: #92400e;
+        }
+
+        .tip-box {
+            background: #e7f0fa;
+            border-radius: 18px;
+            padding: 14px 20px;
+            margin-top: 18px;
+            display: flex;
+            gap: 12px;
+            border-left: 5px solid #a7581a;
+        }
+
+        .tip-box i {
+            color: #8a5a28;
+            font-size: 1.4rem;
+        }
+
+        .action-hint {
+            margin-top: 10px;
+            color: #3a5c7c;
+            font-style: italic;
+        }
+
+        .btn-simulate {
+            background: white;
+            border: 1.5px solid #a7581a;
+            color: #a7581a;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: default;
+            display: inline-block;
+            margin-top: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            text-align: right;
+            color: #6c86a3;
+            border-top: 1px solid #d7e2ee;
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .download-link {
+            background: #1e6f3c;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(0,40,20,0.1);
+            transition: 0.15s;
+            border: 1px solid #3c9b5e;
+            white-space: nowrap;
+        }
+        .download-link:hover {
+            background: #145c2e;
+            box-shadow: 0 6px 12px rgba(0,60,30,0.15);
+        }
+        .download-link i {
+            font-size: 1rem;
+        }
+
+        /* GIF 动图样式 (预留) */
+        .step-gif {
+            margin-top: 20px;
+            text-align: center;
+            background: #f8fafd;
+            padding: 16px 12px;
+            border-radius: 20px;
+            border: 1px solid #ecdfc8;
+        }
+        .step-gif img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2d3b6;
+        }
+        .gif-placeholder {
+            margin-top: 20px;
+            background: #f0f4fa;
+            padding: 20px 16px;
+            border-radius: 20px;
+            text-align: center;
+            color: #8b7355;
+            border: 1px dashed #8da4c0;
+            font-size: 0.95rem;
+        }
+        .gif-placeholder i {
+            margin-right: 8px;
+            color: #a7581a;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 16px;
+            }
+            .step-header {
+                flex-wrap: wrap;
+            }
+            .excel-table {
+                font-size: 0.8rem;
+            }
+        }
+    
+        /* 返回首页按钮（与情景应用题页统一） */
+        .review-outline-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #c9a86a 0%, #4a2a0e 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(122, 82, 38, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 12px;
+        }
+        .review-outline-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(122, 82, 38, 0.4); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 头部 -->
+    <div class="header">
+        <div class="title-section">
+            <h1>🧑‍🏫 英语教师面试记分表</h1>
+            <a href="../index.html" class="review-outline-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:4px;"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>返回首页</a>
+            <div class="sub">
+                <span class="exam-badge"><i class="far fa-file-excel"></i> 高中信息技术 · 学业水平考试</span>
+                <span class="excel-version"><i class="fab fa-microsoft"></i> Excel 2010</span>
+            </div>
+        </div>
+        <div style="color:#3a6685;">
+            <i class="far fa-clock"></i> 操作题 · 分步跟练
+        </div>
+    </div>
+
+    <!-- 题目要求卡片 -->
+    <div class="task-card">
+        <h2><i class="fas fa-list-check" style="font-size:1.4rem;"></i> 题目操作描述</h2>
+        <div class="task-list">
+            <div class="task-item"><i class="fas fa-arrows-alt-v"></i> (1) 第2行行高20，列标题倾斜+加粗</div>
+            <div class="task-item"><i class="fas fa-calculator"></i> (2) 函数求总分/最高/最低分，最后得分公式</div>
+            <div class="task-item"><i class="fas fa-arrow-down-wide-short"></i> (3) 按“最后得分”降序排序</div>
+            <div class="task-item"><i class="fas fa-border-all"></i> (4) A2:J24 蓝色外边框、红色内边框 (细实线)</div>
+        </div>
+        <div style="margin-top: 16px; color: #5b3a1a;"><i class="fas fa-mouse-pointer"></i> 根据下方步骤卡片，跟随指引在Excel中操作，动图仅作参考预留。</div>
+    </div>
+
+    <!-- 示例数据表 (模拟面试记分表) -->
+    <div class="demo-section">
+        <div class="demo-header">
+            <h3><i class="fas fa-table"></i> 参考数据 · 英语教师面试评分 (共22位教师)</h3>
+            <a href="月考成绩分析表.xlsx" download class="download-link">
+                <i class="fas fa-download"></i> 下载上次练习文件
+            </a><a href="英语教师面试记分表.xlsx" download class="download-link">
+                <i class="fas fa-download"></i> 下载本次练习文件
+            </a>
+            <span style="background:#f3efe4; padding:4px 12px; border-radius:30px; font-size:0.9rem;">区域 A1:J24</span>
+        </div>
+        <div class="table-wrapper">
+            <table class="excel-table">
+                <thead>
+                    <tr><th colspan="10" style="text-align:center; background:#4a2a0e; font-size:1.2rem;">英语教师面试记分表</th></tr>
+                    <tr class="col-header">
+                        <th>教师编号</th><th>评委1</th><th>评委2</th><th>评委3</th><th>评委4</th><th>评委5</th><th>总分</th><th>最高分</th><th>最低分</th><th>最后得分</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 展示前8行代表性数据，其余省略示意，总分等留空表示待计算 -->
+                    <tr><td>JS01</td><td>94</td><td>90</td><td>89</td><td>85</td><td>90</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS02</td><td>89</td><td>96</td><td>85</td><td>90</td><td>89</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS03</td><td>96</td><td>85</td><td>85</td><td>89</td><td>89</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS04</td><td>77</td><td>76</td><td>78</td><td>66</td><td>84</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS05</td><td>85</td><td>94</td><td>94</td><td>96</td><td>96</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS06</td><td>90</td><td>89</td><td>96</td><td>94</td><td>94</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS07</td><td>55</td><td>67</td><td>88</td><td>76</td><td>78</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS08</td><td>68</td><td>70</td><td>50</td><td>78</td><td>96</td><td></td><td></td><td></td><td></td></tr>
+                    <!-- 省略中间行，用一行提示 -->
+                    <tr><td colspan="10" style="background: #f0f5fb; color:#5b3a1a; text-align:center; font-style:italic;">…… 中间数据省略，共 JS01 ~ JS22 (第3行至第24行) ……</td></tr>
+                    <tr><td>JS20</td><td>80</td><td>62</td><td>76</td><td>68</td><td>59</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS21</td><td>67</td><td>74</td><td>59</td><td>63</td><td>86</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>JS22</td><td>96</td><td>92</td><td>94</td><td>89</td><td>96</td><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footnote">
+            <span><i class="far fa-hand-pointer"></i> 总分(G列)、最高分(H)、最低分(I)、最后得分(J) 需使用函数/公式计算。</span>
+            <span><i class="far fa-lightbulb"></i> 第2行为列标题行 (A2:J2) ，数据从第3行开始。</span>
+        </div>
+    </div>
+
+    <!-- 分步操作区域 -->
+    <div class="steps-title">
+        <h2>📋 分步操作 · 跟我做</h2>
+        <span>Excel 2010 实操</span>
+    </div>
+
+    <div class="step-grid">
+        <!-- 步骤1：行高、倾斜加粗 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3>设置第2行行高 & 列标题倾斜加粗</h3>
+            </div>
+            <div class="step-body">
+                <ul class="instruction-list">
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-arrows-alt-v"></i></div>
+                        <div class="ins-content"><strong>设置行高：</strong> 单击行号 <span class="code-badge">2</span> 选中整行 → 右键 → “行高” → 输入 <span class="highlight">20</span> → 确定。</div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-mouse"></i></div>
+                        <div class="ins-content"><strong>选中列标题：</strong> 拖动选择单元格区域 <span class="code-badge">A2:J2</span> (教师编号～最后得分)。</div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-italic"></i></div>
+                        <div class="ins-content">
+                            <strong>倾斜 + 加粗：</strong> 在“开始”选项卡 → “字体”组：<br>
+                            ▪ 单击 <i class="fas fa-italic"></i> <strong>“倾斜”</strong> (或按 Ctrl+I) <br>
+                            ▪ 单击 <strong>B</strong> (加粗) 或按 Ctrl+B <br>
+                            <span class="code-badge">效果：列标题变为斜体加粗。</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="tip-box">
+                    <i class="fas fa-check-circle"></i>
+                    <div>行高20磅使标题行更醒目；倾斜+加粗符合题目要求，完成后可对比上方表格样式。</div>
+                </div>
+                <!-- 步骤1 GIF 预留 -->
+                <div class="step-gif">
+                    <img src="GIF/5.行高和字体设置.gif" alt="行高与倾斜加粗操作演示">
+                </div>
+            </div>
+        </div>
+
+        <!-- 步骤2：函数求总分/最高/最低 + 最后得分公式 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3>函数计算 · 总分/最高/最低 · 最后得分</h3>
+            </div>
+            <div class="step-body">
+                <ul class="instruction-list">
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-sigma"></i></div>
+                        <div class="ins-content">
+                            <strong>总分 (G列)：</strong> 单击 <span class="code-badge">G3</span> ，输入公式 <code>=SUM(B3:F3)</code> 回车。<br>
+                            或使用“开始”选项卡 → “自动求和” ∑（注意数据源是否正确）。然后双击填充柄填充至 G24。
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-arrow-up"></i></div>
+                        <div class="ins-content">
+                            <strong>最高分 (H列)：</strong> 单击 <span class="code-badge">H3</span> ，输入 <code>=MAX(B3:F3)</code> 回车。<br>
+                            或使用“开始”选项卡 → “最大值” M（注意数据源是否正确）。然后双击填充柄填充至 G24。
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-arrow-down"></i></div>
+                        <div class="ins-content">
+                            <strong>最低分 (I列)：</strong> 单击 <span class="code-badge">I3</span> ，输入 <code>=MIN(B3:F3)</code> 回车。<br>
+                            或使用“开始”选项卡 → “最小值” I（注意数据源是否正确）。然后双击填充柄填充至 G24。
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-equals"></i></div>
+                        <div class="ins-content">
+                            <strong>最后得分 (J列) · 公式：</strong> 单击 <span class="code-badge">J3</span> ，输入公式 <code>=(G3-H3-I3)/3（注意输入法切换到英文状态）</code> ⬅ 严格按照题目！<br>
+                            然后拖动填充柄至 J24 。(若需小数可设置单元格格式为数值)
+                        </div>
+                    </li>
+                </ul>
+                <div class="tip-box">
+                    <i class="fas fa-info-circle"></i>
+                    <div>💡 注意：公式为 <strong>(总分-最高分-最低分)÷3</strong> 。填充时确保相对引用正确。所有评委分数在B~F列。</div>
+                </div>
+                <div class="action-hint">
+                    <i class="far fa-keyboard"></i> 快速填充：双击单元格右下角填充柄可自动向下填充。
+                </div>
+                <!-- 步骤2 GIF 预留 -->
+                <div class="step-gif">
+                    <img src="GIF/6.函数与公式计算.gif" alt="SUM/MAX/MIN及最后得分公式演示">
+                </div>
+            </div>
+        </div>
+
+        <!-- 步骤3：按最后得分降序排序 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3>排序 · 最后得分降序</h3>
+            </div>
+            <div class="step-body">
+                <ul class="instruction-list">
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-table"></i></div>
+                        <div class="ins-content"><strong>定位数据区：</strong> 单击单元格A2，按住鼠标左键不放拖动光标到J24，确保选中整个数据表格。</div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-sort-amount-down"></i></div>
+                        <div class="ins-content">
+                            <strong>自定义排序：</strong> “开始”选项卡或“数据”选项卡 → “排序和筛选”组 → 单击“排序-自定义排序”按钮。<br>
+                            ▪ 主要关键字：选择 <span class="highlight">“最后得分”</span> (或列J) <br>
+                            ▪ 排序依据：数值 <br>
+                            ▪ 次序：<strong>降序</strong> <br>
+                            ▪ ⚠️ 务必勾选“数据包含标题” → 确定。
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-check"></i></div>
+                        <div class="ins-content">排序后，最后得分最高的教师将排在最前面，所有相关数据一同移动。</div>
+                    </li>
+                </ul>
+                <div class="tip-box">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>若弹出“排序提醒”，选择“扩展选定区域”，以保证姓名和分数一起排序。</div>
+                </div>
+                <!-- 步骤3 GIF 预留 -->
+                <div class="step-gif">
+                    <img src="GIF/7.排序操作.gif" alt="按最后得分降序排序演示">
+                </div>
+            </div>
+        </div>
+
+        <!-- 步骤4：边框设置 (蓝外红内细实线) -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3>添加边框 · 蓝色外框 + 红色内框</h3>
+            </div>
+            <div class="step-body">
+                <ul class="instruction-list">
+                    <li>
+                        <div class="ins-icon"><i class="far fa-square"></i></div>
+                        <div class="ins-content"><strong>选中区域：</strong> 鼠标拖动选择 <span class="code-badge">A2:J24</span> (从列标题到最后一个教师记录)。</div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-border-all"></i></div>
+                        <div class="ins-content">
+                            <strong>打开边框设置：</strong> 右键 → “设置单元格格式” (或 Ctrl+1) → “边框”选项卡。
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ins-icon"><i class="fas fa-pen"></i></div>
+                        <div class="ins-content">
+                            <strong>① 蓝色外边框：</strong> 线条“样式”选 <span class="highlight">细实线</span> (左侧最后一个) ，颜色选 <span style="color:#8a5a28; font-weight:bold;">蓝色</span> → 点击“外边框”按钮。<br>
+                            <strong>② 红色内边框：</strong> 颜色改为 <span style="color:#c00000; font-weight:bold;">红色</span> ，线条仍为细实线 → 点击“内部”按钮 → 确定。
+                        </div>
+                    </li>
+                </ul>
+                <div class="tip-box">
+                    <i class="fas fa-paint-brush"></i>
+                    <div>✨ 设置后A2:J24区域将显示蓝色外框线和红色内部网格线，符合题目要求。</div>
+                </div>
+                <div style="margin-top: 16px; background: #fcf9f0; padding: 8px 18px; border-radius: 30px; display: inline-block;">
+                    <i class="fas fa-save" style="margin-right: 8px;"></i>最后记得 <strong>保存</strong> (Ctrl+S) ，关闭并返回考试界面。
+                </div>
+                <!-- 步骤4 GIF 预留 -->
+                <div class="step-gif">
+                    <img src="GIF/8.边框设置.gif" alt="蓝色外边框红色内边框操作演示">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模拟开始作答 -->
+    <div style="margin: 36px 0 16px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer-note">
+        <div><i class="far fa-copy"></i> 高中信息技术 · 学业水平考试  Excel 2010 操作题 · 英语教师面试记分</div>
+        <div><i class="fas fa-undo-alt"></i> 完成操作后请保存并返回</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // 卡片点击视觉反馈 (与之前风格一致)
+        const cards = document.querySelectorAll('.step-card');
+        cards.forEach((card) => {
+            card.addEventListener('click', () => {
+                card.style.transition = 'box-shadow 0.15s';
+                card.style.boxShadow = '0 12px 28px rgba(43, 87, 151, 0.15)';
+                setTimeout(() => card.style.boxShadow = '', 200);
+            });
+        });
+        console.log('📘 高中信息技术Excel操作题 · 英语教师面试记分表：行高/倾斜加粗、函数计算、排序、边框。动图位置已预留。');
+    })();
+</script>
+</body>
+</html>

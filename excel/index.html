@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel 操作题 · 高中信息技术学考训练营</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', sans-serif; }
+
+    body {
+        background: linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)),
+                    linear-gradient(135deg, #e8dcc2 0%, #f0e8d4 50%, #e8f0e4 100%) fixed;
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 20px;
+    }
+
+    header { text-align: center; margin-bottom: 32px; }
+
+    h1 { font-size: 2rem; color: #a7581a; margin-bottom: 8px; }
+    .subtitle { color: #666; font-size: 1.05rem; margin-bottom: 16px; }
+
+    /* 返回首页按钮（与情景应用题页统一） */
+    .review-outline-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #c9a86a 0%, #4a2a0e 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 16px;
+        box-shadow: 0 4px 15px rgba(122, 82, 38, 0.3);
+        transition: all 0.3s ease;
+    }
+    .review-outline-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(122, 82, 38, 0.4); }
+
+    .excel-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 24px;
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(12px);
+        border-radius: 15px;
+        padding: 28px 24px;
+        flex: 1;
+        min-width: 280px;
+        max-width: 400px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12); }
+
+    .card .icon { font-size: 52px; margin-bottom: 12px; }
+    .card h2 { color: #a7581a; font-size: 1.35rem; margin-bottom: 10px; }
+    .card p { color: #4a3a28; font-size: 0.92rem; line-height: 1.6; margin-bottom: 20px; }
+
+    .btn {
+        display: inline-block;
+        background: linear-gradient(45deg, #a7581a, #b97a3e);
+        color: white;
+        padding: 11px 26px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s;
+    }
+    .btn:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); }
+
+    footer { margin-top: 40px; color: #8b8070; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Excel 操作题</h1>
+        <p class="subtitle">选择一道操作题开始练习</p>
+        <a href="../index.html" class="review-outline-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:4px;"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>返回首页</a>
+    </header>
+
+    <div class="excel-grid">
+        <div class="card">
+            <div class="icon">📈</div>
+            <h2>月考成绩统计分析</h2>
+            <p>对班级月考成绩表进行求和、平均分、排序、图表创建等综合统计分析操作。</p>
+            <a href="1.月考成绩统计分析.html" class="btn">开始练习</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">📋</div>
+            <h2>面试记分表操作题</h2>
+            <p>完成面试记分表的合并居中、边框设置、行高字体调整、函数计算等格式化操作。</p>
+            <a href="2.面试记分表操作题.html" class="btn">开始练习</a>
+        </div>
+    </div>
+
+    <footer>© 高中信息技术学考训练营 · Excel 操作题专项</footer>
+</body>
+</html>

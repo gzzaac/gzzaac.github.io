@@ -86,8 +86,7 @@
             backdrop-filter: blur(12px);
             border-radius: 15px;
             padding: 25px;
-            flex: 1;
-            min-width: 240px;
+            flex: 0 0 calc(33.333% - 14px);  /* 桌面端每行固定 3 个，6 卡两行 */
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
@@ -144,6 +143,14 @@
         }
         
         .card-4 .btn {
+            background: linear-gradient(45deg, #a7581a, #b97a3e);
+        }
+
+        .card-5 .btn {
+            background: linear-gradient(45deg, #a7581a, #b97a3e);
+        }
+
+        .card-6 .btn {
             background: linear-gradient(45deg, #a7581a, #b97a3e);
         }
         
@@ -232,7 +239,7 @@
         /* 原有响应式（卡片等） */
         @media (max-width: 1200px) {
             .card {
-                flex: 0 0 calc(50% - 20px);
+                flex: 0 0 calc(50% - 10px);  /* 平板/窄桌面每行 2 个 */
             }
         }
         
@@ -277,7 +284,7 @@
         </header>
         
         <div class="notification-bar">
-            📢 Python程序设计题中新增16道提升填空题；新增自学Python语言的魔法工坊（支持导入任意英语单词生成新关卡，打字仅支持电脑端）。本站题库持续开放更新，助力大家深化理解、夯实基础。学无止境，气有浩然！
+            📢 Python程序设计题中新增16道提升填空题；新增自学Python语言的魔法工坊（打字练习仅支持电脑端，支持导入任意英语单词生成新关卡）。本站题库持续开放更新，助力大家深化理解、夯实基础。学无止境，气有浩然！
         </div>
         
         <div class="nav-cards">
@@ -293,6 +300,12 @@
                 <a href="scenario-questions.html" class="btn">开始测试</a>
             </div>
             
+            <div class="card card-6">
+                <h2>Excel 操作题</h2>
+                <p>月考成绩统计分析、面试记分表两道实操题，练表格处理与函数运算。</p>
+                <a href="excel/index.html" class="btn">开始练习</a>
+            </div>
+
             <div class="card card-3">
                 <h2>程序设计题</h2>
                 <p>测试Python编程基础，提升算法思维和代码实现能力。</p>
@@ -303,6 +316,12 @@
                 <h2>复习大纲</h2>
                 <p>查看信息技术复习大纲，了解考试重点和知识点分布。</p>
                 <a href="zaezfx.html" class="btn">查看大纲</a>
+            </div>
+
+            <div class="card card-5">
+                <h2>阿涛工具箱</h2>
+                <p>小工具合集：听写小助手、阳光花园任务挑战、智能课程表，持续扩充中。</p>
+                <a href="https://gzzaac.github.io/pvz-task/" class="btn" target="_blank" rel="noopener">打开工具箱</a>
             </div>
         </div>
 
