@@ -445,6 +445,18 @@
             margin-top: 12px;
         }
         .review-outline-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(122, 82, 38, 0.4); }
+    
+        /* ===== 移动端适配补充 ===== */
+        @media (max-width: 640px) {
+            h1 { font-size: 1.45rem; line-height: 1.35; }
+            .header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            /* 参考数据区：标题与下载按钮改为上下堆叠，避免标题被挤成竖排 */
+            .demo-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .demo-header h3 { font-size: 1.05rem; line-height: 1.5; }
+            .download-link { margin-left: 0; white-space: normal; }
+            .sub { flex-wrap: wrap; gap: 8px; }
+            .gif-box img, .step-gif img { max-width: 100%; height: auto; }
+        }
     </style>
 </head>
 <body>
@@ -559,7 +571,7 @@
                 </div>
                 <!-- 步骤1 GIF 预留 -->
                 <div class="step-gif">
-                    <img src="GIF/5.行高和字体设置.gif" alt="行高与倾斜加粗操作演示">
+                    <img src="gif/5.行高和字体设置.gif" alt="行高与倾斜加粗操作演示">
                 </div>
             </div>
         </div>
@@ -610,7 +622,7 @@
                 </div>
                 <!-- 步骤2 GIF 预留 -->
                 <div class="step-gif">
-                    <img src="GIF/6.函数与公式计算.gif" alt="SUM/MAX/MIN及最后得分公式演示">
+                    <img src="gif/6.函数与公式计算.gif" alt="SUM/MAX/MIN及最后得分公式演示">
                 </div>
             </div>
         </div>
@@ -648,7 +660,7 @@
                 </div>
                 <!-- 步骤3 GIF 预留 -->
                 <div class="step-gif">
-                    <img src="GIF/7.排序操作.gif" alt="按最后得分降序排序演示">
+                    <img src="gif/7.排序操作.gif" alt="按最后得分降序排序演示">
                 </div>
             </div>
         </div>
@@ -688,7 +700,7 @@
                 </div>
                 <!-- 步骤4 GIF 预留 -->
                 <div class="step-gif">
-                    <img src="GIF/8.边框设置.gif" alt="蓝色外边框红色内边框操作演示">
+                    <img src="gif/8.边框设置.gif" alt="蓝色外边框红色内边框操作演示">
                 </div>
             </div>
         </div>

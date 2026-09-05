@@ -461,6 +461,18 @@
             margin-top: 12px;
         }
         .review-outline-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(122, 82, 38, 0.4); }
+    
+        /* ===== 移动端适配补充 ===== */
+        @media (max-width: 640px) {
+            h1 { font-size: 1.45rem; line-height: 1.35; }
+            .header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            /* 参考数据区：标题与下载按钮改为上下堆叠，避免标题被挤成竖排 */
+            .demo-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .demo-header h3 { font-size: 1.05rem; line-height: 1.5; }
+            .download-link { margin-left: 0; white-space: normal; }
+            .sub { flex-wrap: wrap; gap: 8px; }
+            .gif-box img, .step-gif img { max-width: 100%; height: auto; }
+        }
     </style>
 </head>
 <body>
@@ -571,7 +583,7 @@
                 </div>
                 <!-- ========== 步骤1 GIF 动图 ========== -->
                 <div class="step-gif">
-                    <img src="GIF/1.合并居中.gif" alt="合并居中操作演示">
+                    <img src="gif/1.合并居中.gif" alt="合并居中操作演示">
                 </div>
                 <!-- ================================= -->
             </div>
@@ -609,7 +621,7 @@
                 </div>
                 <!-- ========== 步骤2 GIF 动图 ========== -->
                 <div class="step-gif">
-                    <img src="GIF/2.求和函数.gif" alt="求和函数操作演示">
+                    <img src="gif/2.求和函数.gif" alt="求和函数操作演示">
                 </div>
                 <!-- ================================= -->
             </div>
@@ -648,7 +660,7 @@
                 </div>
                 <!-- ========== 步骤3 GIF 占位（预留） ========== -->
                 <div class="step-gif">
-                    <img src="GIF/3.排序操作.gif" alt="排序操作演示">
+                    <img src="gif/3.排序操作.gif" alt="排序操作演示">
                 </div>
                 <!-- ===================================== -->
             </div>
@@ -691,7 +703,7 @@
                 </div>
                 <!-- ========== 步骤4 GIF 占位（预留） ========== -->
 				<div class="step-gif">
-                    <img src="GIF/4.图表创建.gif" alt="图表创建操作演示">
+                    <img src="gif/4.图表创建.gif" alt="图表创建操作演示">
                 </div>
                 <!-- ===================================== -->
             </div>
