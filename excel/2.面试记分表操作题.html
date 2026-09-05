@@ -16,7 +16,7 @@
         body {
             font-family: 'Segoe UI', '微软雅黑', system-ui, sans-serif;
             background: #f5f0e2;
-            color: #1e2f4e;
+            color: #3a2410;
             padding: 24px 16px;
             line-height: 1.5;
         }
@@ -50,7 +50,7 @@
 
         .title-section .sub {
             font-size: 1rem;
-            color: #4a627a;
+            color: #6b5a45;
             margin-top: 6px;
             display: flex;
             align-items: center;
@@ -159,7 +159,7 @@
             font-weight: 700;
             font-size: 1.1rem;
             text-align: center;
-            border-color: #1e4270;
+            border-color: #4a2a0e;
         }
 
         .excel-table tbody tr:nth-child(even) {
@@ -226,7 +226,7 @@
 
         .step-card:hover {
             box-shadow: 0 14px 26px rgba(122, 82, 38, 0.08);
-            border-color: #b7cee8;
+            border-color: #d8c5a4;
         }
 
         .step-header {
@@ -255,7 +255,7 @@
         .step-header h3 {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #103450;
+            color: #402a12;
         }
 
         .step-body {
@@ -333,7 +333,7 @@
 
         .action-hint {
             margin-top: 10px;
-            color: #3a5c7c;
+            color: #7a5f42;
             font-style: italic;
         }
 
@@ -354,7 +354,7 @@
         .footer-note {
             margin-top: 40px;
             text-align: right;
-            color: #6c86a3;
+            color: #8b7355;
             border-top: 1px solid #d7e2ee;
             padding-top: 24px;
             display: flex;
@@ -410,7 +410,7 @@
             border-radius: 20px;
             text-align: center;
             color: #8b7355;
-            border: 1px dashed #8da4c0;
+            border: 1px dashed #a89274;
             font-size: 0.95rem;
         }
         .gif-placeholder i {
@@ -448,7 +448,7 @@
     
         /* ===== 移动端适配补充 ===== */
         @media (max-width: 640px) {
-            h1 { font-size: 1.45rem; line-height: 1.35; }
+            .title-section h1, h1 { font-size: 1.45rem !important; line-height: 1.35; }
             .header { flex-direction: column; align-items: flex-start; gap: 12px; }
             /* 参考数据区：标题与下载按钮改为上下堆叠，避免标题被挤成竖排 */
             .demo-header { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -456,6 +456,38 @@
             .download-link { margin-left: 0; white-space: normal; }
             .sub { flex-wrap: wrap; gap: 8px; }
             .gif-box img, .step-gif img { max-width: 100%; height: auto; }
+            /* 页脚两段文字手机端上下排列 */
+            .footer-note { flex-direction: column; gap: 8px; text-align: center; }
+
+        }
+    
+        /* ===== GIF 灯箱：点击全屏弹出，竖屏自动横屏显示 ===== */
+        #gif-lightbox {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(20, 14, 8, 0.94);
+            z-index: 99999;
+            overflow: hidden;
+        }
+        #gif-lightbox.show { display: flex; align-items: center; justify-content: center; }
+        #gif-lightbox img {
+            max-width: 96vw; max-height: 96vh;
+            width: auto; height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+        }
+        #gif-lightbox .lb-hint {
+            position: absolute; bottom: 18px; left: 0; right: 0;
+            text-align: center; color: rgba(255,255,255,0.75);
+            font-size: 13px; letter-spacing: 1px;
+        }
+        /* 手机竖屏：GIF 旋转 90 度，横屏构图铺满整屏 */
+        @media (orientation: portrait) {
+            #gif-lightbox img {
+                height: 96vw; width: auto;
+                max-width: none; max-height: none;
+                transform: rotate(90deg);
+            }
         }
     </style>
 </head>
@@ -472,7 +504,7 @@
                 <span class="excel-version"><i class="fab fa-microsoft"></i> Excel 2010</span>
             </div>
         </div>
-        <div style="color:#3a6685;">
+        <div style="color:#6b4a2e;">
             <i class="far fa-clock"></i> 操作题 · 分步跟练
         </div>
     </div>
@@ -730,6 +762,26 @@
         });
         console.log('📘 高中信息技术Excel操作题 · 英语教师面试记分表：行高/倾斜加粗、函数计算、排序、边框。动图位置已预留。');
     })();
+</script>
+
+<script>
+// GIF 灯箱：点击步骤演示图全屏查看，点击任意处关闭
+(function() {
+    var lb = document.createElement('div');
+    lb.id = 'gif-lightbox';
+    lb.innerHTML = '<img alt="操作演示GIF（横屏放大）">' +
+                   '<div class="lb-hint">点击任意位置关闭 · 手机竖屏时自动横屏显示</div>';
+    document.body.appendChild(lb);
+    document.addEventListener('click', function(e) {
+        if (lb.classList.contains('show')) { lb.classList.remove('show'); return; }
+        var t = e.target;
+        if (t && t.tagName === 'IMG' && /gif\//i.test(t.getAttribute('src') || '')) {
+            lb.querySelector('img').src = t.getAttribute('src');
+            lb.classList.add('show');
+            e.stopPropagation();
+        }
+    }, true);
+})();
 </script>
 </body>
 </html>
