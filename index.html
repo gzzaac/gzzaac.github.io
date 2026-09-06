@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>高中信息技术学考训练营</title>
     <style>
+        /* ===== 全局重置 ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Microsoft YaHei', sans-serif;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.85)), 
-                        url('./images/background.jpg');
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.85)),
+                url('./images/background.jpg');
             background-size: cover;
             background-position: center;
             color: #333;
@@ -25,7 +26,7 @@
             padding: 20px;
             transition: background 0.5s ease;
         }
-        
+
         .container {
             width: 90%;
             max-width: 1400px;
@@ -34,31 +35,37 @@
             display: flex;
             flex-direction: column;
         }
-        
+
+        /* ===== Header ===== */
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 20px 30px;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             width: 100%;
             backdrop-filter: blur(5px);
+            transition: padding 0.3s ease;
         }
-        
+
+        /* ---------- 标题：桌面端 ---------- */
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
             color: #a7581a;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* 默认不强制换行，桌面端由字体大小自然控制 */
+            white-space: normal;
         }
-        
+
         .subtitle {
             font-size: 1.2rem;
             color: #666;
             margin-bottom: 20px;
         }
-        
+
+        /* ===== 通知栏 ===== */
         .notification-bar {
             background: rgba(255, 193, 7, 0.85);
             color: #333;
@@ -71,7 +78,8 @@
             width: 100%;
             line-height: 1.5;
         }
-        
+
+        /* ===== 卡片网格 ===== */
         .nav-cards {
             display: flex;
             flex-wrap: wrap;
@@ -80,38 +88,46 @@
             margin-top: 20px;
             flex: 0 0 auto;
         }
-        
+
         .card {
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(12px);
             border-radius: 15px;
             padding: 25px;
-            flex: 0 0 calc(33.333% - 14px);  /* 桌面端每行固定 3 个，6 卡两行 */
+            flex: 0 0 calc(33.333% - 14px);
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        
+
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
             background: rgba(255, 255, 255, 0.75);
         }
-        
+
         .card h2 {
             color: #a7581a;
             margin-bottom: 15px;
             font-size: 1.7rem;
         }
-        
+
         .card p {
             color: #4a3a28;
             margin-bottom: 20px;
             line-height: 1.6;
             font-size: 0.95rem;
         }
-        
+
+        .card .btn {
+            margin-top: auto;
+        }
+
+        /* ===== 按钮 ===== */
         .btn {
             display: inline-block;
             background: #7c4312;
@@ -124,37 +140,22 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             font-size: 0.95rem;
         }
-        
+
         .btn:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
-        
-        .card-1 .btn {
-            background: linear-gradient(45deg, #a7581a, #b97a3e);
-        }
-        
-        .card-2 .btn {
-            background: linear-gradient(45deg, #a7581a, #b97a3e);
-        }
-        
-        .card-3 .btn {
-            background: linear-gradient(45deg, #a7581a, #b97a3e);
-        }
-        
-        .card-4 .btn {
-            background: linear-gradient(45deg, #a7581a, #b97a3e);
-        }
 
-        .card-5 .btn {
-            background: linear-gradient(45deg, #a7581a, #b97a3e);
-        }
-
+        .card-1 .btn,
+        .card-2 .btn,
+        .card-3 .btn,
+        .card-4 .btn,
+        .card-5 .btn,
         .card-6 .btn {
             background: linear-gradient(45deg, #a7581a, #b97a3e);
         }
-        
-        /* ===== 底部统计样式（始终横向排列，移动端紧凑） ===== */
+
+        /* ===== 底部统计 ===== */
         .footer-stats {
             width: 100%;
             text-align: center;
@@ -173,19 +174,19 @@
             gap: 4px 16px;
             transition: all 0.3s;
         }
-        
+
         .footer-stats .stat-item {
             display: inline-flex;
             align-items: center;
             gap: 3px;
             white-space: nowrap;
         }
-        
+
         .footer-stats .stat-label {
             font-weight: 500;
             color: #4a3a28;
         }
-        
+
         .footer-stats .stat-number {
             font-weight: 700;
             color: #a7581a;
@@ -194,14 +195,129 @@
             display: inline-block;
             transition: opacity 0.6s ease;
         }
-        
+
         .footer-stats .divider {
             color: #ccc;
             font-weight: 300;
             user-select: none;
         }
-        
-        /* 移动端优化：缩小字体和间距，保证一行显示 */
+
+        /* ============================================================ */
+        /* ===== 响应式布局 ===== */
+
+        /* ---------- 平板 / 窄桌面：卡片 2 列 ---------- */
+        @media (max-width: 1200px) {
+            .card {
+                flex: 0 0 calc(50% - 10px);
+            }
+        }
+
+        /* ---------- 手机：卡片 1 列 ---------- */
+        @media (max-width: 768px) {
+            .nav-cards {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .card {
+                width: 90%;
+                max-width: 400px;
+            }
+
+            /* 桌面标题尺寸保留，但手机端在下方会覆盖 */
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ---------- 手机（核心修复区） ---------- */
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+
+            /* ---- 修复：标题强制一行，字体调小 ---- */
+            h1 {
+                font-size: 1.2rem;
+                /* 关键：强制不换行 */
+                white-space: nowrap;
+                /* 防止溢出时截断（安全兜底） */
+                overflow: hidden;
+                text-overflow: ellipsis;
+                /* 消除额外的字间距，节省空间 */
+                letter-spacing: 0;
+            }
+
+            /* header 内边距紧凑，给标题更多空间 */
+            header {
+                padding: 14px 10px;
+                margin-bottom: 20px;
+            }
+
+            /* 副标题也稍微缩小 */
+            .subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 12px;
+            }
+
+            /* 卡片内边距减小 */
+            .card {
+                width: 100%;
+                padding: 18px 15px;
+            }
+
+            .card h2 {
+                font-size: 1.3rem;
+            }
+
+            .card p {
+                font-size: 0.88rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+
+            /* 通知栏文字缩小 */
+            .notification-bar {
+                font-size: 0.9rem;
+                padding: 12px 14px;
+            }
+        }
+
+        /* ---------- 更小屏（≤ 380px）进一步压缩 ---------- */
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 1rem;
+                /* 极窄屏下再小一点，确保 11 个字完整显示 */
+            }
+
+            header {
+                padding: 10px 6px;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+            }
+
+            .footer-stats {
+                font-size: 0.75rem;
+                padding: 10px 6px;
+                gap: 2px 6px;
+            }
+
+            .footer-stats .stat-number {
+                font-size: 0.85rem;
+            }
+
+            .footer-stats .stat-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* ---------- 底部统计在移动端保持一行 ---------- */
         @media (max-width: 600px) {
             .footer-stats {
                 font-size: 0.85rem;
@@ -209,116 +325,74 @@
                 gap: 2px 10px;
                 border-radius: 10px;
             }
+
             .footer-stats .stat-number {
                 font-size: 0.95rem;
                 min-width: 16px;
             }
+
             .footer-stats .stat-label {
                 font-size: 0.85rem;
             }
+
             .footer-stats .divider {
                 margin: 0 2px;
             }
         }
-        
-        /* 极窄屏（≤ 380px）再压缩 */
-        @media (max-width: 380px) {
-            .footer-stats {
-                font-size: 0.75rem;
-                padding: 10px 6px;
-                gap: 2px 6px;
-            }
-            .footer-stats .stat-number {
-                font-size: 0.85rem;
-            }
-            .footer-stats .stat-label {
-                font-size: 0.75rem;
-            }
-        }
-        
-        /* 原有响应式（卡片等） */
-        @media (max-width: 1200px) {
-            .card {
-                flex: 0 0 calc(50% - 10px);  /* 平板/窄桌面每行 2 个 */
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-cards {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-            }
-            
-            .card {
-                width: 90%;
-                max-width: 400px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                width: 95%;
-            }
-            
-            .card {
-                width: 100%;
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 1.6rem;  /* 11 字标题手机上一行放下，不再折成两行 */
-                letter-spacing: 0;
-            }
-        }
     </style>
 </head>
+
 <body>
     <div class="container">
+        <!-- ====== 头部 ====== -->
         <header>
             <h1>高中信息技术学考训练营</h1>
             <p class="subtitle">信息技术学业水平测试大闯关</p>
         </header>
-        
+
+        <!-- ====== 通知栏 ====== -->
         <div class="notification-bar">
             📢 新增Excel2010操作题模块。Python程序设计题中新增16道提升填空题；新增Python语言魔法工坊打字练习（仅支持电脑端，可以导入任意英语单词生成新关卡）。本站题库持续开放更新，助力大家深化理解、夯实基础。学无止境，气有浩然！
         </div>
-        
+
+        <!-- ====== 功能卡片 ====== -->
         <div class="nav-cards">
+            <!-- 选择题 -->
             <div class="card card-1">
                 <h2>选择题</h2>
                 <p>涵盖信息技术基础知识，帮助您巩固所学内容。</p>
                 <a href="multiple-choice.html" class="btn">开始测试</a>
             </div>
-            
+
+            <!-- 情景应用题 -->
             <div class="card card-2">
                 <h2>情景应用题</h2>
                 <p>测试您在实际场景中应用信息技术的能力。</p>
                 <a href="scenario-questions.html" class="btn">开始测试</a>
             </div>
-            
+
+            <!-- Excel2010 操作题 -->
             <div class="card card-6">
                 <h2>Excel2010操作题</h2>
                 <p>测试Excel2010表格处理与函数运算能力。</p>
                 <a href="excel/index.html" class="btn">开始测试</a>
             </div>
 
+            <!-- 程序设计题 -->
             <div class="card card-3">
                 <h2>程序设计题</h2>
                 <p>测试Python编程基础，提升算法思维和代码实现能力。</p>
                 <a href="programming-questions.html" class="btn">开始测试</a>
             </div>
-            
+
+            <!-- 复习大纲 -->
             <div class="card card-4">
                 <h2>复习大纲</h2>
                 <p>查看信息技术复习大纲，了解考试重点和知识点分布。</p>
                 <a href="zaezfx.html" class="btn">查看大纲</a>
             </div>
 
+            <!-- 阿涛工具箱 -->
             <div class="card card-5">
                 <h2>阿涛工具箱</h2>
                 <p>小工具合集：听写小助手、阳光花园任务挑战、智能课程表，持续扩充中。</p>
@@ -326,40 +400,37 @@
             </div>
         </div>
 
-        <!-- 底部访问量统计（使用不蒜子） -->
+        <!-- ====== 底部统计（不蒜子） ====== -->
         <div class="footer-stats">
             <span class="stat-item">
                 <span class="stat-label">📊 总访问量：</span>
                 <span class="stat-number" id="busuanzi_value_site_pv">0</span>
                 <span>次</span>
             </span>
-            <!-- 注释掉访客数显示，但后台依然统计 -->
-            <!-- <span class="divider">|</span> -->
-            <!-- <span class="stat-item">
-                <span class="stat-label">👥 访客数：</span>
-                <span class="stat-number" id="busuanzi_value_site_uv">0</span>
-                <span>人</span>
-            </span> -->
+            <!-- 访客数已隐藏，但后台继续统计 -->
         </div>
     </div>
 
-    <!-- 不蒜子统计脚本（异步加载）—— 保留，确保后台统计 -->
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <!-- ====== 不蒜子统计（异步） ====== -->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
 
+    <!-- ====== 脚本 ====== -->
     <script>
-        // 背景图片加载失败时的备用方案
+        // 背景图片加载失败时备用
         document.addEventListener('DOMContentLoaded', function() {
             const bgImage = new Image();
             bgImage.onerror = function() {
                 console.log('背景图片加载失败，使用牛皮纸纹理背景');
-                document.body.style.background = 'linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)), url(\'./images/paper-texture.jpg\')';
+                document.body.style.background =
+                    'linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)), url(\'./images/paper-texture.jpg\')';
                 document.body.style.backgroundSize = 'cover';
                 document.body.style.backgroundPosition = 'center';
             };
             bgImage.src = './images/background.jpg';
         });
 
-        // 为总访问量数字添加淡入效果（访客数监听已注释）
+        // 总访问量数字淡入
         document.addEventListener('DOMContentLoaded', function() {
             const pv = document.getElementById('busuanzi_value_site_pv');
             if (pv) {
@@ -371,34 +442,19 @@
                 });
                 observer.observe(pv, { childList: true, characterData: true, subtree: true });
             }
-            
-            // 访客数监听已注释，不影响后台统计
-            /*
-            const uv = document.getElementById('busuanzi_value_site_uv');
-            if (uv) {
-                uv.style.opacity = '0';
-                const observer = new MutationObserver(function() {
-                    if (uv.textContent && uv.textContent !== '0') {
-                        uv.style.opacity = '1';
-                    }
-                });
-                observer.observe(uv, { childList: true, characterData: true, subtree: true });
-            }
-            */
         });
-    </script>
-    <script>
-    // 源码保护：禁止右键查看/查看源代码/开发者工具（不影响正常使用）
-    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'U' || e.key === 'S')) {
-            e.preventDefault();
-        }
-        if (e.key === 'F12') { e.preventDefault(); }
-        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
-            e.preventDefault();
-        }
-    });
+
+        // ===== 源码保护（防右键 / 防查看源码 / 防 F12） =====
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'U' || e.key === 'S')) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12') { e.preventDefault(); }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
