@@ -8,7 +8,10 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', sans-serif; }
 
     body {
-        background: linear-gradient(rgba(245, 238, 224, 0.68), rgba(245, 238, 224, 0.76)),
+        /* 牛皮纸背景：优先加载 images/paper-texture.jpg，加载失败时依次回退到 CSS 备用纸纹与暖色渐变 */
+        background: linear-gradient(rgba(245, 238, 224, 0.5), rgba(245, 238, 224, 0.62)),
+                    url('images/paper-texture.jpg') center / cover no-repeat fixed,
+                    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='7'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.12'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='260' height='260' fill='%23e6d2a8'/%3E%3Crect width='260' height='260' filter='url(%23p)'/%3E%3C/svg%3E"),
                     linear-gradient(135deg, #e8dcc2 0%, #f0e8d4 50%, #e8f0e4 100%) fixed;
         color: #333;
         min-height: 100vh;
@@ -103,6 +106,13 @@
             <h2>面试记分表操作题</h2>
             <p>完成面试记分表的合并居中、边框设置、行高字体调整、函数计算等格式化操作。</p>
             <a href="2.面试记分表操作题.html" class="btn">开始练习</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">📊</div>
+            <h2>能源产品产量统计</h2>
+            <p>对能源产品产量表进行求和计算、降序排序填序号、行高列宽设置、创建折线图等综合操作。</p>
+            <a href="3.能源产品产量统计.html" class="btn">开始练习</a>
         </div>
     </div>
 

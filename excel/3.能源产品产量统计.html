@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>高中信息技术 · Excel 能源产品产量统计操作题</title>
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== 全局重置 & 基础 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', '微软雅黑', system-ui, -apple-system, sans-serif;
+            background: #f5f0e2;
+            color: #3a2410;
+            padding: 16px 10px;
+            line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(74, 42, 14, 0.08);
+            padding: 28px 32px 40px;
+            transition: padding 0.2s;
+        }
+
+        /* ===== 头部 ===== */
+        .header {
+            border-bottom: 2px solid #e6edf5;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .title-section h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #3a2410;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+        }
+
+        .title-section .sub {
+            font-size: 1rem;
+            color: #6b5a45;
+            margin-top: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 12px;
+        }
+
+        .exam-badge {
+            background: #d4e2f0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #3a2410;
+            white-space: nowrap;
+        }
+
+        .excel-version {
+            background: #1e6f3c;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .header-right {
+            color: #6b4a2e;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        /* ===== 返回首页按钮 ===== */
+        .review-outline-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #c9a86a 0%, #4a2a0e 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(122, 82, 38, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 12px;
+            border: none;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .review-outline-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(122, 82, 38, 0.4);
+        }
+        .review-outline-btn:active {
+            transform: scale(0.96);
+        }
+        .review-outline-btn svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        /* ===== 题目要求卡片 ===== */
+        .task-card {
+            background: #f7f2e6;
+            border-left: 8px solid #a7581a;
+            border-radius: 20px;
+            padding: 22px 26px;
+            margin-bottom: 32px;
+        }
+
+        .task-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #402a12;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px 20px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            font-size: 1.05rem;
+        }
+
+        .task-item i {
+            color: #a7581a;
+            width: 20px;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        /* ===== 示例数据表 ===== */
+        .demo-section {
+            margin-bottom: 36px;
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .demo-header h3 {
+            font-weight: 600;
+            color: #4a2a0e;
+            font-size: 1.3rem;
+            line-height: 1.4;
+        }
+
+        .badge-region {
+            background: #f3efe4;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #5b3a1a;
+            white-space: nowrap;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 18px;
+            border: 1px solid #d0ddee;
+            background: #fafcff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+            margin-bottom: 6px;
+        }
+
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            min-width: 960px;
+            white-space: nowrap;
+        }
+
+        .excel-table th,
+        .excel-table td {
+            border: 1px solid #bcc9db;
+            padding: 9px 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .excel-table thead tr:first-child th {
+            background: #a7581a;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            border-color: #4a2a0e;
+        }
+
+        .excel-table tbody tr:nth-child(even) {
+            background-color: #f4f8fe;
+        }
+
+        .excel-table tbody tr:hover {
+            background: #e3ecf9;
+        }
+
+        .col-header {
+            background: #ecdfc8;
+            font-weight: 600;
+            color: #402a12;
+        }
+
+        .empty-cell {
+            background: #fdf8ec;
+            color: #a89678;
+            font-style: italic;
+            font-size: 0.82rem;
+        }
+
+        .highlight-cell {
+            background: #fdefd4;
+            border: 2px dashed #a7581a;
+            font-weight: 600;
+        }
+
+        .chart-source-cell {
+            background: #dcecd8;
+            border: 2px solid #5a9e6f;
+            font-weight: 600;
+        }
+
+        .footnote {
+            margin-top: 8px;
+            color: #8b7355;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footnote span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ===== 下载按钮 ===== */
+        .download-link {
+            background: #1e6f3c;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(0, 40, 20, 0.1);
+            transition: 0.15s;
+            border: 1px solid #3c9b5e;
+            white-space: nowrap;
+            touch-action: manipulation;
+            flex-shrink: 0;
+        }
+        .download-link:hover {
+            background: #145c2e;
+            box-shadow: 0 6px 12px rgba(0, 60, 30, 0.15);
+        }
+        .download-link:active {
+            transform: scale(0.96);
+        }
+        .download-link i {
+            font-size: 1rem;
+        }
+
+        /* ===== 图表数据源说明条 ===== */
+        .chart-source-note {
+            margin-top: 10px;
+            background: #f4faf3;
+            padding: 10px 18px;
+            border-radius: 14px;
+            border: 1px solid #c3e6cb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+        .chart-source-note .cs-badge {
+            background: #d4edda;
+            padding: 2px 10px;
+            border-radius: 16px;
+            font-weight: 600;
+            color: #155724;
+        }
+        .chart-source-note .cs-desc {
+            color: #4d6b3a;
+        }
+
+        /* ===== 步骤标题 ===== */
+        .steps-title {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            margin: 32px 0 20px;
+            gap: 8px 14px;
+        }
+
+        .steps-title h2 {
+            font-size: 1.8rem;
+            font-weight: 650;
+            color: #3a2410;
+        }
+
+        .steps-title span {
+            background: #e0e9f3;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #3a2410;
+        }
+
+        /* ===== 步骤卡片 ===== */
+        .step-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 28px;
+            border: 1px solid #dfe8f2;
+            box-shadow: 0 6px 14px rgba(74, 42, 14, 0.03);
+            overflow: hidden;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .step-card:hover {
+            box-shadow: 0 14px 26px rgba(122, 82, 38, 0.08);
+            border-color: #d8c5a4;
+        }
+
+        .step-header {
+            background: #f9fcff;
+            padding: 18px 26px;
+            border-bottom: 1px dashed #e2d3b6;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .step-number {
+            background: #4a2a0e;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.6rem;
+            box-shadow: 0 6px 10px rgba(74, 42, 14, 0.1);
+            flex-shrink: 0;
+        }
+
+        .step-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #402a12;
+            line-height: 1.3;
+        }
+
+        .step-body {
+            padding: 22px 30px 28px;
+            background: #ffffff;
+        }
+
+        .instruction-list {
+            list-style: none;
+        }
+
+        .instruction-list li {
+            margin-bottom: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .ins-icon {
+            width: 32px;
+            height: 32px;
+            background: #eef3fc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a5a28;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .ins-content {
+            flex: 1;
+            font-size: 0.98rem;
+        }
+
+        .ins-content strong {
+            color: #402a12;
+            font-weight: 650;
+        }
+
+        .ins-content .sub-note {
+            color: #7a5f42;
+            font-size: 0.9rem;
+        }
+
+        .code-badge {
+            background: #f3efe4;
+            padding: 4px 12px;
+            border-radius: 24px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #cad6e3;
+            display: inline-block;
+            margin: 4px 2px 0 0;
+        }
+
+        .highlight {
+            background: #fdefd4;
+            padding: 2px 8px;
+            border-radius: 16px;
+            font-weight: 500;
+            color: #92400e;
+        }
+
+        .highlight-blue {
+            background: #dce8f6;
+            padding: 2px 8px;
+            border-radius: 16px;
+            font-weight: 500;
+            color: #1e5c9b;
+        }
+
+        .highlight-green {
+            background: #d4edda;
+            padding: 2px 8px;
+            border-radius: 16px;
+            font-weight: 500;
+            color: #155724;
+        }
+
+        .tip-box {
+            background: #e7f0fa;
+            border-radius: 18px;
+            padding: 14px 20px;
+            margin-top: 18px;
+            display: flex;
+            gap: 12px;
+            border-left: 5px solid #a7581a;
+            font-size: 0.95rem;
+        }
+
+        .tip-box i {
+            color: #8a5a28;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .action-hint {
+            margin-top: 10px;
+            color: #7a5f42;
+            font-style: italic;
+            font-size: 0.92rem;
+        }
+
+        .btn-simulate {
+            background: white;
+            border: 1.5px solid #a7581a;
+            color: #a7581a;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: default;
+            display: inline-block;
+            margin-top: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        /* ===== GIF 样式 ===== */
+        .step-gif {
+            margin-top: 20px;
+            text-align: center;
+            background: #f8fafd;
+            padding: 16px 12px;
+            border-radius: 20px;
+            border: 1px solid #ecdfc8;
+            cursor: pointer;
+            transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .step-gif:active {
+            background: #f0e8d8;
+        }
+        .step-gif img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2d3b6;
+            display: block;
+            margin: 0 auto;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .step-gif .gif-tap-hint {
+            display: block;
+            font-size: 0.7rem;
+            color: #8b7355;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .save-reminder {
+            margin-top: 16px;
+            background: #fcf9f0;
+            padding: 8px 18px;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+
+        /* ===== 页脚 ===== */
+        .footer-note {
+            margin-top: 40px;
+            border-top: 1px solid #d7e2ee;
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #8b7355;
+            font-size: 0.9rem;
+        }
+        .footer-note div {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ===== GIF 灯箱 ===== */
+        #gif-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 14, 8, 0.94);
+            z-index: 99999;
+            overflow: hidden;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            touch-action: none;
+        }
+        #gif-lightbox.show {
+            display: flex;
+        }
+        #gif-lightbox img {
+            max-width: 96vw;
+            max-height: 96vh;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            object-fit: contain;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        #gif-lightbox .lb-hint {
+            position: absolute;
+            bottom: 18px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 13px;
+            letter-spacing: 1px;
+            padding: 0 16px;
+        }
+        /* 手机竖屏：GIF 旋转 90 度，横屏构图铺满整屏 */
+        @media (orientation: portrait) and (max-width: 768px) {
+            #gif-lightbox img {
+                height: 92vw;
+                width: auto;
+                max-width: none;
+                max-height: none;
+                transform: rotate(90deg);
+            }
+        }
+        @media (orientation: portrait) and (max-width: 480px) {
+            #gif-lightbox img {
+                height: 96vw;
+            }
+        }
+
+        /* ============================================================== */
+        /* ===== 响应式设计 — 多断点精细适配 ===== */
+        /* ============================================================== */
+
+        /* --- 平板及以下 (≤ 1024px) --- */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 22px 18px 30px;
+            }
+            .excel-table {
+                font-size: 0.82rem;
+                min-width: 880px;
+            }
+            .excel-table th,
+            .excel-table td {
+                padding: 7px 9px;
+            }
+            .title-section h1 {
+                font-size: 1.7rem;
+            }
+        }
+
+        /* --- 小平板 / 大手机 (≤ 768px) --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 8px;
+            }
+            .container {
+                padding: 16px 14px 24px;
+                border-radius: 22px;
+            }
+            .header {
+                padding-bottom: 14px;
+                margin-bottom: 16px;
+                gap: 10px;
+            }
+            .title-section h1 {
+                font-size: 1.35rem;
+            }
+            .title-section .sub {
+                font-size: 0.8rem;
+                gap: 6px 10px;
+            }
+            .exam-badge,
+            .excel-version {
+                font-size: 0.7rem;
+                padding: 3px 12px;
+            }
+            .header-right {
+                font-size: 0.8rem;
+            }
+            .review-outline-btn {
+                font-size: 0.8rem;
+                padding: 7px 16px;
+                margin-top: 8px;
+            }
+            .review-outline-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .task-card {
+                padding: 16px 18px;
+                border-left-width: 6px;
+                margin-bottom: 24px;
+            }
+            .task-card h2 {
+                font-size: 1.15rem;
+                margin-bottom: 12px;
+            }
+            .task-item {
+                font-size: 0.9rem;
+                gap: 8px;
+            }
+            .task-item i {
+                width: 18px;
+                font-size: 0.95rem;
+            }
+
+            .demo-header h3 {
+                font-size: 1rem;
+            }
+            .badge-region {
+                font-size: 0.72rem;
+                padding: 3px 12px;
+            }
+            .download-link {
+                font-size: 0.8rem;
+                padding: 7px 16px;
+                gap: 6px;
+            }
+
+            .excel-table {
+                font-size: 0.75rem;
+                min-width: 760px;
+            }
+            .excel-table th,
+            .excel-table td {
+                padding: 6px 8px;
+            }
+            .excel-table thead tr:first-child th {
+                font-size: 0.85rem;
+            }
+
+            .chart-source-note {
+                font-size: 0.8rem;
+                padding: 8px 14px;
+                gap: 8px;
+            }
+
+            .steps-title {
+                margin: 24px 0 16px;
+                gap: 6px 12px;
+            }
+            .steps-title h2 {
+                font-size: 1.3rem;
+            }
+            .steps-title span {
+                font-size: 0.72rem;
+                padding: 3px 12px;
+            }
+
+            .step-card {
+                border-radius: 20px;
+            }
+            .step-header {
+                padding: 14px 16px;
+                gap: 12px;
+            }
+            .step-number {
+                width: 36px;
+                height: 36px;
+                font-size: 1.25rem;
+            }
+            .step-header h3 {
+                font-size: 1.08rem;
+            }
+            .step-body {
+                padding: 16px 16px 20px;
+            }
+            .instruction-list li {
+                gap: 12px;
+                margin-bottom: 13px;
+            }
+            .ins-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
+                border-radius: 10px;
+            }
+            .ins-content {
+                font-size: 0.9rem;
+            }
+            .code-badge {
+                font-size: 0.78rem;
+                padding: 2px 9px;
+            }
+            .tip-box {
+                font-size: 0.86rem;
+                padding: 11px 15px;
+                gap: 10px;
+                border-left-width: 4px;
+            }
+            .tip-box i {
+                font-size: 1.1rem;
+            }
+            .action-hint {
+                font-size: 0.83rem;
+            }
+
+            .step-gif {
+                padding: 12px 8px;
+                margin-top: 16px;
+            }
+            .step-gif .gif-tap-hint {
+                font-size: 0.66rem;
+            }
+
+            .footer-note {
+                font-size: 0.8rem;
+                padding-top: 18px;
+                margin-top: 30px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 8px;
+            }
+        }
+
+        /* --- 手机 (≤ 480px) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 8px 4px;
+            }
+            .container {
+                padding: 12px 10px 18px;
+                border-radius: 18px;
+            }
+
+            .title-section h1 {
+                font-size: 1.15rem;
+            }
+            .title-section .sub {
+                font-size: 0.7rem;
+                gap: 4px 8px;
+            }
+            .exam-badge,
+            .excel-version {
+                font-size: 0.62rem;
+                padding: 2px 10px;
+            }
+            .header-right {
+                font-size: 0.72rem;
+            }
+            .review-outline-btn {
+                font-size: 0.72rem;
+                padding: 6px 14px;
+                border-radius: 20px;
+            }
+            .review-outline-btn svg {
+                width: 12px;
+                height: 12px;
+            }
+
+            .task-card {
+                padding: 12px 12px;
+                border-left-width: 5px;
+                border-radius: 14px;
+                margin-bottom: 20px;
+            }
+            .task-card h2 {
+                font-size: 1rem;
+                margin-bottom: 10px;
+                gap: 6px;
+            }
+            .task-list {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .task-item {
+                font-size: 0.82rem;
+                gap: 6px;
+                line-height: 1.5;
+            }
+            .task-item i {
+                width: 16px;
+                font-size: 0.8rem;
+            }
+
+            .demo-header {
+                gap: 6px 10px;
+            }
+            .demo-header h3 {
+                font-size: 0.86rem;
+            }
+            .badge-region {
+                font-size: 0.62rem;
+                padding: 2px 10px;
+            }
+            .download-link {
+                font-size: 0.72rem;
+                padding: 5px 12px;
+                gap: 5px;
+                border-radius: 30px;
+            }
+            .download-link i {
+                font-size: 0.8rem;
+            }
+
+            .table-wrapper {
+                border-radius: 12px;
+            }
+            .excel-table {
+                font-size: 0.66rem;
+                min-width: 620px;
+            }
+            .excel-table th,
+            .excel-table td {
+                padding: 5px 6px;
+            }
+            .excel-table thead tr:first-child th {
+                font-size: 0.76rem;
+            }
+            .empty-cell {
+                font-size: 0.62rem;
+            }
+
+            .footnote {
+                font-size: 0.7rem;
+                gap: 6px 12px;
+            }
+
+            .chart-source-note {
+                font-size: 0.72rem;
+                padding: 7px 11px;
+                gap: 6px;
+                border-radius: 10px;
+            }
+            .chart-source-note .cs-badge {
+                font-size: 0.7rem;
+                padding: 1px 8px;
+            }
+
+            .steps-title {
+                margin: 20px 0 12px;
+                gap: 4px 8px;
+            }
+            .steps-title h2 {
+                font-size: 1.05rem;
+            }
+            .steps-title span {
+                font-size: 0.62rem;
+                padding: 2px 10px;
+            }
+
+            .step-card {
+                border-radius: 16px;
+            }
+            .step-header {
+                padding: 11px 12px;
+                gap: 10px;
+            }
+            .step-number {
+                width: 30px;
+                height: 30px;
+                font-size: 1.05rem;
+                border-radius: 30px;
+            }
+            .step-header h3 {
+                font-size: 0.92rem;
+            }
+            .step-body {
+                padding: 12px 12px 16px;
+            }
+            .instruction-list li {
+                gap: 10px;
+                margin-bottom: 11px;
+            }
+            .ins-icon {
+                width: 24px;
+                height: 24px;
+                font-size: 0.78rem;
+                border-radius: 8px;
+                min-width: 24px;
+            }
+            .ins-content {
+                font-size: 0.8rem;
+            }
+            .ins-content .sub-note {
+                font-size: 0.72rem;
+            }
+            .code-badge {
+                font-size: 0.68rem;
+                padding: 1px 7px;
+                border-radius: 14px;
+                margin: 3px 2px 0 0;
+            }
+            .highlight,
+            .highlight-blue,
+            .highlight-green {
+                padding: 1px 6px;
+                border-radius: 10px;
+                font-size: 0.76rem;
+            }
+            .tip-box {
+                font-size: 0.76rem;
+                padding: 9px 12px;
+                gap: 8px;
+                border-left-width: 4px;
+                border-radius: 12px;
+                margin-top: 12px;
+            }
+            .tip-box i {
+                font-size: 0.95rem;
+            }
+            .action-hint {
+                font-size: 0.74rem;
+                margin-top: 7px;
+            }
+
+            .step-gif {
+                padding: 10px 6px;
+                margin-top: 14px;
+                border-radius: 12px;
+            }
+            .step-gif .gif-tap-hint {
+                font-size: 0.6rem;
+                margin-top: 5px;
+            }
+
+            .save-reminder {
+                font-size: 0.78rem;
+                padding: 7px 14px;
+            }
+
+            .btn-simulate {
+                font-size: 0.78rem;
+                padding: 6px 16px;
+            }
+
+            .footer-note {
+                font-size: 0.7rem;
+                padding-top: 14px;
+                margin-top: 22px;
+                gap: 5px;
+            }
+        }
+
+        /* --- 超小屏 (≤ 360px) --- */
+        @media (max-width: 360px) {
+            .container {
+                padding: 8px 6px 14px;
+                border-radius: 14px;
+            }
+            .title-section h1 {
+                font-size: 1rem;
+            }
+            .task-card h2 {
+                font-size: 0.88rem;
+            }
+            .task-item {
+                font-size: 0.75rem;
+            }
+            .demo-header h3 {
+                font-size: 0.78rem;
+            }
+            .excel-table {
+                font-size: 0.58rem;
+                min-width: 540px;
+            }
+            .excel-table th,
+            .excel-table td {
+                padding: 4px 5px;
+            }
+            .step-header h3 {
+                font-size: 0.82rem;
+            }
+            .step-number {
+                width: 26px;
+                height: 26px;
+                font-size: 0.9rem;
+            }
+            .ins-content {
+                font-size: 0.73rem;
+            }
+            .code-badge {
+                font-size: 0.62rem;
+            }
+            .tip-box {
+                font-size: 0.7rem;
+                padding: 7px 10px;
+            }
+            .download-link {
+                font-size: 0.66rem;
+                padding: 4px 10px;
+            }
+            .review-outline-btn {
+                font-size: 0.66rem;
+                padding: 4px 11px;
+            }
+        }
+
+        /* --- 表格滚动提示（仅移动端显示） --- */
+        @media (max-width: 768px) {
+            .table-wrapper::after {
+                content: '← 左右滑动查看 →';
+                display: block;
+                text-align: center;
+                font-size: 0.65rem;
+                color: #a89274;
+                padding: 4px 0 2px;
+                letter-spacing: 1px;
+            }
+        }
+        @media (max-width: 480px) {
+            .table-wrapper::after {
+                font-size: 0.55rem;
+                padding: 3px 0 1px;
+            }
+        }
+
+        /* --- 触摸优化：增大点击区域 --- */
+        .step-card,
+        .download-link,
+        .review-outline-btn,
+        .step-gif {
+            touch-action: manipulation;
+        }
+        .step-gif {
+            cursor: pointer;
+        }
+
+        /* --- 暗色模式下的轻量适配 (保持可读) --- */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1c1610;
+                color: #e8ddd0;
+            }
+            .container {
+                background: #2a221a;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+            .header {
+                border-bottom-color: #3d342a;
+            }
+            .title-section h1 {
+                color: #efe6d8;
+            }
+            .title-section .sub {
+                color: #b8a692;
+            }
+            .exam-badge {
+                background: #3d3a34;
+                color: #e8ddd0;
+            }
+            .excel-version {
+                background: #1e6f3c;
+                color: #fff;
+            }
+            .header-right {
+                color: #b8a692;
+            }
+            .task-card {
+                background: #332b22;
+                border-left-color: #c47a3a;
+            }
+            .task-card h2 {
+                color: #efe6d8;
+            }
+            .task-item {
+                color: #e0d4c6;
+            }
+            .task-item i {
+                color: #c47a3a;
+            }
+            .demo-header h3 {
+                color: #e8ddd0;
+            }
+            .badge-region {
+                background: #3d342a;
+                color: #e0d4c6;
+            }
+            .table-wrapper {
+                background: #1f1a14;
+                border-color: #3d342a;
+            }
+            .excel-table th,
+            .excel-table td {
+                border-color: #3d342a;
+            }
+            .excel-table thead tr:first-child th {
+                background: #7a4a1e;
+                border-color: #5a3a1a;
+                color: #fff;
+            }
+            .excel-table tbody tr:nth-child(even) {
+                background-color: #241e18;
+            }
+            .excel-table tbody tr:hover {
+                background: #332b22;
+            }
+            .col-header {
+                background: #3d342a;
+                color: #e8ddd0;
+            }
+            .empty-cell {
+                background: #2a221a;
+                color: #7a6a52;
+            }
+            .highlight-cell {
+                background: #3d3224;
+                border-color: #c47a3a;
+            }
+            .chart-source-cell {
+                background: #22301f;
+                border-color: #5a9e6f;
+            }
+            .footnote {
+                color: #b8a692;
+            }
+            .chart-source-note {
+                background: #1f2a1c;
+                border-color: #3a5a3a;
+            }
+            .chart-source-note .cs-badge {
+                background: #2d3d28;
+                color: #b8d8b8;
+            }
+            .chart-source-note .cs-desc {
+                color: #a8c0a8;
+            }
+            .steps-title h2 {
+                color: #efe6d8;
+            }
+            .steps-title span {
+                background: #3d342a;
+                color: #e8ddd0;
+            }
+            .step-card {
+                background: #221c16;
+                border-color: #3d342a;
+            }
+            .step-card:hover {
+                border-color: #6a5a48;
+            }
+            .step-header {
+                background: #1f1a14;
+                border-bottom-color: #3d342a;
+            }
+            .step-number {
+                background: #6a4a2a;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+            .step-header h3 {
+                color: #efe6d8;
+            }
+            .step-body {
+                background: #221c16;
+            }
+            .ins-icon {
+                background: #2d261e;
+                color: #c47a3a;
+            }
+            .ins-content {
+                color: #e0d4c6;
+            }
+            .ins-content strong {
+                color: #efe6d8;
+            }
+            .ins-content .sub-note {
+                color: #b8a692;
+            }
+            .code-badge {
+                background: #2d261e;
+                border-color: #4a3d2e;
+                color: #d4c8b8;
+            }
+            .highlight {
+                background: #3d3224;
+                color: #f0d8a8;
+            }
+            .highlight-blue {
+                background: #1f2a3a;
+                color: #a8c8e8;
+            }
+            .highlight-green {
+                background: #1f2a1c;
+                color: #b8d8b8;
+            }
+            .tip-box {
+                background: #1f1a14;
+                border-left-color: #c47a3a;
+                color: #e0d4c6;
+            }
+            .tip-box i {
+                color: #c47a3a;
+            }
+            .action-hint {
+                color: #b8a692;
+            }
+            .step-gif {
+                background: #1f1a14;
+                border-color: #3d342a;
+            }
+            .step-gif img {
+                border-color: #3d342a;
+            }
+            .step-gif .gif-tap-hint {
+                color: #b8a692;
+            }
+            .save-reminder {
+                background: #332b22;
+                color: #e0d4c6;
+            }
+            .footer-note {
+                border-top-color: #3d342a;
+                color: #b8a692;
+            }
+            .download-link {
+                background: #1e6f3c;
+                border-color: #3c9b5e;
+                color: #fff;
+            }
+            .download-link:hover {
+                background: #145c2e;
+            }
+            .review-outline-btn {
+                background: linear-gradient(135deg, #b8944a 0%, #3d2a12 100%);
+                color: #fff;
+            }
+            .btn-simulate {
+                background: #2a221a;
+                border-color: #c47a3a;
+                color: #c47a3a;
+            }
+            #gif-lightbox {
+                background: rgba(10, 6, 4, 0.96);
+            }
+            #gif-lightbox .lb-hint {
+                color: rgba(255, 255, 255, 0.6);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ===== 头部 ===== -->
+        <div class="header">
+            <div class="title-section">
+                <h1>📊 能源产品产量统计（2月~5月）</h1>
+                <a href="../index.html" class="review-outline-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/>
+                    </svg>
+                    返回首页
+                </a>
+                <div class="sub">
+                    <span class="exam-badge"><i class="far fa-file-excel"></i> 高中信息技术 · 学业水平考试</span>
+                    <span class="excel-version"><i class="fab fa-microsoft"></i> Excel 2010</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <i class="far fa-clock"></i> 操作题 · 分步跟练
+            </div>
+        </div>
+
+        <!-- ===== 题目要求 ===== -->
+        <div class="task-card">
+            <h2><i class="fas fa-list-check" style="font-size:1.4rem;"></i> 题目操作描述</h2>
+            <div class="task-list">
+                <div class="task-item"><i class="fas fa-calculator"></i> (1) 利用求和公式计算各能源2月~5月总产量，设置为数值型，保留1位小数</div>
+                <div class="task-item"><i class="fas fa-sort-amount-down"></i> (2) 以"总产量"为关键字降序排序，在"序号"列填写 1,2,3……12</div>
+                <div class="task-item"><i class="fas fa-arrows-alt"></i> (3) 选择区域 A2:G14，设置行高为 20，列宽为 16</div>
+                <div class="task-item"><i class="fas fa-chart-line"></i> (4) 以 B2:F3 为数据区域，创建折线图，可视化原煤 2月~5月产量</div>
+            </div>
+            <div style="margin-top: 16px; color: #5b3a1a; font-size:0.92rem;">
+                <i class="fas fa-mouse-pointer"></i> 根据下方步骤卡片，跟随指引在 Excel 2010 中操作
+            </div>
+        </div>
+
+        <!-- ===== 参考数据表 ===== -->
+        <div class="demo-section">
+            <div class="demo-header">
+                <h3><i class="fas fa-table"></i> 参考数据 · 能源产品产量统计（2月~5月） · 共12种能源产品</h3>
+                <span class="badge-region">区域 A1:G14</span>
+                <a href="能源产品产量统计.xlsx" download class="download-link">
+                    <i class="fas fa-download"></i> 下载练习文件
+                </a>
+            </div>
+            <div class="table-wrapper">
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="text-align:center; background:#4a2a0e; font-size:1.15rem;">📊 能源产品产量统计（2月~5月）</th>
+                        </tr>
+                        <tr class="col-header">
+                            <th>序号</th>
+                            <th>指标</th>
+                            <th>2月</th>
+                            <th>3月</th>
+                            <th>4月</th>
+                            <th>5月</th>
+                            <th>总产量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>原煤(万吨)</td>
+                            <td>68659.8</td>
+                            <td>39579.5</td>
+                            <td>36279.6</td>
+                            <td>36783.3</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>原油(万吨)</td>
+                            <td>3347.4</td>
+                            <td>1771.3</td>
+                            <td>1699.6</td>
+                            <td>1756.7</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>液化天然气(万吨)</td>
+                            <td>233.86</td>
+                            <td>157.52</td>
+                            <td>155.96</td>
+                            <td>147.2</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>原油加工量(万吨)</td>
+                            <td>11301.4</td>
+                            <td>5858.5</td>
+                            <td>5181</td>
+                            <td>5391.7</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>汽油(万吨)</td>
+                            <td>2621.4</td>
+                            <td>1372.3</td>
+                            <td>1105.5</td>
+                            <td>1160.5</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>煤油(万吨)</td>
+                            <td>556.3</td>
+                            <td>262.7</td>
+                            <td>175</td>
+                            <td>152.2</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>柴油(万吨)</td>
+                            <td>2975.7</td>
+                            <td>1553.7</td>
+                            <td>1426.6</td>
+                            <td>1467.8</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>燃料油(万吨)</td>
+                            <td>817.4</td>
+                            <td>368.7</td>
+                            <td>368.1</td>
+                            <td>409.1</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>石脑油(万吨)</td>
+                            <td>897.9</td>
+                            <td>440.1</td>
+                            <td>403.5</td>
+                            <td>404.8</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>液化石油气(万吨)</td>
+                            <td>782</td>
+                            <td>429.7</td>
+                            <td>383.1</td>
+                            <td>425.1</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>石油焦(万吨)</td>
+                            <td>496.7</td>
+                            <td>251.7</td>
+                            <td>230</td>
+                            <td>242.5</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                        <tr>
+                            <td class="empty-cell">待填</td>
+                            <td>石油沥青(万吨)</td>
+                            <td>640.9</td>
+                            <td>342.8</td>
+                            <td>324.4</td>
+                            <td>332.3</td>
+                            <td class="empty-cell">待计算</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footnote">
+                <span><i class="far fa-hand-pointer"></i> 序号(A列)和总产量(G列)需通过操作完成；数据区域为 A1:G14。</span>
+                <span><i class="far fa-lightbulb"></i> 第1行为表格标题，第2行为列标题行（A2:G2），数据从第3行开始至第14行。</span>
+            </div>
+            <!-- 折线图数据源高亮说明 -->
+            <div class="chart-source-note">
+                <span class="cs-badge"><i class="fas fa-chart-line"></i> 折线图数据源 B2:F3</span>
+                <span class="cs-desc">包含：<strong>B2</strong>("指标")、<strong>C2:F2</strong>(月份标签)、<strong>B3</strong>("原煤(万吨)")、<strong>C3:F3</strong>(原煤各月数据)</span>
+            </div>
+        </div>
+
+        <!-- ===== 步骤标题 ===== -->
+        <div class="steps-title">
+            <h2>📋 分步操作 · 跟我做</h2>
+            <span>Excel 2010 实操</span>
+        </div>
+
+        <!-- ===== 步骤网格 ===== -->
+        <div class="step-grid">
+
+            <!-- 步骤1 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h3>求和公式计算总产量 · 数值型保留1位小数</h3>
+                </div>
+                <div class="step-body">
+                    <ul class="instruction-list">
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-sigma"></i></div>
+                            <div class="ins-content">
+                                <strong>单击单元格 <span class="code-badge">G3</span>（原煤行的总产量列），</strong>
+                                选择“公式”选项卡→ 自动求和公式：<code>=SUM(C3:F3)</code>，按 <strong>Enter</strong> 确认。
+                                <br><span class="sub-note">此公式将 C3 到 F3（2月~5月）的数值相加，得出原煤的总产量。</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-arrow-down"></i></div>
+                            <div class="ins-content">
+                                <strong>填充公式到其余行：</strong> 单击选中 <span class="code-badge">G3</span>，将鼠标移至单元格右下角，当光标变为<strong>黑色十字填充柄</strong>时，<strong>双击</strong>填充柄，公式自动填充至 <span class="code-badge">G14</span>。
+                                <br><span class="sub-note">（或手动拖动填充柄从 G3 到 G14）</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-sliders-h"></i></div>
+                            <div class="ins-content">
+                                <strong>设置数值型、保留1位小数：</strong> 选中已填充的单元格区域 <span class="code-badge">G3:G14</span> →
+                                右键 → <strong>“设置单元格格式”</strong>（或按 Ctrl+1）→
+                                “数字”选项卡 → 分类选择 <span class="highlight">“数值”</span> →
+                                小数位数设为 <span class="highlight">1</span> → 单击“确定”。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="ins-content">
+                                <strong>验证：</strong> 检查 G3 单元格，原煤总产量应显示为 <span class="highlight-blue">181302.2</span>（保留1位小数）。
+                                其他各行也应正确显示对应总产量。
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div>💡 <strong>提示：</strong>SUM 函数是 Excel 最常用的求和函数。填充柄双击可自动识别相邻数据区域边界，快速填充公式。设置数值格式不会改变实际数值，仅影响显示方式。</div>
+                    </div>
+                    <div class="action-hint">
+                        <i class="far fa-keyboard"></i> 快捷键：选中 G3 后，也可使用 <strong>Alt + =</strong> 快速插入 SUM 函数，Excel 会自动识别求和范围 C3:F3。
+                    </div>
+                    <!-- 步骤1 GIF -->
+                    <div class="step-gif" data-gif="GIF/3.求和公式与数值格式设置.gif">
+                        <img src="GIF/3.求和公式与数值格式设置.gif" alt="SUM求和公式及数值格式设置操作演示" loading="lazy">
+                        <span class="gif-tap-hint"><i class="fas fa-expand"></i> 点击放大观看</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤2 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h3>按"总产量"降序排序 · 填写序号 1~12</h3>
+                </div>
+                <div class="step-body">
+                    <ul class="instruction-list">
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-mouse-pointer"></i></div>
+                            <div class="ins-content">
+                                <strong>选中数据区域：</strong> 单击单元格 <span class="code-badge">A2</span>，按住鼠标左键拖动至 <span class="code-badge">G14</span>，确保选中整个数据表格（含列标题行和12行数据）。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-sort-amount-down"></i></div>
+                            <div class="ins-content">
+                                <strong>自定义排序：</strong> 单击“开始”选项卡（或“数据”选项卡）→ “排序和筛选”组 →
+                                单击 <strong>“排序”</strong> 按钮（或选择“自定义排序”）→ 弹出排序对话框：
+                                <br>▪ 主要关键字：选择 <span class="highlight">“总产量”</span>（对应 G 列）
+                                <br>▪ 排序依据：<strong>数值</strong>
+                                <br>▪ 次序：<strong>降序</strong>
+                                <br>▪ ⚠️ 务必勾选右上角 <span class="highlight">“数据包含标题”</span> → 单击“确定”。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-list-ol"></i></div>
+                            <div class="ins-content">
+                                <strong>填写序号：</strong> 排序完成后，在 A 列（序号列）从 <span class="code-badge">A3</span> 开始，
+                                依次手动输入 <strong>1, 2, 3……12</strong>。总产量最高的产品序号为 1，依次递减。
+                                <br><span class="sub-note">（可在 A3 输入 1，A4 输入 2，然后选中 A3:A4，拖动填充柄至 A14 快速生成连续序号）</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>⚠️ <strong>注意：</strong>若弹出“排序提醒”对话框，务必选择<strong>“扩展选定区域”</strong>，确保整行数据一起移动，避免数据错位。排序后原煤（总产量最大）将排在第 3 行（数据区第一行），序号为 1。</div>
+                    </div>
+                    <!-- 步骤2 GIF -->
+                    <div class="step-gif" data-gif="GIF/3.降序排序与序号填写.gif">
+                        <img src="GIF/3.降序排序与序号填写.gif" alt="按总产量降序排序并填写序号演示" loading="lazy">
+                        <span class="gif-tap-hint"><i class="fas fa-expand"></i> 点击放大观看</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤3 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h3>选择区域 A2:G14 · 行高 20 · 列宽 16</h3>
+                </div>
+                <div class="step-body">
+                    <ul class="instruction-list">
+                        <li>
+                            <div class="ins-icon"><i class="far fa-square"></i></div>
+                            <div class="ins-content">
+                                <strong>选中指定区域：</strong> 鼠标拖动选择单元格区域 <span class="code-badge">A2:G14</span>
+                                （从“序号”列标题到最后一个能源产品的总产量数据，共13行×7列）。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-arrows-alt-v"></i></div>
+                            <div class="ins-content">
+                                <strong>设置行高为 20：</strong> 在选中区域的状态下，单击“开始”选项卡 → “单元格”组 →
+                                单击 <strong>“格式”</strong> 按钮 → 选择 <span class="highlight">“行高”</span> →
+                                输入 <span class="highlight">20</span> → 单击“确定”。
+                                <br><span class="sub-note">（此操作将第2行至第14行的行高统一设为20磅）</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-arrows-alt-h"></i></div>
+                            <div class="ins-content">
+                                <strong>设置列宽为 16：</strong> 保持 A2:G14 选中状态，再次单击“开始”选项卡 → “单元格”组 →
+                                单击 <strong>“格式”</strong> 按钮 → 选择 <span class="highlight">“列宽”</span> →
+                                输入 <span class="highlight">16</span> → 单击“确定”。
+                                <br><span class="sub-note">（此操作将 A 列至 G 列的列宽统一设为16字符宽度）</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <i class="fas fa-check-circle"></i>
+                        <div>✅ 行高20磅使数据行更易于阅读；列宽16字符确保各列内容（尤其是“液化天然气(万吨)”等较长指标名称）能够完整显示。设置完成后表格整体更加整齐美观。</div>
+                    </div>
+                    <!-- 步骤3 GIF -->
+                    <div class="step-gif" data-gif="GIF/3.行高列宽设置.gif">
+                        <img src="GIF/3.行高列宽设置.gif" alt="设置行高20列宽16操作演示" loading="lazy">
+                        <span class="gif-tap-hint"><i class="fas fa-expand"></i> 点击放大观看</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤4 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h3>以 B2:F3 为数据区域 · 创建折线图</h3>
+                </div>
+                <div class="step-body">
+                    <ul class="instruction-list">
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-hand-pointer"></i></div>
+                            <div class="ins-content">
+                                <strong>选中图表数据源：</strong> 鼠标拖动精确选择区域 <span class="code-badge">B2:F3</span>。
+                                <br>该区域包含：
+                                <br> • <strong>B2</strong> = “指标”（列标题），<strong>C2:F2</strong> = 月份（2月~5月，作为分类轴标签）
+                                <br> • <strong>B3</strong> = “原煤(万吨)”（系列名称），<strong>C3:F3</strong> = 68659.8, 39579.5, 36279.6, 36783.3（数据值）
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="ins-content">
+                                <strong>插入折线图：</strong> 单击“插入”选项卡 → “图表”组 →
+                                单击 <strong>“折线图”</strong> 图标 →
+                                在下拉样式中选择一种折线图（推荐选择 <span class="highlight">“带数据标记的折线图”</span>，第2行第1个或第2个样式）。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-paint-brush"></i></div>
+                            <div class="ins-content">
+                                <strong>调整图表（可选）：</strong> 图表生成后，可拖动到表格空白区域；
+                                单击图表标题可修改为 <span class="highlight-blue">“原煤(万吨) 2月~5月产量趋势”</span>；
+                                通过“图表工具-布局”选项卡可添加坐标轴标题、数据标签等。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="ins-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="ins-content">
+                                <strong>验证图表：</strong> 折线图应显示原煤从 2 月到 5 月的产量变化趋势，横轴为月份（2月、3月、4月、5月），纵轴为产量数值（万吨），图例显示“原煤(万吨)”。
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="tip-box">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>📈 <strong>图表解读：</strong>B2:F3 区域虽小（2行×5列），但包含了折线图所需的全部要素——系列名称、分类轴标签和数据点。Excel 2010 会自动识别首行作为水平轴标签、首列作为图例项。从图表可直观看出原煤产量在 2 月最高，3~5 月趋于平稳。</div>
+                    </div>
+                    <div class="save-reminder">
+                        <i class="fas fa-save" style="margin-right: 8px; color:#1e6f3c;"></i>最后记得 <strong>保存</strong>（Ctrl+S），关闭 Excel 并返回考试界面。
+                    </div>
+                    <!-- 步骤4 GIF -->
+                    <div class="step-gif" data-gif="GIF/3.创建折线图.gif">
+                        <img src="GIF/3.创建折线图.gif" alt="以B2F3为数据源创建折线图操作演示" loading="lazy">
+                        <span class="gif-tap-hint"><i class="fas fa-expand"></i> 点击放大观看</span>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /step-grid -->
+
+        <!-- ===== 页脚 ===== -->
+        <div class="footer-note">
+            <div><i class="far fa-copy"></i> 高中信息技术 · 学业水平考试 · Excel 2010 操作题 · 能源产品产量统计</div>
+            <div><i class="fas fa-undo-alt"></i> 完成操作后请保存并<a href="./index.html" style="color:#a7581a;font-weight:600;text-decoration:underline;margin-left:4px;">返回</a></div>
+        </div>
+    </div><!-- /container -->
+
+    <!-- ===== GIF 灯箱 ===== -->
+    <div id="gif-lightbox">
+        <img alt="操作演示GIF（横屏放大）" id="lightbox-img">
+        <div class="lb-hint">点击任意位置关闭 · 手机竖屏时自动横屏显示</div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // 1. 步骤卡片点击反馈
+            var cards = document.querySelectorAll('.step-card');
+            cards.forEach(function(card) {
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('a') || e.target.closest('.download-link') || e.target.closest('.review-outline-btn')) return;
+                    this.style.transition = 'box-shadow 0.15s';
+                    this.style.boxShadow = '0 12px 28px rgba(122, 82, 38, 0.15)';
+                    setTimeout(function() { card.style.boxShadow = ''; }, 220);
+                });
+            });
+
+            // 2. GIF 灯箱
+            var lb = document.getElementById('gif-lightbox');
+            var lbImg = document.getElementById('lightbox-img');
+
+            document.addEventListener('click', function(e) {
+                if (lb.classList.contains('show')) {
+                    lb.classList.remove('show');
+                    document.body.style.overflow = '';
+                    return;
+                }
+                var gifContainer = e.target.closest('.step-gif');
+                if (gifContainer) {
+                    var img = gifContainer.querySelector('img');
+                    if (img) {
+                        var src = img.getAttribute('src');
+                        if (src && /gif/i.test(src)) {
+                            lbImg.src = src;
+                            lb.classList.add('show');
+                            document.body.style.overflow = 'hidden';
+                            e.stopPropagation();
+                        }
+                    }
+                }
+            }, true);
+
+            // 关闭时恢复滚动
+            var observer = new MutationObserver(function() {
+                if (!lb.classList.contains('show')) {
+                    document.body.style.overflow = '';
+                }
+            });
+            observer.observe(lb, { attributes: true, attributeFilter: ['class'] });
+
+            console.log('📊 高中信息技术Excel操作题 · 能源产品产量统计：SUM求和+数值格式、降序排序+序号、行高列宽、折线图。');
+            console.log('📱 已适配移动设备，点击GIF可全屏查看。');
+        })();
+    </script>
+</body>
+</html>
