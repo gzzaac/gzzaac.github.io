@@ -224,7 +224,7 @@
             animation: pulse 0.3s;
         }
         
-        .btn-question, .btn-home, .btn-more {
+        .btn-question, .btn-home, .btn-more, .btn-improve {
             padding: 10px 22px;
             font-size: 16px;
             font-weight: 600;
@@ -256,9 +256,9 @@
             background: linear-gradient(135deg, #d9c39a 0%, #b97a3e 100%);
         }
 		
-		/* 新增 "提升16题" 按钮配色 — 蓝色系，与整体协调 */
+		/* "提升16题" 按钮 — 与导航栏其他按钮统一配色 */
         .btn-improve {
-            background: linear-gradient(135deg, #b97a3e 0%, #8a5a28 100%);
+            background: linear-gradient(135deg, #a7581a 0%, #7c4312 100%);
             color: #ffffff;
         }
         
@@ -649,13 +649,7 @@
             <div class="nav-bar">
                 <a href="index.html" class="btn btn-home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:4px;"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>返回首页</a>
                 <button class="btn btn-question" id="random-question-btn">随机出题</button>
-                <div class="dropdown">
-                    <button class="btn btn-more" id="more-btn">更多练习 <span class="caret">▾</span></button>
-                    <div class="dropdown-menu" id="more-menu">
-                        <a href="improve-16.html" class="btn btn-improve">提升16题</a>
-                        <a href="Typing Pass.html" class="btn btn-typing">打字通</a>
-                    </div>
-                </div>
+                <a href="improve-16.html" class="btn btn-improve">提升16题</a>
             </div>
         </header>
         

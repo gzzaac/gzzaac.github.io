@@ -47,7 +47,7 @@
         justify-content: center;
         gap: 24px;
         width: 100%;
-        max-width: 900px;
+        max-width: 1240px;
     }
 
     .card {
@@ -56,14 +56,23 @@
         border-radius: 15px;
         padding: 28px 24px;
         flex: 1;
-        min-width: 280px;
+        min-width: 240px;
         max-width: 400px;
         text-align: center;
         border: 1px solid rgba(255, 255, 255, 0.5);
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
         transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12); }
+
+    /* 电脑端：四张卡片强制一行显示，不换行 */
+    @media (min-width: 1000px) {
+        .excel-grid { flex-wrap: nowrap; }
+        .card { flex: 1 1 0; min-width: 0; max-width: none; }
+    }
 
     .card .icon { font-size: 52px; margin-bottom: 12px; }
     .card h2 { color: #a7581a; font-size: 1.35rem; margin-bottom: 10px; }
@@ -80,6 +89,7 @@
         font-size: 0.95rem;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         transition: all 0.3s;
+        margin-top: auto; /* 按钮固定在卡片底部，保证四张卡片按钮同一水平线 */
     }
     .btn:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); }
 
@@ -94,6 +104,13 @@
     </header>
 
     <div class="excel-grid">
+        <div class="card">
+            <div class="icon">⌨️</div>
+            <h2>打字通</h2>
+            <p>指法练习、中英文打字、速度测试与打字游戏，循序渐进掌握盲打技能。</p>
+            <a href="../Typing%20Pass.html" class="btn">开始练习</a>
+        </div>
+
         <div class="card">
             <div class="icon">📈</div>
             <h2>月考成绩统计分析</h2>
